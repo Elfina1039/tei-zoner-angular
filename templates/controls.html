@@ -1,0 +1,15 @@
+<input type="button" value="Show TEI" id="gettei" ng-click="sh.tei=!sh.tei"/>
+<input type="button" value="Draw Shape" id="closepath" ng-click="nShape()"/>
+<input type="button" value="Re-draw" id="editpath" ng-click="eShape()"/>
+<input type="button" value="Clear Points" id="clearpoints" ng-click="clearPoints()"/>
+<input type="button" value="Clear Shapes" id="clearall" ng-click="clearShapes()"/>
+    <input type="button" value="Delete" id="delMode" onClick="toggleDelete(this)"/>
+<input type="button" value="New Image" id="reload"/>
+    
+    <button class=zoom ng-click="zoomChng(0.1)">+</button><button class=zoom ng-click="zoomChng(-0.1)">-</button>
+    
+<div id="currentCoords">
+<p>x: <span class="coord" id="xcordpx"> {{crds.x}} </span>px (<span class="coord" id="xcordpc">{{crds.xp}}</span>%)</p>
+<p>y: <span class="coord" id="ycordpx"> {{crds.y}} </span>px (<span class="coord" id="ycordpc">{{crds.yp}}</span>%)</p>
+<p>x,y: <span class="coord" id="xypx">{{crds.xy}}</span></p>
+</div>

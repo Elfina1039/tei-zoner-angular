@@ -1,0 +1,42 @@
+<h2>TEI Markup</h2>
+{{cVersion}}
+
+<div>
+    <button ng-repeat="v in versions" ng-click="switchVersion(v.title)">{{v.title}}</button>
+</div>
+
+
+<div id=teiXml ng-show="cVersion=='TEI XML'">
+
+<xmp>
+ <graphic url='{{img.filename}}' width='{{img.width}}' height='{{img.height}}' />
+</xmp>
+
+<span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
+    <xmp>
+<zone xml:id='{{a.word.replace("#","")}}' points='{{getPoints(a.shape)}}'/>
+    </xmp>
+ </span>
+
+</div>
+
+<div id="xmlPlus"  ng-show="cVersion=='xmlPlus'">
+    
+ <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
+    <xmp>
+<div corresp="#imtArea_{{annts.indexOf(a)}}" type="imtAnnotation"><head>{{a.word}}</head><div><p>{{a.word}}</p></div></div> 
+    </xmp>
+ </span>
+
+</div>
+
+
+
+
+<div id="jsonPaths"  ng-show="cVersion=='JSON'">
+    
+   <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
+  {{stringify(a,"json")}}
+ </span>
+
+</div>
