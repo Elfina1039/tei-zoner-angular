@@ -1,11 +1,10 @@
-<input type="button" value="Show TEI" id="gettei" ng-click="sh.tei=!sh.tei"/>
-<input type="button" value="Draw Shape" id="closepath" ng-click="nShape()"/>
-<input type="button" value="Re-draw" id="editpath" ng-click="eShape()"/>
+<input type="button" ng-value="teiButton(sh.tei)" id="gettei" ng-click="sh.tei=!sh.tei"/>
+<input type="button" value="Draw Shape" id="closepath" ng-click="nShape()"  ng-show="sh.redraw==false"/>
+<input type="button" value="Re-draw" id="editpath" ng-click="eShape()" ng-show="sh.redraw==true"/>
 <input type="button" value="Clear Points" id="clearpoints" ng-click="clearPoints()"/>
 <input type="button" value="Clear Shapes" id="clearall" ng-click="clearShapes()"/>
-    <input type="button" value="Delete" id="delMode" onClick="toggleDelete(this)"/>
-<input type="button" value="New Image" id="reload"/>
-    
+    <input type="button" value="Delete" id="delMode" ng-click="toggleDelete()"/>
+
     <button class=zoom ng-click="zoomChng(0.1)">+</button><button class=zoom ng-click="zoomChng(-0.1)">-</button>
     
 <div id="currentCoords">

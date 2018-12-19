@@ -51,21 +51,18 @@
 
     
     <h1>TEI Zoner</h1>
-<p>This tool allows you to generate TEI &lt;zone&gt; elements by drawing points on an image.  It is entirely browser-based (nothing is processed on the server), so it should be very fast.   </p>
+
     
     
  
     
-    
-    <form id="pickfile"><label>First, pick an image: <input type="file" id="files" name="files[]" onchange="angular.element(this).scope().handleFile(this)"/></label>
-        
-              <button ng-click="handleFile()">Load</button>
-        
-        </form>
+   
         
   
 <h2 id=helpLink ng-click="sh.help=!sh.help">?</h2>
- <div id=help ng-show="sh.help==true">   
+ <div id=help ng-show="sh.help==true"> 
+         <h1>TEI Zoner</h1>
+<p>This tool allows you to generate TEI &lt;zone&gt; elements by drawing points on an image.  It is entirely browser-based (nothing is processed on the server), so it should be very fast.   </p>
 <ul>
   <li>To set points of your shape, click anywhere on the image.</li>
   <li>To draw your shape, click [Draw Shape] in the bar at the bottom of the screen.</li>
@@ -85,13 +82,16 @@
     
     </div>  
     
-  <div id=wrapper>  
+  <div id=wrapper >  
    
     <img id="editor" />
 <div id="canvas" ng-click="nPoint()"> </div>
   
+        <form id="pickfile"><label>First, pick an image: <input type="file" id="files" name="files[]" onchange="angular.element(this).scope().handleFile(this)"/></label>
+        </form>
         </div>
-    
+     
+  
 </div>
   
     

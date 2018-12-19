@@ -13,8 +13,8 @@ body{
 }
 
 #drawing{height:95%; width:80%;
-  border:5px solid red;
-  position:absolute; top:0; left:20%}
+  position:absolute; top:0; left:20%;
+padding:1em;}
 
 
 #teistuff{
@@ -50,9 +50,11 @@ text-align:center;cursor:pointer }
 background-color:rgb(28, 73, 21); z-index:20; padding:1em;
 border:2px solid white}
 
-#wrapper{position:absolute; left:0; top:20%;
-width:100%; height:75%; border:3px solid yellow;
-overflow:scroll;}
+#wrapper{position:absolute; left:0; top:5%;
+width:100%; height:75%;;
+overflow:scroll;
+border:1em solid rgba(255,255,255,0.4);
+background-color:rgba(255,255,255,0.2)}
 
 
 #editor{
@@ -64,7 +66,7 @@ overflow:scroll;}
 
 #canvas{
   cursor:crosshair;
-  background-color:rgba(0,0,0,0.5);
+  background-color:transparent;
   position:absolute;
   left:0;
   top:0;
@@ -144,7 +146,11 @@ span.coord{
 	color:white;
 }
 
-#shList{background-color:rgb(28, 73, 21); height:100%; border:2px solid white; padding:0.5em; overflow-y:scroll;}
+#shList{background-color:rgb(28, 73, 21); 
+height:100%; border:none;
+ padding:0.5em;
+  overflow-y:scroll;}
+
 #catList{background-color:rgb(83, 114, 9);height:100%; overflow-y:scroll;}
     
 #annTab{background-color:rgb(28, 73, 21);  }
@@ -184,6 +190,7 @@ input.cpicker:{display:inline; height:1em;}
             border:none;
                 padding:0;
                 font-weight:bold;
+                padding:2px;
         }
         
            button.del:hover, button.add:hover{
@@ -193,7 +200,9 @@ input.cpicker:{display:inline; height:1em;}
             
         }
         
-      ul.tabul{padding:0; display:flex; flex-flow: row nowrap; margin:0}
+      ul.tabul{padding:0; display:flex; flex-flow: row nowrap;
+        margin:0; height:2.5em;
+margin-top:1%;}
 
         ul.tabul li {list-style-type:none; 
                 border: 2px solid white;
@@ -201,7 +210,7 @@ input.cpicker:{display:inline; height:1em;}
                 background-color:green;
                 border-top-right-radius:1em;
                 margin:0;
-                padding:0.3em;
+                padding:0.5em;
                 text-indent:0;
              
                 
@@ -264,5 +273,37 @@ border-left:0}
 span.blank,xmp{margin:0; display:inline}
 
       
-    
+    ::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cab413;
+  border: 2px solid #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #e5ba1d;
+  border: 0px none #ffffff;
+  border-radius: 39px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #e5ba1d;
+}
+::-webkit-scrollbar-track:active {
+  background: #e5ba1d;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
     

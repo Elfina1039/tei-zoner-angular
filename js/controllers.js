@@ -2,16 +2,16 @@ angular
 .module("zoner")
 .controller("main",function($scope,$log,cookingFct, drawingFct){
 
-          $scope.sh={tInput:false, annTab:true, caTab:false, help:false, tei:false, load:false};
+          $scope.sh={tInput:false, annTab:true, caTab:false, help:false, tei:false, load:false, redraw:false};
     
     $scope.img={filename:"file", width:0, height:0};
-    $scope.c={Annt:{word:"--"}};
+    $scope.c={Annt:{word:"--"}, origAnnt:null, shape:null};
     $scope.crds={};
     
     $scope.handleFile=function(evt){
         
         $log.info(evt);
-       
+   
         cookingFct.handleFile(evt, $scope);
         
     };
@@ -27,7 +27,8 @@ angular
       $scope.eShape=function(){
         
     drawingFct.redrawShape();
-          
+     $scope.sh.redraw=false; 
+        $scope.c.origAnnt=null;
         
     };
     
@@ -37,7 +38,7 @@ angular
                 $scope.annts.forEach(function(annt){
                     if(annt.cat==cat){
                         console.log("recolour: " + annt.cat);
-                        drawingFct.reColour($scope.cats[cat].clr);
+                        drawingFct.reColour(annt,$scope.cats[cat].clr);
                     }
                     else{
                          console.log("no changes: " + annt.cat);
@@ -45,15 +46,55 @@ angular
                     
                 });
         
-                
+                $scope.$emit("save",{}); 
             }
     
     
     
      $scope.reColour=function(a)
             {
-                drawingFct.reColour($scope.cats[a.cat].clr);
+                drawingFct.reColour(a,$scope.cats[a.cat].clr);
+          $scope.$emit("save",{});
             }
+     
+     
+     $scope.activate=function(shape){
+         
+         $scope.annts.forEach(function(annt){
+             if(annt.shape==shape){
+                  // alert(annt.word);
+                 $scope.c.Annt=annt;
+             }
+         });
+         
+       
+     }
+     
+     $scope.editMode=function(shape){
+        $scope.c.shape=shape;
+         
+         $scope.annts.forEach(function(annt){
+             if(annt.shape==shape){
+                  // alert(annt.word);
+                 $scope.c.origAnnt=annt;
+             }
+         });
+         
+         $scope.sh.redraw=true;
+            console.log("entering edit mode - " + $scope.sh.redraw);
+     }
+     
+      $scope.assignShape=function(a){
+        a.shape=$scope.c.shape;
+        
+          if($scope.c.origAnnt){
+              $scope.c.origAnnt.shape=null;
+          }
+          
+        drawingFct.clearPoints();  
+        $scope.sh.redraw=false;
+        $scope.c.origAnnt=null;
+     }
        
     
     
@@ -77,7 +118,7 @@ angular
     $log.info("directive shList initialized");
   
     return {
-        controller:function($scope){
+        controller:function($scope, drawingFct){
             //{word:"Beowulf",cat:null, shape:null}, {word:"Hwaet",cat:null, shape:null}
             $scope.annts=[];
       
@@ -85,7 +126,7 @@ angular
          $scope.loadCooked=function()
             {
              console.log("loading at controller");
-                var loaded=cookingFct.loadCooked();
+                var loaded=cookingFct.loadCooked($scope);
              
              console.log(loaded);
              
@@ -102,16 +143,18 @@ angular
             words.forEach(function(itm, ndx){
               //  shList.push({imtArea:"#imtArea_"+ndx, word:itm,cats:[],shape:null});
                 
-               $scope.annts.push({word:itm,cat:null, shape:null})
+               $scope.annts.push({word:itm,cat:"default", shape:null})
 
             });
                         
             }
             
+        
+            
              $scope.newAnnt=function()
             {
          
-               $scope.annts.push({word:"",cat:null, shape:null});
+               $scope.annts.push({word:"",cat:"default", shape:null});
                  $scope.$emit("save",{});
                 
 
@@ -119,9 +162,13 @@ angular
              
              $scope.delAnnt=function(annt)
             {
-                 annt.shape=drawingFct.delShape(annt);
+                 if(annt.shape){
+                    annt.shape=drawingFct.delShape(annt); 
+                 }
+                 
                 ind=$scope.annts.indexOf(annt);
                  $scope.annts.splice(ind, 1);
+                  $scope.$emit("save",{});
 
             }
              
@@ -130,8 +177,18 @@ angular
                 ind=$scope.annts.indexOf(cAnnt);
                  $scope.annts.splice(ind, 1);
                 $scope.annts.splice(ndx,0,cAnnt);
+                    $scope.$emit("save",{});
 
             }
+               
+               $scope.highlightShape=function(a,w){
+                   
+                   if(a.shape){
+                     drawingFct.highlightShape(a,w);
+                 }
+                   
+                  
+               }
              
             }
             
@@ -152,7 +209,7 @@ angular
         
         controller:function($scope){
             
-        $scope.cats={blue:{name:"myCat", clr:"blue"},green:{name:"myOtherCat", clr:"green"}};
+        $scope.cats={default:{name:"default", clr:"blue", id:"default"}};
          
                 $scope.newCat=function()
             {       
@@ -195,9 +252,16 @@ angular
             $scope.nShape=function(){
                 $log.info("nShape at controller:" );
                 $log.info($scope.c.Annt);
-           $scope.c.Annt.shape = drawingFct.nShape($scope.c.Annt, $scope.cats[$scope.c.Annt.cat]);
                 
-                   $scope.$emit("save",{});
+                if($scope.c.Annt.shape==null){
+                    $scope.c.Annt.shape = drawingFct.nShape($scope.c.Annt, $scope.cats[$scope.c.Annt.cat],$scope);
+                    $scope.$emit("save",{});
+                }
+                else{
+                    alert("The selecetd annotation already has its own shape. Select a different annotation, please.");
+                }
+                
+                   
             };
             
             
@@ -212,6 +276,19 @@ angular
              $scope.zoomChng=function(zch){
               drawingFct.zoomChng(zch);  
             };
+            
+            $scope.toggleDelete=function(){
+                drawingFct.toggleDelete();
+            }
+            
+            $scope.teiButton=function(shTei){
+                if(shTei==true){
+                    return "Hide TEI";
+                }
+                else{
+                    return "Show TEI";
+                }
+            }
             
         },
         templateUrl:"templates/controls.html"
@@ -245,7 +322,7 @@ angular
                 switch(v)
                     {
                         case "xml2":   var tTag='&lt;div corresp="#imtArea_'+$scope.annts.indexOf(a)+'"type="imtAnnotation"&gt;&lt;head&gt;'+a.word+'&lt;/head&gt;&lt;div&gt;&lt;p&gt;'+a.word+'&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;';  break;
-                       case "json2": var tTag='{"word":"'+a.word+'","color":"'+a.cat+'","points":"'+$scope.getPoints(a.shape)+'", "cat":"'+$scope.cats[a.cat].name+'"}'; break;     
+                       case "json2": var tTag='{"word":"'+a.word+'","color":"'+$scope.cats[a.cat].clr+'","points":"'+$scope.getPoints(a.shape)+'", "cat":"'+$scope.cats[a.cat].name+'"}'; break;     
                     }
                 
              

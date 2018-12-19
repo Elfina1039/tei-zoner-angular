@@ -6,16 +6,17 @@
          <input type=text readonly id=wInput>
  <ul id=anntList ng-repeat="(n,a) in annts">    
 
-   <li ng-class="a.word==c.Annt.word ? 'active':'normal'"> {{n}} 
+   <li ng-class="a==c.Annt ? 'active':'normal'"> {{n}} 
        <button class=add ng-click="delAnnt(a)" ng-show="a.word==c.Annt.word" title="delete">-</button> 
        <button class=add ng-click="moveAnnt(n, c.Annt)" ng-show="a.word!=c.Annt.word" title="move here">></button> 
-       <input type=text ng-model=a.word class=annt  ng-click="c.Annt=a">
+       <input type=text ng-model=a.word class=annt  ng-click="c.Annt=a" ng-focus="highlightShape(a,4)" ng-blur="highlightShape(a,1)">
      
       <select ng-model="a.cat" style="background-color:{{cats[a.cat].clr}}" ng-change="reColour(a)">
        <option ng-repeat="c in cats" value="{{c.id}}"  style="background-color:{{c.clr}}" >{{c.name}}</option>
        </select>
        
       <button class=add ng-click="delShape(a)" ng-show="a.shape!=null">X</button>
+       <button class=add ng-click="assignShape(a)" ng-show="a.shape==null && sh.redraw==true">+</button>
 
          </ul>     
 

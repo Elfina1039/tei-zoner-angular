@@ -12,9 +12,9 @@
  <graphic url='{{img.filename}}' width='{{img.width}}' height='{{img.height}}' />
 </xmp>
 
-<span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
+<span class=blank ng-repeat="(num,a) in annts" ng-if="a.shape!=null">
     <xmp>
-<zone xml:id='{{a.word.replace("#","")}}' points='{{getPoints(a.shape)}}'/>
+<zone xml:id='imtArea_{{num}}' points='{{getPoints(a.shape)}}'/>
     </xmp>
  </span>
 
@@ -36,7 +36,7 @@
 <div id="jsonPaths"  ng-show="cVersion=='JSON'">
     
    <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
-  {{stringify(a,"json")}}
+  {{stringify(a,"json2")}}
  </span>
 
 </div>

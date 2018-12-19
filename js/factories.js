@@ -2,7 +2,8 @@
 
 angular.module("zoner")
 .factory("cookingFct",function(drawingFct){
-
+    
+   
     var filename;
     
  function handleFileSelect(evt, link) {
@@ -183,13 +184,13 @@ angular.module("zoner")
         }
     
             
-        function loadCooked()
+        function loadCooked(scope)
         {
             
             var catList=getCookedJson(filename+"_cats");
             var catObj={};
               catList.forEach(function(itm){
-                catObj[itm.clr]={name:itm.name, clr:itm.clr};
+                catObj[itm.id]={name:itm.name, clr:itm.clr, id:itm.id};
             });
             
         
@@ -198,7 +199,7 @@ angular.module("zoner")
             
             shList.forEach(function(itm){
                 // console.log("drawing loaded");
-                itm.shape=drawingFct.cShape(itm.shape,itm,catObj[itm.cat]);
+                itm.shape=drawingFct.cShape(itm.shape,itm,catObj[itm.cat], scope);
             });
  
             return {cats:catObj, annts:shList};
@@ -215,6 +216,12 @@ angular.module("zoner")
 angular.module("zoner")
 .factory("drawingFct",function(){
 
+     var delModeOn=false;
+    
+    function toggleDelete(){
+      delModeOn=!delModeOn;  
+    }
+    
  var canvas;   
 var paper;   
 var coords = new Array();
@@ -434,8 +441,9 @@ opacity: .5,
     
     
     
-function nShape(annt, cat)
+function nShape(annt, cat, scope)
     {
+    
         console.log("drawing new one");
         console.log(cat);
         
@@ -478,7 +486,7 @@ function nShape(annt, cat)
     var word=annt.word;
     //--var sndx="d";
     
-     var rsl=cShape(path, annt, cat);
+     var rsl=cShape(path, annt, cat, scope);
        rsl.test="test";
        // saveShapes(shapes);
      // getPaths();
@@ -495,8 +503,9 @@ function nShape(annt, cat)
     
     
         
-cShape=function(path,annt, cat)
+cShape=function(path,annt, cat, scope)
     {
+    
     // console.log("adding new shape");
     // console.log(path);
     var shape = paper.path(path);
@@ -527,14 +536,16 @@ cShape=function(path,annt, cat)
        shape.mousedown(function(e){
            if(delModeOn)
                {   
-            var lsIt=findItem(shList,"shape",this);
+           // var lsIt=findItem(shList,"shape",this);
             //lsIt.shape=null;
             
                    
-               var ds=shapes.indexOf(this);   
+             //  var ds=shapes.indexOf(this); 
+                annt.shape=null;
                this.remove(); 
+                 delModeOn=false;  
                    
-                   shapes.splice(ds,1);
+                  // shapes.splice(ds,1);
                   // saveShapes(shapes);
                    
                     $(canvas).click(function(e){
@@ -605,12 +616,18 @@ cShape=function(path,annt, cat)
            // console.log("edit shape");
            
            editShape(this);
+           scope.editMode(this);
            
        });
+    
+    shape.hover(function(){
+  scope.activate(this);
+});
     
     return shape;
     }
     
+
 
 function delShape(which)
     {
@@ -733,13 +750,19 @@ var nPath=[];
         // console.log( $(canvas).css("width"));
         }
     
-    function reColour(newColour)
+    function reColour(a,newColour)
     {
         a.shape.attr("fill",newColour);
     }
+    
+     function highlightShape(a, w)
+    {
+        a.shape.attr("stroke-width",w);
+    }
         
     
-  return {createEditor:createEditor, nShape:nShape, cShape:cShape, delShape:delShape, clearPoints:clearPoints, clearShapes:clearShapes, zoomChng:zoomChng, reColour:reColour, redrawShape:redrawShape};
+    
+  return {createEditor:createEditor, nShape:nShape, cShape:cShape, delShape:delShape, clearPoints:clearPoints, clearShapes:clearShapes, zoomChng:zoomChng, reColour:reColour, redrawShape:redrawShape, highlightShape:highlightShape, toggleDelete:toggleDelete};
 
 
 });
