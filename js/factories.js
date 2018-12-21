@@ -298,7 +298,6 @@ opacity: .5,
                {  
                    // console.log("moving shape");
                 var nPath=calcPath(xpx, ypx, sRef); 
-                   
                  sShape.attr("path",nPath);
                }    
                   
@@ -354,7 +353,7 @@ opacity: .5,
        //   console.log("DO: "+this.ox + "/" + this.oy);
            // console.log(this);
             this.attr({fill:"green"});
-           this.attr({cx:this.ox+dx, cy:this.oy+dy});
+           this.attr({cx:this.ox+(dx/zm), cy:this.oy+(dy/zm)});
           //   console.log(this.attr("x") + "/" + this.attr("y"));
           
         } 
@@ -531,29 +530,24 @@ cShape=function(path,annt, cat, scope)
        
     //  shapes.push(shape);
        
-      
+      shape.dblclick(function(){
+           // console.log("edit shape");
+           
+           editShape(this);
+           scope.editMode(this);
+           
+       });
        
-       shape.mousedown(function(e){
+       shape.click(function(e){
            if(delModeOn)
                {   
-           // var lsIt=findItem(shList,"shape",this);
-            //lsIt.shape=null;
-            
-                   
-             //  var ds=shapes.indexOf(this); 
+        
                 annt.shape=null;
                this.remove(); 
                  delModeOn=false;  
-                   
-                  // shapes.splice(ds,1);
-                  // saveShapes(shapes);
-                   
-                    $(canvas).click(function(e){
-                        
-                        
-               //   var x = e.pageX - $(this).offset().left;
-               // var y = e.pageY - $(this).offset().top;
-                        
+               
+             $(canvas).click(function(e){
+             
                          
               var x = e.offsetX;
                 var y = e.offsetY;
@@ -565,41 +559,20 @@ cShape=function(path,annt, cat, scope)
                    getPaths();
                   
                }
-           else
-               {
-                   
-                  sShape=this;
-                   sColor=this.attr("fill");
-                var sx = e.pageX - $("#canvas").offset().left  ;
-                var sy = e.pageY - $("#canvas").offset().top  ;
-                   sRef={x:sx,y:sy,pth:this.attrs.path};
-                   
-                   // console.log(sRef);
-                  this.attr("fill","rgba(0,255,0,0.5)");
-               }
+           
            
        });
        
-       shape.mouseup(function(){
-            sShape=null;
-           sRef=null;
-            this.attr("fill",sColor);
-           
-      
-          // saveShapes(shapes);
-       });
-       
-         shape.mouseover(function(p){
+       shape.hover(function(p){
             
             $(canvas).unbind("click");
             this.attr("stroke-width",3);
-             this.title="title";
             
-        });   
-                        
-        shape.mouseout(function(){
+        });
+    
+     shape.mouseout(function(p){
             
-            $(canvas).click(function(e){
+               $(canvas).click(function(e){
                 // var x = e.pageX - $(this).offset().left;
                 //var y = e.pageY - $(this).offset().top;
                 
@@ -608,21 +581,43 @@ cShape=function(path,annt, cat, scope)
                 var i = {x:x,y:y,string:x+","+y};
              
                nPoint(x,y,i);
-           });   
+           }); 
             this.attr("stroke-width",1);
+            
         });
-       
-       shape.dblclick(function(){
-           // console.log("edit shape");
-           
-           editShape(this);
-           scope.editMode(this);
-           
-       });
     
-    shape.hover(function(){
-  scope.activate(this);
-});
+         function shapeDrag(x,y){
+             console.log("DDDRAG");
+              console.log(this);
+           console.log("DC: "+this.attr("path"));
+              this.oPath=this.attr("path");
+              this.attr({opacity:0.5});
+             //  console.log("DLD: "+this.ox + "/" +this.oy);
+        }   
+                        
+                        
+        function shapeMove(dx,dy){
+            console.log("MOVE");
+      
+           // console.log(this);
+            this.attr({opacity:0.7});
+          // this.attr({cx:this.ox+(dx/zm), cy:this.oy+(dy/zm)});
+            var moved=reCalcPath(dx/zm, dy/zm, this.oPath);
+            this.attr({path:moved});
+          //   console.log(this.attr("x") + "/" + this.attr("y"));
+          
+        } 
+                        
+                                         
+          function shapeStop(){
+            console.log("SSSSTOP");
+        
+              this.attr({opacity:1});
+            
+        }   
+                        
+        shape.drag(shapeMove,shapeDrag, shapeStop);
+    
     
     return shape;
     }
@@ -642,8 +637,6 @@ function calcPath(cx,cy,sRef)
     var py=cy-sRef.y;
    
 var nPath=[];
-    
-    
     
     sRef.pth.forEach(function(pt){
         
@@ -665,8 +658,35 @@ var nPath=[];
     nPath=nPath.join("");
 //// console.log("calculated: "+nPath);
     
-    return nPath;
+    return nPath; 
+}
     
+    function reCalcPath(px,py,current)
+{
+
+var nPath=[];
+    
+    current.forEach(function(pt){
+        
+        if(pt[0]!="Z")
+        {
+           var nx=parseFloat(pt[1]+px);
+        var ny=parseFloat(pt[2]+py);
+        
+        nPath.push(pt[0]+nx+","+ny);  
+        }
+        else
+            {
+                nPath.push("Z");
+            }
+       
+        
+    });
+    
+    nPath=nPath.join("");
+//// console.log("calculated: "+nPath);
+    
+    return nPath; 
 }
 
  function editShape(shp)

@@ -17,8 +17,10 @@
 
 <body ng-app="zoner"  ng-controller="main" >
     
+    <h1 id=banner>TEI Zoner</h1>  
+    <div id=main>
       <div id=leftPan>  
-      
+    
       <ul class=tabul>
           <li id=annTab ng-click="sh.annTab=true; sh.caTab=false"><a href="#shList">Annotations.</a></li>
           <li id=catTab  ng-click="sh.caTab=true; sh.annTab=false"><a href="#catList">Categories</a></li>
@@ -47,20 +49,9 @@
 </section>
 
 
-    
-
-    
-    <h1>TEI Zoner</h1>
-
-    
-    
- 
-    
-   
-        
   
 <h2 id=helpLink ng-click="sh.help=!sh.help">?</h2>
- <div id=help ng-show="sh.help==true"> 
+<p>This tool allows you to generate TEI &lt;zone&gt; elements by drawing points on an image.  It is entirely browser-based (nothing is processed on the server), so it should be very fast.   </p> <div id=help ng-show="sh.help==true"> 
          <h1>TEI Zoner</h1>
 <p>This tool allows you to generate TEI &lt;zone&gt; elements by drawing points on an image.  It is entirely browser-based (nothing is processed on the server), so it should be very fast.   </p>
 <ul>
@@ -120,7 +111,7 @@
   crossorigin="anonymous"></script>
 <!--<script src="js/zoner.js"></script> -->
     
-    
+    </div>
     
 </body>
 </html>

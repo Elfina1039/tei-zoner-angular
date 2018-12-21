@@ -53,8 +53,7 @@ border:2px solid white}
 #wrapper{position:absolute; left:0; top:5%;
 width:100%; height:75%;;
 overflow:scroll;
-border:1em solid rgba(255,255,255,0.4);
-background-color:rgba(255,255,255,0.2)}
+border:1em solid rgba(255,255,255,0.2)}
 
 
 #editor{
@@ -66,7 +65,7 @@ background-color:rgba(255,255,255,0.2)}
 
 #canvas{
   cursor:crosshair;
-  background-color:transparent;
+  background-color:rgba(0,0,0,0.5);
   position:absolute;
   left:0;
   top:0;
@@ -146,11 +145,7 @@ span.coord{
 	color:white;
 }
 
-#shList{background-color:rgb(28, 73, 21); 
-height:100%; border:none;
- padding:0.5em;
-  overflow-y:scroll;}
-
+#shList{background-color:rgb(28, 73, 21); height:100%; border:2px solid white; padding:0.5em; overflow-y:scroll;}
 #catList{background-color:rgb(83, 114, 9);height:100%; overflow-y:scroll;}
     
 #annTab{background-color:rgb(28, 73, 21);  }
@@ -190,7 +185,6 @@ input.cpicker:{display:inline; height:1em;}
             border:none;
                 padding:0;
                 font-weight:bold;
-                padding:2px;
         }
         
            button.del:hover, button.add:hover{
@@ -267,6 +261,14 @@ border-left:0}
 
 
  span.cColor{width:1em; height:1em; margin:0.2em; padding:0.1em; border:1px solid white; border-radius:0.2em;} 
+#wInput{display:none}      
+      
+    
+span.blank,xmp{margin:0; display:inline}
+
+      
+    
+    
 #wInput{display:none}      
       
     
