@@ -1,16 +1,90 @@
+
+//menu rules
+
+#mainBanner{
+    font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
+    font-size: 14pt;
+    color: #292929;
+}
+
+h1{
+    font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
+    font-size: 14pt;
+    color: #292929;
+}
+
+nav{
+    font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
+    font-size: 14pt;
+    color: #292929;
+}
+
+#onglets {
+    display: flex;
+  flex-flow_row wrap;
+    font: bold 12px Arial;
+    list-style-type: none;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #9EA0A1;
+    margin-left: 0;
+
+}
+
+#onglets a {
+    color: white;
+    text-decoration: none;
+    padding: 4px;
+  background-color:rgb(125,125,125);
+  margin-right:0.5em;
+
+}
+nav ul li:hover a {
+    color: #fff;
+
+}
+a:hover {
+    color: #5f0000;
+    text-decoration: underline;
+}
+a:link, a:visited, a:active {
+
+    color: #5f0000;
+    text-decoration: none;
+
+}
+nav ul li a {
+    display: block;
+    padding: 25px 40px;
+    color: #757575;
+    text-decoration: none;
+}
+
 html,body{
  margin: 0;
  padding: 0;
  font-family: sans-serif;
  font-size: 10pt;
  line-height: 1.2em;
-    
+  display:flex;
+  flex-flow:column nowrap;
+  background: url('../images/page_bg.png') 0 0 repeat-x;
 }
 body{
  padding-bottom: 3rem;
-    background-color:rgb(50,50,50);
+
    color:white 
 }
+
+#mainContainer, nav, #mainBanner{width:100%}
+
+#menu{width:100%; height:25%;
+display:flex;
+  flex-flow:row nowrap;
+  justify-content:center;
+}
+#main{width:100%; height:90%; position:absolute; 
+left:0; top:25%; display:flex; 
+flex-flow:row wrap;}
 
 #drawing{height:95%; width:80%;
   position:absolute; top:0; left:20%;
@@ -65,7 +139,7 @@ border:1em solid rgba(255,255,255,0.2)}
 
 #canvas{
   cursor:crosshair;
-  background-color:rgba(0,0,0,0.5);
+  background-color:rgba(0,0,0,0);
   position:absolute;
   left:0;
   top:0;
@@ -138,17 +212,17 @@ span.coord{
 	
 	width:20%;
 	height:97%;
-	position:fixed;
-	left:0;
-	top:0;
-	background-color:rgb(50,50,50);
 	color:white;
 }
 
-#shList{background-color:rgb(28, 73, 21); height:100%; border:2px solid white; padding:0.5em; overflow-y:scroll;}
-#catList{background-color:rgb(83, 114, 9);height:100%; overflow-y:scroll;}
+#shList{background-color:rgba(229, 186, 29, 0.3);
+  height:100%; border:2px solid white;
+  padding:0.5em; overflow-y:scroll;
+color:black;}
+#catList{background-color:rgba(229, 186, 29, 0.5);
+  height:100%; overflow-y:scroll;}
     
-#annTab{background-color:rgb(28, 73, 21);  }
+#annTab{background-color:rgba(229, 186, 29, 0.3);  }
 textarea{width:98%; margin:0.3em; background-color:rgb(229, 186, 29)}
 input[type=text]{background-color:rgb(229, 186, 29); border-radius:0.2em; border:2px inset white;}
 hr{background-color:white; height:3px; border:none}
@@ -171,7 +245,7 @@ background-color:rgba(255,255,255,0.2)}
 
 input.cpicker:{display:inline; height:1em;}
 
-#catTab{background-color:rgb(83, 114, 9); }
+#catTab{background-color:rgba(229, 186, 29, 0.5); }
         
 
 
@@ -221,28 +295,7 @@ flex-flow:row nowrap;}
 
 ul.tabul a {color:white; font-weight:bold; 
 text-decoration:none;}
-
-        
-#cPicker{display:flex; flex-flow:row wrap; padding:0; background-color:white; margin:0; justify-content: center}
-li.cPick{width:1em; height:1em; list-style-type:none; border: 1px solid black; cursor:pointer}
-#cRed{background-color:rgba(255,0,0,0.5)}
-#cRedblue{background-color:rgba(255,0,255,0.5)}
-#cRedgreen{background-color:rgba(255,255,0,0.5)}
-#cBlue{background-color:rgba(0,0,255,0.5)}
-#cGreen{background-color:rgba(0,255,0,0.5)}
-#cWhite{background-color:rgba(255,255,255,0.5)}
-#cBlack{background-color:rgba(0,0,0,0.5)}
-#cBluegreen{background-color:rgba(0,255,255,0.5)}
-
-.cRed{background-color:rgba(255,0,0,0.5)}
-.cRedblue{background-color:rgba(255,0,255,0.5)}
-.cRedgreen{background-color:rgba(255,255,0,0.5)}
-.cBlue{background-color:rgba(0,0,255,0.5)}
-.cGreen{background-color:rgba(0,255,0,0.5)}
-.cWhite{background-color:rgba(255,255,255,0.5)}
-.cBlack{background-color:rgba(0,0,0,0.5)}
-.cBluegreen{background-color:rgba(0,255,255,0.5)}
-        
+    
   #cats{padding:0.2em;}
 #cats li{ width:100%; margin:0.3em; cursor:pointer}
 

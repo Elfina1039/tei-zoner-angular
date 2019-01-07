@@ -102,11 +102,18 @@ angular.module("zoner")
     
        function getCookedJson(cVar)
         {
+            console.log(cVar);
             var cooked= getCookie(cVar);
-            var toObj=JSON.parse(cooked);
+            
+            if(cooked){
+                 var toObj=JSON.parse(cooked);
             // console.log(toObj);
             
             return toObj;
+            }
+           else{
+               return [];
+           }
             
         }
         
@@ -211,6 +218,74 @@ angular.module("zoner")
 
 
 });
+
+
+angular.module("zoner")
+.factory("xmlFct",function(drawingFct){
+  
+function getCats(xmlDoc){
+    var rsl={};
+    
+    var caTags=xmlDoc.querySelectorAll("rendition");
+    caTags.forEach(function(node){
+     var id=node.getAttribute("xmlid");
+        var name=node.querySelector("label").innerHTML;
+        var color=node.querySelector("code").innerHTML.replace(/ ?color: ?/i,"");
+        
+        rsl[id]={name:name, id:id, clr:color};
+    });
+    console.log(rsl);
+ return rsl;   
+}       
+    
+    
+    
+    
+function getAnnts(xmlDoc){
+    var rsl=[];
+    
+    var annTags=xmlDoc.querySelectorAll("div[type=imtAnnotation]");
+    annTags.forEach(function(node){
+     var corresp=node.getAttribute("corresp");
+        word=node.querySelector("head").innerHTML;
+        title=node.querySelector("p").innerHTML;
+        shape=parseShapeXml(xmlDoc.querySelector("zone[xmlid="+corresp.replace("#","")+"]"));
+        
+        
+        rsl.push({word:word, cat:shape.cat, shape:shape, fields:{title:{name:"title", value:title}}});
+    });
+    
+ return rsl;   
+}    
+    
+    function parseShapeXml(zone){
+        var shapeCat=zone.getAttribute("rendition");
+        if(zone.getAttribute("points")){
+            var shapeCoords=[];
+            var shapePoints=zone.getAttribute("points").trim();
+            var pList=shapePoints.split(" ");
+            pList.forEach(function(p){
+                var xy=p.split(",");
+                shapeCoords.push({x:xy[0], y:xy[1], string:xy[0]+","+xy[1]});
+                
+            });
+            
+        }else{
+            lrx=zone.getAttribute("lrx");
+             lry=zone.getAttribute("lry");
+             ulx=zone.getAttribute("ulx");
+             uly=zone.getAttribute("uly");
+            var shapeCoords=[{x:ulx, y:uly, string: ulx+","+uly},{x:lrx, y:lry, string:lrx+","+lry}];
+        }
+        
+        return {cat:shapeCat, coords:shapeCoords}
+    };
+    
+    return {getAnnts:getAnnts, getCats:getCats}
+    
+});
+
+
 
 
 angular.module("zoner")
@@ -440,18 +515,23 @@ opacity: .5,
     
     
     
-function nShape(annt, cat, scope)
+function nShape(annt, cat, scope, customCoords)
     {
+        
+        if(customCoords){
+            coords=customCoords;
+        }else{
+            coords=readPoints(coords);
+        }
     
         console.log("drawing new one");
-        console.log(cat);
         
          var path = null;
-        coords=readPoints(coords);
+        
         
     if (coords.length == 2)  
         {
-          
+          console.log("CLCULATING POLYGON");
             var x1=coords[1].x;
             var y1=coords[0].y;
             coords.splice(1,0,{x:x1, y:y1, string: x1+","+y1});

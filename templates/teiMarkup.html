@@ -14,7 +14,7 @@
 
 <span class=blank ng-repeat="(num,a) in annts" ng-if="a.shape!=null">
     <xmp>
-<zone xml:id='imtArea_{{num}}' points='{{getPoints(a.shape)}}'/>
+<zone xml:id='imtArea_{{num}}' points='{{getPoints(a.shape)}}' rendition="{{cats[a.cat].name}}"/>
     </xmp>
  </span>
 
@@ -24,7 +24,7 @@
     
  <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
     <xmp>
-<div corresp="#imtArea_{{annts.indexOf(a)}}" type="imtAnnotation"><head>{{a.word}}</head><div><p>{{a.word}}</p></div></div> 
+<div corresp="#imtArea_{{annts.indexOf(a)}}" type="imtAnnotation" ><head>{{a.word}}</head><div><p>{{getTitle(a)}}</p></div></div> 
     </xmp>
  </span>
 
@@ -38,5 +38,32 @@
    <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
   {{stringify(a,"json2")}}
  </span>
+
+</div>
+
+<div id="categories"  ng-show="cVersion=='categories'">
+    
+  <xmp>
+    
+<tagsDecl xml:id="imtAnnotationCategories">
+    </xmp>
+      
+<span ng-repeat="c in cats"><xmp>
+    <rendition xml:id="{{c.name}}" >
+
+<label>{{c.name}}</label>
+
+<code lang="text/css" rend="polygon">color: {{c.clr}}</code>
+
+</rendition>
+    
+    </xmp></span>
+
+<xmp>
+
+
+</tagsDecl>
+    
+    </xmp>
 
 </div>

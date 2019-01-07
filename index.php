@@ -7,10 +7,6 @@
   <title>TEI Zoner</title>
   <meta name="author" content="Chris Sparks">
 
-  <link rel="stylesheet" type="text/css" href="./css/teibp.css"/> 
-	<link rel="stylesheet" type="text/css" href="./css/custom.css"/>
-
-
   <link rel="stylesheet" href="css/style.css?v=1.0">
   <link rel="stylesheet" href="css/highlighter-default.css">
 
@@ -20,7 +16,16 @@
 </head>
 
 <body ng-app="zoner"  ng-controller="main" >
-    <div id=menu></div>
+    <div id=menu>
+    
+     <?php
+$menu = 'zoner';
+
+require('./menu.php');
+
+?>
+    
+    </div>
 
     <div id=main>
       <div id=leftPan>  

@@ -110,10 +110,18 @@ angular
 
 });
 
+angular
+.module("zoner")
+.directive("currentAnnt",function(){
+    
+    return {templateUrl:"templates/currentAnnt.html"}
+    
+});
+
 
 angular
 .module("zoner")
-.directive("shList",function($log, cookingFct){
+.directive("shList",function($log, cookingFct, xmlFct){
 
     $log.info("directive shList initialized");
   
@@ -137,24 +145,42 @@ angular
             
             $scope.loadShList=function()
             {
-                
-            var words=$scope.tInput.split(" ");
+         
+                   var words=$scope.tInput.split(" ");
           
             words.forEach(function(itm, ndx){
               //  shList.push({imtArea:"#imtArea_"+ndx, word:itm,cats:[],shape:null});
                 
-               $scope.annts.push({word:itm,cat:"default", shape:null})
-
+               $scope.annts.push({word:itm,cat:shape.cat, shape:null, fields:{title:{name:"title",value:""}}})
+   
             });
-                        
+                
             }
             
+             $scope.loadXml=function()
+            {
+                
+            parser = new DOMParser();
+                var replaced=$scope.tInput.replace(/xml:id/g,"xmlid");
+            xmlDoc = parser.parseFromString(replaced,"text/xml"); 
+                
+                $scope.cats=xmlFct.getCats(xmlDoc);
+                 
+                var xmlAnnts=xmlFct.getAnnts(xmlDoc);
+                 console.log(xmlAnnts);
+                 
+                 xmlAnnts.forEach(function(a){
+                     console.log(a.shape.coords);
+                     a.shape=drawingFct.nShape(a, $scope.cats[a.cat],$scope, a.shape.coords);
+                     $scope.annts.push(a);
+                 });
+            }
         
             
              $scope.newAnnt=function()
             {
          
-               $scope.annts.push({word:"",cat:"default", shape:null});
+               $scope.annts.push({word:"",cat:"default", shape:null, fields:{title:{name:"title",value:""}}});
                  $scope.$emit("save",{});
                 
 
@@ -253,6 +279,11 @@ angular
                 $log.info("nShape at controller:" );
                 $log.info($scope.c.Annt);
                 
+                if($scope.c.Annt.word=="--" || $scope.c.Annt.word=="_blank"){
+                    $scope.c.Annt={word:"_blank", cat:"default", shape:null};
+                    $scope.annts.push($scope.c.Annt);
+                }
+                
                 if($scope.c.Annt.shape==null){
                     $scope.c.Annt.shape = drawingFct.nShape($scope.c.Annt, $scope.cats[$scope.c.Annt.cat],$scope);
                     $scope.$emit("save",{});
@@ -307,22 +338,37 @@ angular
             
             $scope.cVersion="TEI XML";
             
-            $scope.versions=[{title:"JSON"},{title:"TEI XML"}, {title:"xmlPlus"}];
+            $scope.versions=[{title:"JSON"},{title:"TEI XML"}, {title:"xmlPlus"},{title:"categories"}];
             
             $scope.switchVersion=function(nv){
                 $scope.cVersion=nv;
+            }
+            
+             $scope.getTitle=function(a){
+                 console.log(a);
+                if(a.fields.title && a.fields.title.value!=""){
+                    console.log("returning tile");
+                    return a.fields.title.value;
+                }else{
+                    console.log("returning word");
+                    return a.word;
+                }
             }
             
             
             $scope.stringify=function(a, v)
             {
                 
-            //    console.log($scope.cats);
-                
+                console.log(a.cat);
+                if($scope.cats[a.cat]){
+                    sColor=$scope.cats[a.cat].clr;
+                }else{
+                    sColor="#ffffff";
+                }
                 switch(v)
                     {
                         case "xml2":   var tTag='&lt;div corresp="#imtArea_'+$scope.annts.indexOf(a)+'"type="imtAnnotation"&gt;&lt;head&gt;'+a.word+'&lt;/head&gt;&lt;div&gt;&lt;p&gt;'+a.word+'&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;';  break;
-                       case "json2": var tTag='{"word":"'+a.word+'","color":"'+$scope.cats[a.cat].clr+'","points":"'+$scope.getPoints(a.shape)+'", "cat":"'+$scope.cats[a.cat].name+'"}'; break;     
+                       case "json2": var tTag='{"word":"'+a.word+'","color":"'+sColor+'","points":"'+$scope.getPoints(a.shape)+'", "cat":"'+$scope.cats[a.cat].name+'"}'; break;     
                     }
                 
              

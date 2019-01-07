@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oasis-schema href="imt_1_8.rng" type="application/xml"?>
+<?oxygen RNGSchema="imt_1_8.rng" type="xml"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" version="5.0" xml:id="IMT-format-example">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title/>
+      </titleStmt>
+
+      <publicationStmt>
+        <p/>
+      </publicationStmt>
+      <sourceDesc>
+        <p>2076 x 1428</p>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <tagsDecl xml:id="imtAnnotationCategories">
+        <rendition xml:id="cat1">
+          <label>My first category (yellow)</label>
+          <code rend="rectangle" lang="text/css">color: #ffff00</code>
+        </rendition>
+        <rendition xml:id="cat2">
+          <label>My second category (white)</label>
+          <code rend="rectangle" lang="text/css">color: #ffffff</code>
+        </rendition>
+          
+          <rendition xml:id="cat3">
+          <label>Polygons</label>
+          <code rend="polygon" lang="text/css">color: #ffffff</code>
+        </rendition>
+      </tagsDecl>
+      <appInfo>
+        <application ident="ImageMarkupTool01" version="1.8.2.0" notAfter="2018-12-21T14:54:02">
+          <label> Image Markup Tool</label>
+          <desc> Tool for annotating images using TEI</desc>
+          <ref type="appURI" target="http://www.tapor.uvic.ca/~mholmes/image_markup/"> </ref>
+          <ptr target="#imtAnnotatedImage"/>
+          <ptr target="#imtImageAnnotations"/>
+          <ptr target="#imtAnnotationCategories"/>
+        </application>
+
+
+      </appInfo>
+    </encodingDesc>
+  </teiHeader>
+  <facsimile xml:id="imtAnnotatedImage">
+    <surface>
+      <graphic url="blennie-1.JPG" width="2076px" height="1428px"/>
+      <zone xml:id="imtArea_0" rendition="cat1" ulx="550" uly="1157" lrx="689" lry="1368"
+        rend="visible"/>
+      <zone xml:id="imtArea_1" rendition="cat1" ulx="677" uly="922" lrx="807" lry="1012"
+        rend="visible"/>
+      <zone xml:id="imtArea_2" rendition="cat2" ulx="1043" uly="685" lrx="1152" lry="815"
+        rend="visible"/>
+     <zone xml:id="imtArea_3" rend="visible" lry="468" lrx="877" uly="359" ulx="659" rendition="cat2"/>
+    </surface>
+  </facsimile>
+  <text>
+    <body>
+      <div xml:id="imtImageAnnotations">
+        <div corresp="#imtArea_0" type="imtAnnotation">
+          <head>Yellow!</head>
+          <div>
+            <p>This part of the fish is more or less yellow.</p>
+          </div>
+        </div>
+        <div corresp="#imtArea_1" type="imtAnnotation">
+          <head>Yellow again!</head>
+          <div>
+            <p>This part too is yellowish.</p>
+          </div>
+        </div>
+        <div corresp="#imtArea_2" type="imtAnnotation">
+          <head>Mouth</head>
+          <div>
+            <p>The lips look very white.</p>
+          </div>
+        </div>
+        <div corresp="#imtArea_3" type="imtAnnotation">
+          <head>Hairs</head>
+          <div>
+            <p>OK, not hairs, but tentacles. Anyway, they loook like they have white stripes.</p>
+          </div>
+        </div>
+      </div>
+    </body>
+  </text>
+</TEI>
