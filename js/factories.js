@@ -612,7 +612,11 @@ cShape=function(path,annt, cat, scope)
        
       shape.dblclick(function(){
            // console.log("edit shape");
-           
+          if(scope.sh.redraw==true){
+              console.log("already in edit mode");
+              scope.eShape();
+          } 
+          
            editShape(this);
            scope.editMode(this);
            
@@ -639,7 +643,9 @@ cShape=function(path,annt, cat, scope)
                    getPaths();
                   
                }
-           
+           else{
+               scope.activateAnnt(this);
+           }
            
        });
        
@@ -855,9 +861,10 @@ var nPath=[];
         a.shape.attr("fill",newColour);
     }
     
-     function highlightShape(a, w)
+     function highlightShape(a,c, w)
     {
         a.shape.attr("stroke-width",w);
+        a.shape.attr("stroke",c);
     }
         
     

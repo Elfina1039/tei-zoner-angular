@@ -15,7 +15,7 @@
   <![endif]-->
 </head>
 
-<body ng-app="zoner"  ng-controller="main" >
+<body  >
     <div id=menu>
     
      <?php
@@ -27,23 +27,30 @@ require('./menu.php');
     
     </div>
 
-    <div id=main>
+    <div id=main ng-app="zoner"  ng-controller="main">
       <div id=leftPan>  
     
       <ul class=tabul>
-          <li id=annTab ng-click="sh.annTab=true; sh.caTab=false"><a href="#shList">Annotations.</a></li>
-          <li id=catTab  ng-click="sh.caTab=true; sh.annTab=false"><a href="#catList">Categories</a></li>
+          <li id=annTab ng-click="c.tab='annTab'"><a href="#shList">Annotations.</a></li>
+          <li id=catTab  ng-click="c.tab='caTab'"><a href="#catList">Categories</a></li>
+          <li id=catTab  ng-click="c.tab='fieldTab'"><a href="#catList">Fields</a></li>
       </ul>  
       
-     <div id=shList ng-show="sh.annTab==true">
+     <div id=shList ng-show="c.tab=='annTab'">
         
          <sh-list></sh-list>
          
     </div>
          
-      <div id=catList ng-show="sh.caTab==true">
+      <div id=catList ng-show="c.tab=='caTab'">
     
           <cat-list></cat-list>   
+          
+    </div>
+          
+           <div id=fieldList ng-show="c.tab=='fieldTab'">
+    
+          <field-list></field-list>   
           
     </div>
       
@@ -60,7 +67,7 @@ require('./menu.php');
 
   
 <h2 id=helpLink ng-click="sh.help=!sh.help">?</h2>
-<p>This tool allows you to generate TEI &lt;zone&gt; elements by drawing points on an image.  It is entirely browser-based (nothing is processed on the server), so it should be very fast.   </p> <div id=help ng-show="sh.help==true"> 
+ <div id=help ng-show="sh.help==true"> 
          <h1>TEI Zoner</h1>
 <p>This tool allows you to generate TEI &lt;zone&gt; elements by drawing points on an image.  It is entirely browser-based (nothing is processed on the server), so it should be very fast.   </p>
 <ul>
@@ -108,6 +115,7 @@ require('./menu.php');
         angular.module("zoner",[]);
 
     </script>
+        <script src="js/dragNdrop.js"></script>
       <script src="js/factories.js"></script>
       <script src="js/controllers.js"></script>
      

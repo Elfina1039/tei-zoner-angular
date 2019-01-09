@@ -27,6 +27,7 @@ nav{
     padding-bottom: 24px;
     border-bottom: 1px solid #9EA0A1;
     margin-left: 0;
+    
 
 }
 
@@ -68,11 +69,13 @@ html,body{
   display:flex;
   flex-flow:column nowrap;
   background: url('../images/page_bg.png') 0 0 repeat-x;
+  background-size:100% 100%;
+  height:125%;
+  
 }
 body{
  padding-bottom: 3rem;
-
-   color:white 
+   color:black
 }
 
 #mainContainer, nav, #mainBanner{width:100%}
@@ -82,9 +85,10 @@ display:flex;
   flex-flow:row nowrap;
   justify-content:center;
 }
-#main{width:100%; height:90%; position:absolute; 
+#main{width:100%; height:100%; position:absolute; 
 left:0; top:25%; display:flex; 
-flex-flow:row wrap;}
+flex-flow:row wrap;
+padding:10px;}
 
 #drawing{height:95%; width:80%;
   position:absolute; top:0; left:20%;
@@ -108,11 +112,12 @@ padding:1em;}
 #controls{
   position: fixed;
   bottom: 0;
-  background-color: green;
+  background-color: rgb(229, 186, 29);
   padding: .3rem 2%;
   width: 100%;
   z-index: 9;
   height: 5%;
+  
 }
 
 #helpLink{position:fixed; right:0; top:0; width:2em;
@@ -121,13 +126,13 @@ background-color:rgb(229, 186, 29); z-index:21; padding:0.5em;
 text-align:center;cursor:pointer }
 
 #help{position:fixed; right:0; top:0; width:80%;
-background-color:rgb(28, 73, 21); z-index:20; padding:1em;
-border:2px solid white}
+background-color:rgba(229, 186, 29, 0.3); z-index:20; padding:1em;
+border:none; color:black;}
 
-#wrapper{position:absolute; left:0; top:5%;
-width:100%; height:75%;;
+#wrapper{position:absolute; left:2%; top:2%;
+width:98%; height:93%;;
 overflow:scroll;
-border:1em solid rgba(255,255,255,0.2)}
+border:0.2em solid rgb(229, 186, 29);}
 
 
 #editor{
@@ -149,12 +154,7 @@ border:1em solid rgba(255,255,255,0.2)}
   border: 1px solid #000;
   margin: 10px 5px 0 0;
 }
-#coords{
-  background: yellow;
-  opacity: 0.8;
-  z-index: 999;
-  position: absolute;
-}
+
 #imgarea{
   width: 80%;
   padding: 1%;
@@ -181,7 +181,7 @@ pre#teiwrapper{
 }
 span.coord{
   display: inline-block;
-  color: purple;
+  color: rgb(125,125,125);
 }
 #currentCoords{
   background: white;
@@ -205,34 +205,45 @@ span.coord{
   line-height: 1.2em;
 }
 
+#pickfile label{margin:0.5em}
+
 *{box-sizing:border-box}
-
-
-        #leftPan {
+ #leftPan {
 	
 	width:20%;
-	height:97%;
-	color:white;
+	height:90%;
+	color:black;
 }
 
 #shList{background-color:rgba(229, 186, 29, 0.3);
-  height:100%; border:2px solid white;
+  height:100%; 
   padding:0.5em; overflow-y:scroll;
 color:black;}
 #catList{background-color:rgba(229, 186, 29, 0.5);
   height:100%; overflow-y:scroll;}
     
-#annTab{background-color:rgba(229, 186, 29, 0.3);  }
+#annTab{background-color:rgba(229, 186, 29, 0.3); color:black; }
 textarea{width:98%; margin:0.3em; background-color:rgb(229, 186, 29)}
-input[type=text]{background-color:rgb(229, 186, 29); border-radius:0.2em; border:2px inset white;}
-hr{background-color:white; height:3px; border:none}
-select{width:20%;margin-left:0.5em; background-color:rgb(229, 186, 29); border:none; border-radius:0.2em;}
-button, input[type=button]{border-radius:0.2em; font-weight:bold; margin:0.3em}
+input[type=text]{background-color:rgb(229, 186, 29); 
+  border-radius:0.2em; border:2px inset white;}
+hr{background-color:rgb(229, 186, 29); height:3px; border:none}
+select{width:20%;margin-left:0.5em; background-color:rgb(229, 186, 29); border:none; 
+  border-radius:0.2em;}
+select option{opacity:0.5}
+button, input[type=button]{border-radius:0.2em; 
+  font-weight:520; margin:0.1em;
+background-color:rgb(125,125,125);
+padding:0.3em;
+color:white;
+border:none}
+
+button:hover, input[type=button]:hover{background-color:black}
 
 input.annt{background-color:transparent; 
   border:0;
-  border-bottom:2px solid rgb(229, 186, 29);
-  color:white;
+  border-bottom:2px solid rgb(125,125,125);
+  color:black;
+  border-radius:0;
 width:80%;}
 
 input.annt:hover, input.annt:active{
@@ -240,34 +251,34 @@ input.annt:hover, input.annt:active{
 
 
 li.cat{width:100%; display:flex; flex-flow:row nowrap;}
-input.cat{width:90%; border:0; border-bottom:2px solid rgb(229,186,26);
-background-color:rgba(255,255,255,0.2)}
+input.cat{width:90%; border:0; border-bottom:2px solid rgb(125,125,125);
+background-color:rgba(255,255,255,0.2); border-radius:0}
 
 input.cpicker:{display:inline; height:1em;}
 
 #catTab{background-color:rgba(229, 186, 29, 0.5); }
         
-
-
-     
         
         button.del, button.add{
             border-radius:0.2em;
-            background-color:rgb(229, 186, 29);
-            color:green;
+            background-color:rgb(125,125,125);
+            color:white;
             margin:0.3em;
             border:none;
-                padding:0;
+                padding:1px;
                 font-weight:bold;
+width:1.5em; height:1.5em;
         }
         
            button.del:hover, button.add:hover{
            
-            background-color:rgba(255,255,255,1);
+            background-color:black;
            
             
         }
-        
+button.icon{width:1.5em; height:1.5em;}        
+button.delAnnt{background-image:url(icons/delete.png);}
+
       ul.tabul{padding:0; display:flex; flex-flow: row nowrap;
         margin:0; height:2.5em;
 margin-top:1%;}
@@ -292,6 +303,25 @@ flex-flow:row nowrap;}
 
 #anntList{padding:0}
 
+#cAnnt{border:2px solid rgb(125,125,125);
+padding:0.5em;
+ top:0.1em;
+position:sticky;
+  background-color:rgb(219, 197, 135)
+}
+
+#cAnnt h5{margin:0;
+  padding:0.2em;
+display:block;
+  font-size:13pt;
+background-color:rgba(229, 186, 29, 0.2)}
+#cAnnt select{width:inherit}
+#cAnnt ul{padding-left:0.5em;}
+#cAnnt ul li{list-style-type:none; text-indent:0;}
+
+span.fieldName{font-size: smaller;
+  color:rgb(125,125,125)
+}
 
 ul.tabul a {color:white; font-weight:bold; 
 text-decoration:none;}
@@ -304,7 +334,8 @@ li button{width:5%;}
 li{font-weight:bold}
     
 li.active{padding-left:1em;
-border-left:2px solid rgb(229, 186, 29)}
+border-left:2px solid rgb(125,125,125);
+background-color:rgba(125,125,125,0.3)}
 
 li.normal{padding-left:0;
 border-left:0}

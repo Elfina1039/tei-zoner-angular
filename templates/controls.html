@@ -8,7 +8,7 @@
     <button class=zoom ng-click="zoomChng(0.1)">+</button><button class=zoom ng-click="zoomChng(-0.1)">-</button>
     
 <div id="currentCoords">
-<p>x: <span class="coord" id="xcordpx"> {{crds.x}} </span>px (<span class="coord" id="xcordpc">{{crds.xp}}</span>%)</p>
-<p>y: <span class="coord" id="ycordpx"> {{crds.y}} </span>px (<span class="coord" id="ycordpc">{{crds.yp}}</span>%)</p>
-<p>x,y: <span class="coord" id="xypx">{{crds.xy}}</span></p>
+    <p><b>x:</b> <span class="coord" id="xcordpx"> {{roundNum(crds.x)}} </span> px (<span class="coord" id="xcordpc">{{roundNum(crds.xp)}}</span> %)</p>
+    <p><b>y:</b> <span class="coord" id="ycordpx"> {{roundNum(crds.y)}} </span> px (<span class="coord" id="ycordpc">{{roundNum(crds.yp)}}</span> %)</p>
+<p><b>x,y:</b> <span class="coord" id="xypx">{{roundNum(crds.x)}}, {{roundNum(crds.y)}}</span></p>
 </div>

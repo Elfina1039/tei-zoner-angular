@@ -2,17 +2,20 @@ angular
 .module("zoner")
 .controller("main",function($scope,$log,cookingFct, drawingFct){
 
-          $scope.sh={tInput:false, annTab:true, caTab:false, help:false, tei:false, load:false, redraw:false};
+          $scope.sh={tInput:false,  help:false, tei:false, load:false, redraw:false, editBox:false};
     
     $scope.img={filename:"file", width:0, height:0};
-    $scope.c={Annt:{word:"--"}, origAnnt:null, shape:null};
+    $scope.c={Annt:null, origAnnt:null, shape:null, tab:"annTab" };
     $scope.crds={};
+    $scope.nClr="#ff0000";
+    $scope.catCount=1;
     
     $scope.handleFile=function(evt){
         
         $log.info(evt);
    
         cookingFct.handleFile(evt, $scope);
+        $scope.sh.editBox=true;
         
     };
     
@@ -58,7 +61,7 @@ angular
             }
      
      
-     $scope.activate=function(shape){
+     $scope.activateAnnt=function(shape){
          
          $scope.annts.forEach(function(annt){
              if(annt.shape==shape){
@@ -130,6 +133,9 @@ angular
             //{word:"Beowulf",cat:null, shape:null}, {word:"Hwaet",cat:null, shape:null}
             $scope.annts=[];
       
+            $scope.startDrag=function(){
+                console.log("dragging");
+            }
            
          $scope.loadCooked=function()
             {
@@ -151,7 +157,7 @@ angular
             words.forEach(function(itm, ndx){
               //  shList.push({imtArea:"#imtArea_"+ndx, word:itm,cats:[],shape:null});
                 
-               $scope.annts.push({word:itm,cat:shape.cat, shape:null, fields:{title:{name:"title",value:""}}})
+               $scope.annts.push({word:itm,cat:"default", shape:null, fields:$scope.getFields()});
    
             });
                 
@@ -180,7 +186,7 @@ angular
              $scope.newAnnt=function()
             {
          
-               $scope.annts.push({word:"",cat:"default", shape:null, fields:{title:{name:"title",value:""}}});
+               $scope.annts.push({word:"",cat:"default", shape:null, fields:$scope.getFields()});
                  $scope.$emit("save",{});
                 
 
@@ -190,6 +196,10 @@ angular
             {
                  if(annt.shape){
                     annt.shape=drawingFct.delShape(annt); 
+                 }
+                 
+                 if(annt==$scope.c.Annt){
+                    $scope.c.Annt=null;
                  }
                  
                 ind=$scope.annts.indexOf(annt);
@@ -207,10 +217,10 @@ angular
 
             }
                
-               $scope.highlightShape=function(a,w){
+               $scope.highlightShape=function(a,c,w){
                    
                    if(a.shape){
-                     drawingFct.highlightShape(a,w);
+                     drawingFct.highlightShape(a,c,w);
                  }
                    
                   
@@ -239,15 +249,11 @@ angular
          
                 $scope.newCat=function()
             {       
-                if($scope.cats[$scope.nClr]!=null)
-                    {
-                     alert("This colour is already in use");   
-                    }
-         else
-             {
-                 console.log($scope.nClr);
-               $scope.cats[$scope.nClr]={name:"",clr:$scope.nClr, id:$scope.nClr};  
-             }
+             
+            console.log($scope.nClr);
+               $scope.cats["cat"+$scope.catCount]={name:"",clr:$scope.nClr, id:$scope.nClr};
+                    $scope.catCount++;
+             
                
             }
                 
@@ -261,6 +267,49 @@ angular
         },
         
         templateUrl:"templates/catList.html"
+    }
+
+});
+
+angular
+.module("zoner")
+.directive("fieldList",function($log){
+
+    $log.info("directive fieldList initialized");
+  
+    return {
+        
+        controller:function($scope){
+            
+        $scope.fields=[{name:"title"}];
+         
+                $scope.newField=function()
+            {       
+               
+               $scope.fields.push({name:""});
+              
+            }
+                
+                $scope.getFields=function(){
+                    var rsl={};
+                    
+                    $scope.fields.forEach(function(f){
+                        rsl[f.name]={name:f.name, value:""};
+                        
+                    });
+                    console.log(rsl);
+                  return rsl;  
+                }
+                
+            
+                $scope.delField=function(field){
+                    console.log(field);
+                    
+                }
+            
+        },
+        
+        templateUrl:"templates/fieldList.html"
     }
 
 });
@@ -279,18 +328,14 @@ angular
                 $log.info("nShape at controller:" );
                 $log.info($scope.c.Annt);
                 
-                if($scope.c.Annt.word=="--" || $scope.c.Annt.word=="_blank"){
-                    $scope.c.Annt={word:"_blank", cat:"default", shape:null};
+                if($scope.c.Annt==null || $scope.c.Annt.shape!=null){
+                    $scope.c.Annt={word:"_blank", cat:"default", shape:null, fields:$scope.getFields()};
+                    console.log("adding blank");
                     $scope.annts.push($scope.c.Annt);
                 }
-                
-                if($scope.c.Annt.shape==null){
-                    $scope.c.Annt.shape = drawingFct.nShape($scope.c.Annt, $scope.cats[$scope.c.Annt.cat],$scope);
+               
+                  $scope.c.Annt.shape = drawingFct.nShape($scope.c.Annt, $scope.cats[$scope.c.Annt.cat],$scope);
                     $scope.$emit("save",{});
-                }
-                else{
-                    alert("The selecetd annotation already has its own shape. Select a different annotation, please.");
-                }
                 
                    
             };
@@ -310,6 +355,11 @@ angular
             
             $scope.toggleDelete=function(){
                 drawingFct.toggleDelete();
+            }
+            
+             $scope.roundNum=function(floatNum){
+                // console.log(parseInt(floatNum));
+                return parseInt(floatNum);
             }
             
             $scope.teiButton=function(shTei){
@@ -345,12 +395,12 @@ angular
             }
             
              $scope.getTitle=function(a){
-                 console.log(a);
+                // console.log(a);
                 if(a.fields.title && a.fields.title.value!=""){
-                    console.log("returning tile");
+                   // console.log("returning tile");
                     return a.fields.title.value;
                 }else{
-                    console.log("returning word");
+                   // console.log("returning word");
                     return a.word;
                 }
             }

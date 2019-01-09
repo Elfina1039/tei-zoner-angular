@@ -1,0 +1,10 @@
+
+    <ul id=fields>
+        
+        <li ng-repeat="f in fields"  class=cat>
+            <button class=add ng-click="delField(f)">-</button> 
+            <input type=text ng-model=f.name class=cat>
+      </li>
+    </ul>   
+
+<button class=add ng-click="newField()">+</button>
