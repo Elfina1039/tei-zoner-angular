@@ -33,7 +33,7 @@ require('./menu.php');
       <ul class=tabul>
           <li id=annTab ng-click="c.tab='annTab'"><a href="#shList">Annotations.</a></li>
           <li id=catTab  ng-click="c.tab='caTab'"><a href="#catList">Categories</a></li>
-          <li id=catTab  ng-click="c.tab='fieldTab'"><a href="#catList">Fields</a></li>
+          <li id=fieldTab  ng-click="c.tab='fieldTab'"><a href="#catList">Fields</a></li>
       </ul>  
       
      <div id=shList ng-show="c.tab=='annTab'">
@@ -98,13 +98,13 @@ require('./menu.php');
         </form>
         </div>
      
-  
+  <div id="controls">
+    <controls></controls>
+</div>
 </div>
   
     
-<div id="controls">
-    <controls></controls>
-</div>
+
     
 <script src="js/angular.min.js"></script>  
   

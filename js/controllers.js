@@ -56,7 +56,8 @@ angular
     
      $scope.reColour=function(a)
             {
-                drawingFct.reColour(a,$scope.cats[a.cat].clr);
+         console.log(a);
+            drawingFct.reColour(a,$scope.cats[a.cat].clr);
           $scope.$emit("save",{});
             }
      
@@ -146,6 +147,8 @@ angular
              
                 $scope.annts=loaded.annts;
                 $scope.cats=loaded.cats;
+             
+                $scope.catCount=loaded.cats.keys().length+1;
             }
             
             
@@ -155,7 +158,7 @@ angular
                    var words=$scope.tInput.split(" ");
           
             words.forEach(function(itm, ndx){
-              //  shList.push({imtArea:"#imtArea_"+ndx, word:itm,cats:[],shape:null});
+             console.log("adding "+ itm);
                 
                $scope.annts.push({word:itm,cat:"default", shape:null, fields:$scope.getFields()});
    
@@ -251,7 +254,8 @@ angular
             {       
              
             console.log($scope.nClr);
-               $scope.cats["cat"+$scope.catCount]={name:"",clr:$scope.nClr, id:$scope.nClr};
+                    console.log($scope.catCount);
+               $scope.cats["cat"+$scope.catCount]={name:"",clr:$scope.nClr, id:"cat"+$scope.catCount};
                     $scope.catCount++;
              
                
@@ -412,13 +416,15 @@ angular
                 console.log(a.cat);
                 if($scope.cats[a.cat]){
                     sColor=$scope.cats[a.cat].clr;
+                    catId="default";
                 }else{
                     sColor="#ffffff";
+                    catId=$scope.cats[a.cat].id;
                 }
                 switch(v)
                     {
                         case "xml2":   var tTag='&lt;div corresp="#imtArea_'+$scope.annts.indexOf(a)+'"type="imtAnnotation"&gt;&lt;head&gt;'+a.word+'&lt;/head&gt;&lt;div&gt;&lt;p&gt;'+a.word+'&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;';  break;
-                       case "json2": var tTag='{"word":"'+a.word+'","color":"'+sColor+'","points":"'+$scope.getPoints(a.shape)+'", "cat":"'+$scope.cats[a.cat].name+'"}'; break;     
+                       case "json2": var tTag='{"word":"'+a.word+'","color":"'+sColor+'","points":"'+$scope.getPoints(a.shape)+'", "cat":"'+catId+'"}'; break;     
                     }
                 
              

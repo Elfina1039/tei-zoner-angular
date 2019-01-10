@@ -90,9 +90,9 @@ left:0; top:25%; display:flex;
 flex-flow:row wrap;
 padding:10px;}
 
-#drawing{height:95%; width:80%;
+#drawing{height:98%; width:79%;
   position:absolute; top:0; left:20%;
-padding:1em;}
+}
 
 
 #teistuff{
@@ -110,15 +110,22 @@ padding:1em;}
 }
 
 #controls{
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  top:1%;
+  left:2%;
   background-color: rgb(229, 186, 29);
-  padding: .3rem 2%;
-  width: 100%;
+  width: 98%;
   z-index: 9;
   height: 5%;
-  
+display:flex;
+  padding-left:.5em
 }
+controls{  display:flex;
+  flex-flow:row nowrap;
+  align-items: center;
+  justify-content: flex-start
+}
+controls button{margin: 0 0.1em 0 0.1em}
 
 #helpLink{position:fixed; right:0; top:0; width:2em;
   margin:0; height:2em; border-radius:50%; border:2px solid white;
@@ -129,8 +136,8 @@ text-align:center;cursor:pointer }
 background-color:rgba(229, 186, 29, 0.3); z-index:20; padding:1em;
 border:none; color:black;}
 
-#wrapper{position:absolute; left:2%; top:2%;
-width:98%; height:93%;;
+#wrapper{position:absolute; left:2%; top:6%;
+width:98%; height:95%;
 overflow:scroll;
 border:0.2em solid rgb(229, 186, 29);}
 
@@ -209,20 +216,19 @@ span.coord{
 
 *{box-sizing:border-box}
  #leftPan {
-	
 	width:20%;
-	height:90%;
+	height:98%;
 	color:black;
 }
 
-#shList{background-color:rgba(229, 186, 29, 0.3);
-  height:100%; 
+#shList,#fieldList{background-color:rgba(229, 186, 29, 0.3);
+  height:96%; 
   padding:0.5em; overflow-y:scroll;
 color:black;}
 #catList{background-color:rgba(229, 186, 29, 0.5);
-  height:100%; overflow-y:scroll;}
+  height:96%; overflow-y:scroll;}
     
-#annTab{background-color:rgba(229, 186, 29, 0.3); color:black; }
+#annTab, #fieldTab{background-color:rgba(229, 186, 29, 0.3); color:black; }
 textarea{width:98%; margin:0.3em; background-color:rgb(229, 186, 29)}
 input[type=text]{background-color:rgb(229, 186, 29); 
   border-radius:0.2em; border:2px inset white;}
@@ -259,29 +265,27 @@ input.cpicker:{display:inline; height:1em;}
 #catTab{background-color:rgba(229, 186, 29, 0.5); }
         
         
-        button.del, button.add{
-            border-radius:0.2em;
-            background-color:rgb(125,125,125);
-            color:white;
-            margin:0.3em;
-            border:none;
-                padding:1px;
-                font-weight:bold;
-width:1.5em; height:1.5em;
-        }
         
-           button.del:hover, button.add:hover{
-           
+    button.icon:hover{
             background-color:black;
-           
-            
         }
-button.icon{width:1.5em; height:1.5em;}        
-button.delAnnt{background-image:url(icons/delete.png);}
+button.icon{width:1.5em; height:1.5em;} 
+button.iconBig{width:2em; height:2em; background-size:cover} 
+
+button.delete{background-image:url(icons/close_white.png);}
+button.delAnnt{background-image:url(icons/close_white.png);}
+button.delShape{background-image:url(icons/layers_clear_white.png);}
+button.move{background-image:url(icons/low_priority.png);}
+button.assignShape{background-image:url(icons/attach_file.png);}
+button.add{background-image:url(icons/add.png);}
+
+button.zoomIn{background-image:url(icons/zoom_in.png);}
+button.zoomOut{background-image:url(icons/zoom_out.png);}
 
       ul.tabul{padding:0; display:flex; flex-flow: row nowrap;
         margin:0; height:2.5em;
-margin-top:1%;}
+margin-top:1%;
+height:4%}
 
         ul.tabul li {list-style-type:none; 
                 border: 2px solid white;
@@ -339,6 +343,13 @@ background-color:rgba(125,125,125,0.3)}
 
 li.normal{padding-left:0;
 border-left:0}
+
+li.isolated{display:flex; 
+  fles-flow:row nowrap; 
+  align-items:center;
+  justify-content: flex-start;}
+
+li.isolated button{margin-right:0.5em}
 
  input.editAnnt{width:50%}
 

@@ -1,7 +1,8 @@
  <textarea id=textInp ng-model=tInput ng-show="sh.tInput==true"></textarea>
-         <button id=inpButton ng-click="sh.tInput=!sh.tInput">Text Input</button>
-         <button ng-click="loadShList()" id=loadButton>Load</button>
-        <button ng-click="loadXml()" id=loadButton>Load XML</button>
+
+         <button id=inpButton ng-click="sh.tInput=!sh.tInput" ng-show="sh.tInput==false">Text Input</button>
+         <button ng-click="loadShList()" id=loadButton ng-show="sh.tInput==true">Load</button>
+        <button ng-click="loadXml()" id=loadXml ng-show="sh.tInput==true">Load XML</button>
          <button id=cooker ng-click="loadCooked()" ng-show="sh.load==true">Load Saved</button><hr>
          
          <input type=text readonly id=wInput>
@@ -9,22 +10,22 @@
 <current-annt ng-show="sh.editBox==true"></current-annt>
 
 
-
  <ul id=anntList ng-repeat="(n,a) in annts">    
 
-   <li ng-class="a==c.Annt ? 'active':'normal'">
-       
-       <button class=add ng-click="moveAnnt(n, c.Annt)" ng-show="a.word!=c.Annt.word" title="move here">></button> 
+   <li ng-class="a==c.Annt ? 'active':'normal'" >
+
+       <button class="icon move" ng-click="moveAnnt(n, c.Annt)" ng-show="a!=c.Annt" title="move here"></button> 
        <input type=text ng-model=a.word class=annt  ng-click="c.Annt=a" ng-focus="highlightShape(a,'yellow',7)" ng-blur="highlightShape(a,'black',1)">
      
    <!--   <select ng-model="a.cat" style="background-color:{{cats[a.cat].clr}}" ng-change="reColour(a)">
        <option ng-repeat="c in cats" value="{{c.id}}"  style="background-color:{{c.clr}}" >{{c.name}}</option>
        </select> -->
        <button class="icon delAnnt" ng-click="delAnnt(a)" ng-show="a==c.Annt" title="delete" ></button> 
-       <button class="icon" ng-click="delShape(a)" ng-show="a.shape!=null">X</button>
-       <button class="icon" ng-click="assignShape(a)" ng-show="a.shape==null && sh.redraw==true">+</button>
-         </ul>     
+       <button class="icon delShape" ng-click="delShape(a)" ng-show="a.shape!=null">X</button>
+       <button class="icon assignShape" ng-click="assignShape(a)" ng-show="a.shape==null && sh.redraw==true">+</button>
+       
+         </ul>  
 
-<button class=add ng-click="newAnnt()">+</button> Add annotation
+<li class=isolated><button class="icon add" ng-click="newAnnt()"></button> Add annotation</li>
 
 

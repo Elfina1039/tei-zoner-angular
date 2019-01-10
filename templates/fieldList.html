@@ -2,9 +2,12 @@
     <ul id=fields>
         
         <li ng-repeat="f in fields"  class=cat>
-            <button class=add ng-click="delField(f)">-</button> 
+           
             <input type=text ng-model=f.name class=cat>
+             <button class="icon delete" ng-click="delField(f)"></button> 
       </li>
     </ul>   
 
-<button class=add ng-click="newField()">+</button>
+<li class=isolated>
+<button class="icon add" ng-click="newField()"></button> Add field
+</li>

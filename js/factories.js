@@ -205,8 +205,10 @@ angular.module("zoner")
             // console.log(shList);
             
             shList.forEach(function(itm){
-                // console.log("drawing loaded");
-                itm.shape=drawingFct.cShape(itm.shape,itm,catObj[itm.cat], scope);
+                if(itm.shape){
+                    itm.shape=drawingFct.cShape(itm.shape,itm,catObj[itm.cat], scope);
+                }
+                
             });
  
             return {cats:catObj, annts:shList};
