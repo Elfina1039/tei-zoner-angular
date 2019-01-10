@@ -190,18 +190,22 @@ span.coord{
   display: inline-block;
   color: rgb(125,125,125);
 }
-#currentCoords{
+#currentCoords, #currentZoom{
   background: white;
   padding: .4rem;
   margin-right: .3rem;
   float: right;
     color:black;
+    min-width:2em;
 }
-#currentCoords p{
+
+#currentCoords p, #currentZoom p{
   margin: 0;
   padding: 0;
   display: inline;
 }
+
+
 #pickfile input{
   font-size: 2rem;
   display: inline-block;
@@ -221,14 +225,8 @@ span.coord{
 	color:black;
 }
 
-#shList,#fieldList{background-color:rgba(229, 186, 29, 0.3);
-  height:96%; 
-  padding:0.5em; overflow-y:scroll;
-color:black;}
-#catList{background-color:rgba(229, 186, 29, 0.5);
-  height:96%; overflow-y:scroll;}
-    
-#annTab, #fieldTab{background-color:rgba(229, 186, 29, 0.3); color:black; }
+
+
 textarea{width:98%; margin:0.3em; background-color:rgb(229, 186, 29)}
 input[type=text]{background-color:rgb(229, 186, 29); 
   border-radius:0.2em; border:2px inset white;}
@@ -262,9 +260,15 @@ background-color:rgba(255,255,255,0.2); border-radius:0}
 
 input.cpicker:{display:inline; height:1em;}
 
-#catTab{background-color:rgba(229, 186, 29, 0.5); }
+#annTab, #shList{background-color:rgba(229, 186, 29, 0.2); color:black; }
+#catTab, #catList{background-color:rgba(229, 186, 29, 0.4); }
+ #fieldTab, #fieldList{background-color:rgba(229, 186, 29, 0.6); color:black; }
         
-        
+.tab{  height:96%;
+  width:100%;
+  padding:0.5em; 
+  overflow-y:scroll;
+color:black}       
         
     button.icon:hover{
             background-color:black;

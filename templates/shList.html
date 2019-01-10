@@ -1,8 +1,8 @@
- <textarea id=textInp ng-model=tInput ng-show="sh.tInput==true"></textarea>
+ <textarea id=textInp ng-model=tInput ng-show="sh.tInput==true" placeholder="input text/XML"></textarea>
 
          <button id=inpButton ng-click="sh.tInput=!sh.tInput" ng-show="sh.tInput==false">Text Input</button>
-         <button ng-click="loadShList()" id=loadButton ng-show="sh.tInput==true">Load</button>
-        <button ng-click="loadXml()" id=loadXml ng-show="sh.tInput==true">Load XML</button>
+         <button ng-click="loadShList()" id=loadButton ng-show="sh.tInput==true && tInput.substring(0,5)!='<?xml'" >Load text</button>
+        <button ng-click="loadXml()" id=loadXml ng-show="sh.tInput==true  && tInput.substring(0,5)=='<?xml'">Load XML</button>
          <button id=cooker ng-click="loadCooked()" ng-show="sh.load==true">Load Saved</button><hr>
          
          <input type=text readonly id=wInput>
@@ -10,9 +10,9 @@
 <current-annt ng-show="sh.editBox==true"></current-annt>
 
 
- <ul id=anntList ng-repeat="(n,a) in annts">    
+ <ul id=anntList>    
 
-   <li ng-class="a==c.Annt ? 'active':'normal'" >
+   <li ng-class="a==c.Annt ? 'active':'normal'"  ng-repeat="(n,a) in annts" id="annt{{n}}">
 
        <button class="icon move" ng-click="moveAnnt(n, c.Annt)" ng-show="a!=c.Annt" title="move here"></button> 
        <input type=text ng-model=a.word class=annt  ng-click="c.Annt=a" ng-focus="highlightShape(a,'yellow',7)" ng-blur="highlightShape(a,'black',1)">

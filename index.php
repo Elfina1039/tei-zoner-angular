@@ -36,19 +36,19 @@ require('./menu.php');
           <li id=fieldTab  ng-click="c.tab='fieldTab'"><a href="#catList">Fields</a></li>
       </ul>  
       
-     <div id=shList ng-show="c.tab=='annTab'">
+     <div id=shList ng-show="c.tab=='annTab'" class="tab">
         
          <sh-list></sh-list>
          
     </div>
          
-      <div id=catList ng-show="c.tab=='caTab'">
+      <div id=catList ng-show="c.tab=='caTab'" class="tab">
     
           <cat-list></cat-list>   
           
     </div>
           
-           <div id=fieldList ng-show="c.tab=='fieldTab'">
+           <div id=fieldList ng-show="c.tab=='fieldTab'" class="tab">
     
           <field-list></field-list>   
           

@@ -6,7 +6,7 @@ angular
     
     $scope.img={filename:"file", width:0, height:0};
     $scope.c={Annt:null, origAnnt:null, shape:null, tab:"annTab" };
-    $scope.crds={};
+    $scope.crds={zoom:1};
     $scope.nClr="#ff0000";
     $scope.catCount=1;
     
@@ -64,10 +64,15 @@ angular
      
      $scope.activateAnnt=function(shape){
          
-         $scope.annts.forEach(function(annt){
+         $scope.annts.forEach(function(annt, ind){
              if(annt.shape==shape){
                   // alert(annt.word);
                  $scope.c.Annt=annt;
+              
+                 var editBox=document.getElementById("cAnnt");
+                 var newScroll=document.getElementById("annt"+ind).offsetTop-editBox.offsetHeight-editBox.offsetTop+10;
+                 console.log("new scroll: "+newScroll);
+                  document.getElementById("shList").scrollTop=newScroll;
              }
          });
          
@@ -75,6 +80,7 @@ angular
      }
      
      $scope.editMode=function(shape){
+            $scope.sh.redraw=true;
         $scope.c.shape=shape;
          
          $scope.annts.forEach(function(annt){
@@ -84,7 +90,7 @@ angular
              }
          });
          
-         $scope.sh.redraw=true;
+      
             console.log("entering edit mode - " + $scope.sh.redraw);
      }
      
@@ -213,7 +219,13 @@ angular
              
                $scope.moveAnnt=function(ndx, cAnnt)
             {
+                  
+                       
                 ind=$scope.annts.indexOf(cAnnt);
+                   console.log("moving from " + ind + " to " + ndx);
+                    if(ndx>ind){
+                       ndx--;
+                   }
                  $scope.annts.splice(ind, 1);
                 $scope.annts.splice(ndx,0,cAnnt);
                     $scope.$emit("save",{});
@@ -248,7 +260,7 @@ angular
         
         controller:function($scope){
             
-        $scope.cats={default:{name:"default", clr:"blue", id:"default"}};
+        $scope.cats={default:{name:"default", clr:"#0000ff", id:"default"}};
          
                 $scope.newCat=function()
             {       
@@ -354,7 +366,7 @@ angular
             };
             
              $scope.zoomChng=function(zch){
-              drawingFct.zoomChng(zch);  
+              $scope.crds.zoom=drawingFct.zoomChng(zch);  
             };
             
             $scope.toggleDelete=function(){
@@ -424,7 +436,7 @@ angular
                 switch(v)
                     {
                         case "xml2":   var tTag='&lt;div corresp="#imtArea_'+$scope.annts.indexOf(a)+'"type="imtAnnotation"&gt;&lt;head&gt;'+a.word+'&lt;/head&gt;&lt;div&gt;&lt;p&gt;'+a.word+'&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;';  break;
-                       case "json2": var tTag='{"word":"'+a.word+'","color":"'+sColor+'","points":"'+$scope.getPoints(a.shape)+'", "cat":"'+catId+'"}'; break;     
+                       case "json2": var tTag='{"word":"'+a.word+'","color":"'+sColor+'","points":"'+$scope.getPoints(a.shape)+'", "cat":"'+catId+'", "fields":'+JSON.stringify(a.fields)+'}'; break;     
                     }
                 
              

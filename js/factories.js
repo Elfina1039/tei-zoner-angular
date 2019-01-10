@@ -294,6 +294,9 @@ angular.module("zoner")
 .factory("drawingFct",function(){
 
      var delModeOn=false;
+   
+    
+    
     
     function toggleDelete(){
       delModeOn=!delModeOn;  
@@ -386,22 +389,16 @@ opacity: .5,
     
          
     function nPoint(x,y,i) {
-        // console.log("NPOINT");
-        
-             
-        
-         // console.log("coords: "+coords);
-        
+     
                 if(!delModeOn)
                     {
                         mousedown = true;
-          
-             //  coords.push(i);
-              //  coords.push(i);
                         
-                        // console.log("coords: "+coords);
+                        var size=Math.ceil(3/zm);
                         
-                var point = paper.circle(x,y,3);
+                        console.log("size: "+size);
+                        
+                var point = paper.circle(x,y,size);
                 coords.push(point);
                 point.attr("fill","#cf0");
                 point.crds=i;
@@ -619,8 +616,9 @@ cShape=function(path,annt, cat, scope)
               scope.eShape();
           } 
           
-           editShape(this);
+           
            scope.editMode(this);
+          editShape(this);
            
        });
        
@@ -646,6 +644,7 @@ cShape=function(path,annt, cat, scope)
                   
                }
            else{
+
                scope.activateAnnt(this);
            }
            
@@ -851,10 +850,16 @@ var nPath=[];
         
         function zoomChng(zChng)
         {
-            zm+=parseFloat(zChng); 
+            zm=roundToTwo(parseFloat(zm+zChng)); 
             
             $("#editor").css({"transform":"scale("+zm+","+zm+")"});
              $(canvas).css({"transform":"scale("+zm+","+zm+")"});
+            
+            return zm;
+            
+        function roundToTwo(num) {    
+            return +(Math.round(num + "e+2")  + "e-2");
+}
         // console.log( $(canvas).css("width"));
         }
     
@@ -865,6 +870,7 @@ var nPath=[];
     
      function highlightShape(a,c, w)
     {
+      
         a.shape.attr("stroke-width",w);
         a.shape.attr("stroke",c);
     }
