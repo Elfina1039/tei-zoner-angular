@@ -273,12 +273,15 @@ color:black}
     button.icon:hover{
             background-color:black;
         }
-button.icon{width:1.5em; height:1.5em;} 
-button.iconBig{width:2em; height:2em; background-size:cover} 
+button.icon{width:1.5em; height:1.5em;
+background-position:center center;
+background-size:contain;} 
+button.iconBig{width:2em; height:2em; background-size:cover; 
+  background-position:center center;} 
 
-button.delete{background-image:url(icons/close_white.png);}
-button.delAnnt{background-image:url(icons/close_white.png);}
-button.delShape{background-image:url(icons/layers_clear_white.png);}
+button.delete{background-image:url(icons/delete_outline.png);}
+button.delAnnt{background-image:url(icons/delete_forever.png);}
+button.delShape{background-image:url(icons/delete_outline.png);}
 button.move{background-image:url(icons/low_priority.png);}
 button.assignShape{background-image:url(icons/attach_file.png);}
 button.add{background-image:url(icons/add.png);}
