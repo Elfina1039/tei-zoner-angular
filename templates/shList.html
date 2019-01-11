@@ -15,7 +15,7 @@
    <li ng-class="a==c.Annt ? 'active':'normal'"  ng-repeat="(n,a) in annts" id="annt{{n}}">
 
        <button class="icon move" ng-click="moveAnnt(n, c.Annt)" ng-show="a!=c.Annt" title="move here"></button> 
-       <input type=text ng-model=a.word class=annt  ng-click="c.Annt=a" ng-focus="highlightShape(a,'yellow',7)" ng-blur="highlightShape(a,'black',1)">
+       <input type=text ng-model=a.word class=annt  ng-click="c.Annt=a" ng-focus="highlightShape(a,'inverted',7)" ng-blur="highlightShape(a,'black',1)">
      
    <!--   <select ng-model="a.cat" style="background-color:{{cats[a.cat].clr}}" ng-change="reColour(a)">
        <option ng-repeat="c in cats" value="{{c.id}}"  style="background-color:{{c.clr}}" >{{c.name}}</option>

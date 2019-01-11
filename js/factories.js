@@ -342,11 +342,16 @@ angular.module("zoner")
     // swich dele mode on and off
         function toggleDelete() {
             if (mode != "deletion") {
-                mode = "deletion";
+                changeMode("deletion");
+                return true;
             } else if (points.length != 0) {
-                mode = "drawing";
+                changeMode("drawing");
+                  $(canvas).click(function(e){placePoint(e)});
+                return false;
             } else {
-                mode = "selection";
+                changeMode("selection");
+                  $(canvas).click(function(e){placePoint(e)});
+                return false;
             }
         }
 
@@ -491,13 +496,11 @@ angular.module("zoner")
     
     // place point
         function placePoint(e) {
-            if(mode=="deletion"){
-                console.log("In order to delete, click a shape."); 
-            } else if(mode=="editing"){
+             if(mode=="editing"){
                 console.log("You cannot add points in editing mode.");
             } else {
                 
-                if(mode=="selection"){
+                if(mode=="selection" || mode=="deletion"){
                     changeMode("drawing");
                 }
                
@@ -628,13 +631,14 @@ angular.module("zoner")
                 if (mode=="deletion") {
                     annt.shape = null;
                     this.remove();
-                    toggleDelete();
-
-                   // $(canvas).click(function(e){placePoint(e)});
-                    getPaths();
+                  //  toggleDelete();
+                   // scope.sh.delete=false;
+                   
+                    //?old: getPaths();
 
                 } else if(mode=="selection") {
                     scope.activateAnnt(this);
+                    highlightShape(this, "inverted", 7)
                 } else {
                     console.log("calling place point");
                     placePoint(e);
@@ -645,25 +649,33 @@ angular.module("zoner")
             shape.hover(function (p) {
                 // MODES
                 $(canvas).unbind("click");
+                switch(mode){
+                    case "deletion": this.attr("stroke","red"); break;
+                }
                 this.attr("stroke-width", 3);
             });
 
             shape.mouseout(function (p) {
                 // MODES
                 $(canvas).click(function(e){placePoint(e)});
+                this.attr("stroke", "black");
                 this.attr("stroke-width", 1);
             });
 
         // drag n drop functions
             function shapeDrag(x, y) {
-                this.oPath = this.attr("path");
-                this.attr({
+                if(mode=="selection"){
+                   this.oPath = this.attr("path");
+                    this.attr({
                     opacity: 0.5
-                });
+                }); 
+                }
+                
             }
 
            
             function shapeMove(dx, dy) {
+                 if(mode=="selection"){
                 this.attr({
                     opacity: 0.7
                 });
@@ -671,12 +683,15 @@ angular.module("zoner")
                 this.attr({
                     path: moved
                 });
+                 }
             }
 
             function shapeStop() {
+                 if(mode=="selection"){
                 this.attr({
                     opacity: 1
                 });
+                 }
             }
 
             shape.drag(shapeMove, shapeDrag, shapeStop);
@@ -688,6 +703,7 @@ angular.module("zoner")
     // delete shape proper
         function delShape(which) {
             which.shape.remove();
+            changeMode("selection");
             return null;
         }
 
@@ -792,7 +808,7 @@ angular.module("zoner")
                 shapes.length = 0;
                 rects.length = 0;
                 $("#clearpoints").click();
-                getPaths();
+                //?old: getPaths();
                 $("#clearall").prop('disabled', true);
 
             } else return;
@@ -823,14 +839,20 @@ angular.module("zoner")
         }
     
     // highlight shape
-        function highlightShape(a, c, w) {
-            a.shape.attr("stroke-width", w);
-            a.shape.attr("stroke", c);
+        function highlightShape(shape, c, w) {
+            shape.attr("stroke-width", w);
+            
+            if(c=="inverted"){
+                c=invertColor(shape.attr("fill"));
+            }
+            
+            shape.attr("stroke", c);
         }
     
     //change mode
     
     function changeMode(newMode){
+        console.log("entering _" + newMode + "_ mode");
         mode=newMode;
         var cursorImg;
         switch(newMode){
@@ -842,6 +864,31 @@ angular.module("zoner")
         
         $("#canvas").css({cursor:cursorImg});
     }
+    // functions for converting colour (external source)
+    function invertColor(hex) {
+    if (hex.indexOf('#') === 0) {
+        hex = hex.slice(1);
+    }
+    // convert 3-digit hex to 6-digits.
+    if (hex.length === 3) {
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    if (hex.length !== 6) {
+        throw new Error('Invalid HEX color.');
+    }
+    // invert color components
+    var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+        g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+        b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+    // pad each with zeros and return
+    return '#' + padZero(r) + padZero(g) + padZero(b);
+}
+
+function padZero(str, len) {
+    len = len || 2;
+    var zeros = new Array(len).join('0');
+    return (zeros + str).slice(-len);
+}
     
         return {
             createEditor: createEditor,

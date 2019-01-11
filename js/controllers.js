@@ -2,7 +2,7 @@ angular
 .module("zoner")
 .controller("main",function($scope,$log,cookingFct, drawingFct){
 
-          $scope.sh={tInput:false,  help:false, tei:false, load:false, redraw:false, editBox:false};
+          $scope.sh={tInput:false,  help:false, tei:false, load:false, redraw:false, editBox:false, delete: false};
     
     $scope.img={filename:"file", width:0, height:0};
     $scope.c={Annt:null, origAnnt:null, shape:null, tab:"annTab" };
@@ -235,7 +235,7 @@ angular
                $scope.highlightShape=function(a,c,w){
                    
                    if(a.shape){
-                     drawingFct.highlightShape(a,c,w);
+                     drawingFct.highlightShape(a.shape,c,w);
                  }
                    
                   
@@ -370,7 +370,7 @@ angular
             };
             
             $scope.toggleDelete=function(){
-                drawingFct.toggleDelete();
+               $scope.sh.delete=drawingFct.toggleDelete();
             }
             
              $scope.roundNum=function(floatNum){
