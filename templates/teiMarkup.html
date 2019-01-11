@@ -34,12 +34,14 @@
 
 
 <div id="jsonPaths"  ng-show="cVersion=='JSON'">
-    
-   <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
-  {{stringify(a,"json2")}}
- </span>
+     {
+    "annts":[{{stringifyAnnts(annts)}} ],
+    "cats": {{stringifyPure(cats)}} 
+    }
 
 </div>
+
+
 
 <div id="categories"  ng-show="cVersion=='categories'">
     

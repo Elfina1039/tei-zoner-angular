@@ -5,6 +5,8 @@
 <button  id="clearall" ng-click="clearShapes()">Clear shapes</button>
     <button id="delMode" ng-click="toggleDelete()" ng-class="sh.delete ? 'activated':''">Delete</button>
 
+<input type=color ng-model=crds.pointColour ng-change="changePointColour()" class=cpicker>
+
 <div id=currentZoom><p>{{crds.zoom}}</p></div>
     <button class="iconBig zoomIn" ng-click="zoomChng(0.1)"></button><button  class="iconBig zoomOut" ng-click="zoomChng(-0.1)"></button>
   

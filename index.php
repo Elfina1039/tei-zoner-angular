@@ -96,6 +96,9 @@ require('./menu.php');
   
         <form id="pickfile"><label>First, pick an image: <input type="file" id="files" name="files[]" onchange="angular.element(this).scope().handleFile(this)"/></label>
         </form>
+      
+      <inst-row wind=loadfile></inst-row>
+      
         </div>
      
   <div id="controls">

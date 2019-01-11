@@ -140,23 +140,16 @@ angular.module("zoner")
         }
 
         function saveAnnts(annts, cats) {
-            
+    
             cookJson(filename + "_annts", []);
-
             annts.forEach(function (a) {
-                
-
-                
-                var sh = a.shape;
-
-
+                 var sh = a.shape;
                 if (sh != null) {
                     a.shape = sh.attrs.path;
-
                 }
-
+                
                 addToCooked(filename + "_annts", a);
-
+                console.log(JSON.stringify(a));
                 a.shape = sh;
 
             });
@@ -164,13 +157,8 @@ angular.module("zoner")
             cookJson(filename + "_cats", []);
 
             for (c in cats) {
-                
-
                 addToCooked(filename + "_cats", cats[c]);
             }
-
-
-
 
 
         }
@@ -190,14 +178,6 @@ angular.module("zoner")
 
 
             var shList = getCookedJson(filename + "_annts");
-            
-
-            shList.forEach(function (itm) {
-                if (itm.shape) {
-                    itm.shape = drawingFct.cShape(itm.shape, itm, catObj[itm.cat], scope);
-                }
-
-            });
 
             return {
                 cats: catObj,
@@ -256,7 +236,7 @@ angular.module("zoner")
                 rsl.push({
                     word: word,
                     cat: shape.cat,
-                    shape: shape,
+                    shape: shape.coords,
                     fields: {
                         title: {
                             name: "title",
@@ -272,18 +252,9 @@ angular.module("zoner")
         function parseShapeXml(zone) {
             var shapeCat = zone.getAttribute("rendition");
             if (zone.getAttribute("points")) {
-                var shapeCoords = [];
-                var shapePoints = zone.getAttribute("points").trim();
-                var pList = shapePoints.split(" ");
-                pList.forEach(function (p) {
-                    var xy = p.split(",");
-                    shapeCoords.push({
-                        x: xy[0],
-                        y: xy[1],
-                        string: xy[0] + "," + xy[1]
-                    });
-
-                });
+                
+                var shapePoints = zone.getAttribute("points");
+             var shapeCoords=pointsToPath(shapePoints);
 
             } else {
                 lrx = zone.getAttribute("lrx");
@@ -306,10 +277,32 @@ angular.module("zoner")
                 coords: shapeCoords
             }
         };
+    
+    
+    function pointsToPath(shapePoints){
+           var shapeCoords = [];
+                shapePoints=shapePoints.trim();
+            console.log("INPUT POINTS: "+shapePoints);
+                var pList = shapePoints.split(" ");
+                pList.forEach(function (p) {
+                    var xy = p.split(",");
+                    shapeCoords.push({
+                        x: xy[0],
+                        y: xy[1],
+                        string: xy[0] + "," + xy[1]
+                    });
+
+                });
+        console.log("GENERATED COORDS:");
+        console.log(JSON.stringify(shapeCoords));
+        return shapeCoords;
+    }
+    
 
         return {
             getAnnts: getAnnts,
-            getCats: getCats
+            getCats: getCats,
+            pointsToPath: pointsToPath
         }
 
     });
@@ -330,6 +323,7 @@ angular.module("zoner")
         var rects = new Array();
         var imgWidth, imgheight, offset;
         var zm = parseFloat(1);
+        var pointColour="#ffffff";
         var colour = 'black',
             mousedown = false,
             width = 1,
@@ -338,7 +332,14 @@ angular.module("zoner")
         var sShape = null;
         var sRef = null;
         var editedShape;
-
+    
+    //change point colour
+    
+    function changePointColour(newColour){
+        pointColour=newColour;
+    }
+    
+    
     // swich dele mode on and off
         function toggleDelete() {
             if (mode != "deletion") {
@@ -424,8 +425,9 @@ angular.module("zoner")
                 mousedown = true;
 
                 var size = Math.ceil(3 / zm);
+               
                 var point = paper.circle(x, y, size);
-                point.attr("fill", "#cf0");
+                point.attr("fill", pointColour);
                 point.crds = i;
                 
             // ?why 2 arrays?
@@ -901,8 +903,32 @@ function padZero(str, len) {
             reColour: reColour,
             redrawShape: redrawShape,
             highlightShape: highlightShape,
-            toggleDelete: toggleDelete
+            toggleDelete: toggleDelete,
+            changePointColour: changePointColour
         };
 
 
     });
+
+
+	
+	angular.module("zoner")
+	.factory("uiFct",function(){
+		
+		var instr={loadfile:
+					{row:[{i:"Upload an image from your computer.",s:true}],
+					state:0, 
+					show:true},
+                   addAnnts:{row:[{i:"Before you create annotations, load an image",s:false}],
+					state:0, 
+					show:false}
+			 };
+			 
+		function getInstr()
+		{
+			return instr;
+		}
+		
+		return {getInstr:getInstr};
+		
+	});
