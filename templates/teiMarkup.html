@@ -1,71 +1,63 @@
 <h2>TEI Markup</h2>
-{{cVersion}}
 
-<div>
-    <button ng-repeat="v in versions" ng-click="switchVersion(v.title)">{{v.title}}</button>
+<div id=outputVersions>
+    <button ng-repeat="v in versions" ng-click="switchVersion(v.title)" ng-class="cVersion==v.title ? 'activated':''">{{v.label}}</button>
 </div>
 
 
-<div id=teiXml ng-show="cVersion=='TEI XML'">
-
-<xmp>
- <graphic url='{{img.filename}}' width='{{img.width}}' height='{{img.height}}' />
-</xmp>
-
-<span class=blank ng-repeat="(num,a) in annts" ng-if="a.shape!=null">
+<div id=teiXml ng-show="cVersion=='TEI XML'" class=outputCode>
     <xmp>
-<zone xml:id='imtArea_{{num}}' points='{{getPoints(a.shape)}}' rendition="{{cats[a.cat].name}}"/>
+        <graphic url='{{img.filename}}' width='{{img.width}}' height='{{img.height}}' />
     </xmp>
- </span>
+    <span class=blank ng-repeat="(num,a) in annts" ng-if="a.shape!=null">
+        <xmp>
+            <zone xml:id='imtArea_{{num}}' points='{{getPoints(a.shape)}}' rendition="{{cats[a.cat].name}}" />
+        </xmp>
+    </span>
+</div>
+
+<div id="xmlPlus" ng-show="cVersion=='xmlPlus'" class=outputCode>
+    <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
+        <xmp>
+            <div corresp="#imtArea_{{annts.indexOf(a)}}" type="imtAnnotation">
+                <head>{{a.word}}</head>
+                <div>
+                    <p>{{getTitle(a)}}</p>
+                </div>
+            </div>
+        </xmp>
+    </span>
 
 </div>
 
-<div id="xmlPlus"  ng-show="cVersion=='xmlPlus'">
-    
- <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
-    <xmp>
-<div corresp="#imtArea_{{annts.indexOf(a)}}" type="imtAnnotation" ><head>{{a.word}}</head><div><p>{{getTitle(a)}}</p></div></div> 
-    </xmp>
- </span>
-
-</div>
 
 
 
-
-<div id="jsonPaths"  ng-show="cVersion=='JSON'">
-     {
-    "annts":[{{stringifyAnnts(annts)}} ],
-    "cats": {{stringifyPure(cats)}} 
+<div id="jsonPaths" ng-show="cVersion=='JSON'" class=outputCode>
+    <pre>
+    {
+    "annts":[{{stringifyAnnts(annts) }} ],
+    "cats": {{stringifyPure(cats)}}
     }
-
+    </pre>
 </div>
 
 
 
-<div id="categories"  ng-show="cVersion=='categories'">
-    
-  <xmp>
-    
-<tagsDecl xml:id="imtAnnotationCategories">
+<div id="categories" ng-show="cVersion=='categories'" class=outputCode>
+    <xmp>
+        <tagsDecl xml:id="imtAnnotationCategories">
     </xmp>
-      
-<span ng-repeat="c in cats"><xmp>
-    <rendition xml:id="{{c.name}}" >
-
-<label>{{c.name}}</label>
-
-<code lang="text/css" rend="polygon">color: {{c.clr}}</code>
-
-</rendition>
-    
-    </xmp></span>
-
-<xmp>
-
-
-</tagsDecl>
-    
+    <span ng-repeat="c in cats">
+        <xmp>
+            <rendition xml:id="{{c.name}}">
+                <label>{{c.name}}</label>
+                <code lang="text/css" rend="polygon">color: {{c.clr}}</code>
+            </rendition>
+        </xmp>
+    </span>
+    <xmp>
+        </tagsDecl>
     </xmp>
 
 </div>

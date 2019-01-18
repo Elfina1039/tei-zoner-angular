@@ -2,11 +2,11 @@
     <ul id=cats >
         
         <li ng-repeat="c in cats"  class=cat>
-             <input type=color ng-model=c.clr class=cpicker ng-change="reColourAll(c.id)"> 
+             <input type=color ng-model=c.clr class=cpicker ng-change="reColourAll(c.id)" title="pick catgory color"> 
             <input type=text ng-model=c.name class=cat>
-            <button class="icon delete" ng-click="delCat(c)"></button>
+            <button class="icon delete" ng-click="delCat(c)" title="delete category"></button>
            </li>
     </ul>   
 <li class=isolated>
-<button class="icon add" ng-click="newCat()"></button> Add category <input type=color ng-model=nClr onmouseover="console.log(this.value)" class=cpicker>
-</li>
+<button class="icon add" ng-click="newCat()"></button> Add category <input type=color ng-model=nClr onmouseover="console.log(this.value)" class=cpicker  title="pick catgory color">
+<inst-row wind=addCategory></inst-row></li>

@@ -4,10 +4,10 @@
         <li ng-repeat="f in fields"  class=cat>
            
             <input type=text ng-model=f.name class=cat>
-             <button class="icon delete" ng-click="delField(f)"></button> 
+             <button class="icon delete" ng-click="delField(f)" title="delete field"></button> 
       </li>
     </ul>   
 
 <li class=isolated>
-<button class="icon add" ng-click="newField()"></button> Add field
+<button class="icon add" ng-click="newField()"></button> Add field <inst-row wind=addField></inst-row>
 </li>

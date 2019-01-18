@@ -86,6 +86,12 @@ angular
                 if (annt.shape == shape) {
                     // alert(annt.word);
                     $scope.c.Annt = annt;
+                    $scope.c.shape = shape;
+                    $scope.c.origAnnt=annt;
+                    
+                    if($scope.c.origAnnt.word=="blank"){
+                        $scope.delAnnt($scope.c.origAnnt);
+                    }
 
                     var editBox = document.getElementById("cAnnt");
                     var newScroll = document.getElementById("annt" + ind).offsetTop - editBox.offsetHeight - editBox.offsetTop + 10;
@@ -113,6 +119,7 @@ angular
         }
 
         $scope.assignShape = function (a) {
+            console.log( $scope.c.shape);
             a.shape = $scope.c.shape;
 
             if ($scope.c.origAnnt) {
@@ -128,7 +135,7 @@ angular
             $scope.annts.forEach(function (annt) {
                 var path = annt.shape.attrs.path;
                 annt.shape = drawingFct.delShape(annt);
-                annt.shape = drawingFct.cShape(path, annt, $scope.cats[annt.cat], $scope);
+                annt.shape = drawingFct.cShape( annt, $scope.cats[annt.cat], $scope, path);
 
 
             });
@@ -178,16 +185,16 @@ angular
                     $scope.loadCooked = function () {
                         console.log("loading at controller");
                         var loaded = cookingFct.loadCooked($scope);
-                        $scope.initialize(loaded);
+                        $scope.initialize(loaded, drawingFct.cShape);
                     }
 
                     $scope.loadJson = function () {
                         var loaded = JSON.parse($scope.tInput);
-                        $scope.initialize(loaded);
+                        $scope.initialize(loaded,drawingFct.nShape);
                     }
 
-                    $scope.initialize = function (loaded) {
-                        console.log(loaded);
+                    $scope.initialize = function (loaded, drawingFnc) {
+                        console.log(JSON.stringify(loaded));
                         $scope.annts = loaded.annts;
                         $scope.cats = loaded.cats;
                         $scope.catCount=Object.keys(loaded.cats).length+1;
@@ -195,9 +202,12 @@ angular
                         $scope.annts.forEach(function (a) {
                             if (a.shape) {
                                 if (typeof a.shape === "string") {
-                                    a.shape = xmlFct.pointsToPath(a.shape);
+                                    console.log(JSON.stringify(a.shape));
+                                     a.shape = xmlFct.pointsToPath(a.shape);
+                                   
                                 }
-                                a.shape = drawingFct.nShape(a, $scope.cats[a.cat], $scope, a.shape);
+                                
+                                a.shape = drawingFnc(a, $scope.cats[a.cat], $scope, a.shape);
                             }
                         });
 
@@ -232,7 +242,7 @@ angular
                         $scope.initialize({
                             annts: xmlAnnts,
                             cats: xmlCats
-                        });
+                        }, drawingFct.nShape);
                     }
 
 
@@ -478,13 +488,17 @@ angular
                 $scope.cVersion = "TEI XML";
 
                 $scope.versions = [{
-                    title: "JSON"
+                    title: "JSON",
+                    label: "JSON"
                 }, {
-                    title: "TEI XML"
+                    title: "TEI XML",
+                    label: "XML zones"
                 }, {
-                    title: "xmlPlus"
+                    title: "xmlPlus",
+                    label: "XML annotations/text"
                 }, {
-                    title: "categories"
+                    title: "categories",
+                    label: "XML categories"
                 }];
 
                 $scope.switchVersion = function (nv) {
@@ -532,6 +546,7 @@ angular
 
                 $scope.stringifyAnnts = function (annts) {
                     var rsl = [];
+                    console.log(annts);
                     annts.forEach(function (annt) {
                         rsl.push($scope.stringify(annt, "json2"));
                     });
@@ -582,7 +597,7 @@ angular
 			}
 			
 		},
-		template:"<div class='instr' ng-mouseenter='toggle()' ng-mouseleave='toggle()'><p ng-show='instr[wind].show!=false || instr[wind].row[instr[wind].state].s!=false'>{{instr[wind].row[instr[wind].state].i}}</p><p ng-show='instr[wind].show==false && instr[wind].row[instr[wind].state].s==false'>?</p></div>"
+		template:"<sup class='instr' ng-mouseenter='toggle()' ng-mouseleave='toggle()'><span ng-show='instr[wind].show!=false || instr[wind].row[instr[wind].state].s!=false'>{{instr[wind].row[instr[wind].state].i}}</span><span ng-show='instr[wind].show==false && instr[wind].row[instr[wind].state].s==false'>?</span></sup>"
 		}
 		
 	});

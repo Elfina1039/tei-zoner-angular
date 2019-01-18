@@ -545,6 +545,7 @@ angular.module("zoner")
 
     // drawing shape
         function nShape(annt, cat, scope, customCoords) {
+            console.log("nSHAPE");
             // load custom coords - if drawing from XML
             if (customCoords) {
                 coords = customCoords;
@@ -588,7 +589,7 @@ angular.module("zoner")
 
             // call drawing function proper and get shape object
             changeMode("selection");
-                var rsl = cShape(path, annt, cat, scope);
+                var rsl = cShape(annt, cat, scope, path);
                
                 $("#clearpoints").prop('disabled', true);
             
@@ -600,7 +601,8 @@ angular.module("zoner")
 
 
     // shape drawing function proper
-       function cShape(path, annt, cat, scope) {
+       function cShape(annt, cat, scope, path) {
+           console.log("cSHAPE");
         // init shape object
             var shape = paper.path(path);
 
@@ -782,7 +784,7 @@ angular.module("zoner")
             path += "z";
             editedShape.attr("path", path);
             clearPoints();
-            changeMode("selection");
+         
             // ?turn off edit mode?
         }
 
@@ -794,6 +796,7 @@ angular.module("zoner")
             coords.length = 0;
             points.length = 0;
             $('#clearpoints').prop('disabled', true);
+        
      }
 
     // delete all shapes
@@ -921,7 +924,29 @@ function padZero(str, len) {
 					show:true},
                    addAnnts:{row:[{i:"Before you create annotations, load an image",s:false}],
 					state:0, 
+					show:false},
+                   annotations:{row:[{i:"Tab listing your annotations.",s:false}],
+					state:0, 
+					show:false},
+                   categories:{row:[{i:"Create catagories",s:false}],
+					state:0, 
+					show:false},
+                   fields:{row:[{i:"Create custom fields",s:false}],
+					state:0, 
+					show:false},
+                   addCategory:{row:[{i:"Create custom fields",s:false}],
+					state:0, 
+					show:false},
+                   drawShape:{row:[{i:"Place points on the canvas before you draw a shape.",s:false}],
+					state:0, 
+					show:false},
+                   addField:{row:[{i:"Add custon fields to be available for every annotation.",s:false}],
+					state:0, 
+					show:false},
+                   coordinates:{row:[{i:"displays coordinates as you move over the canvas",s:false}],
+					state:0, 
 					show:false}
+                   
 			 };
 			 
 		function getInstr()

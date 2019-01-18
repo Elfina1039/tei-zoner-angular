@@ -1,17 +1,23 @@
-<button id="gettei" ng-click="sh.tei=!sh.tei">{{teiButton(sh.tei)}}</button>
-<button  id="closepath" ng-click="nShape()"  ng-show="sh.redraw==false">Draw Shape</button>
-<button id="editpath" ng-click="eShape()" ng-show="sh.redraw==true">Re-draw</button>
-<button id="clearpoints" ng-click="clearPoints()">Clear points</button>
-<button  id="clearall" ng-click="clearShapes()">Clear shapes</button>
-    <button id="delMode" ng-click="toggleDelete()" ng-class="sh.delete ? 'activated':''">Delete</button>
+<div id=ctrlButtons>
+<button id="gettei" ng-click="sh.tei=!sh.tei" title="show TEI output">{{teiButton(sh.tei)}}</button>
+<button  id="closepath" ng-click="nShape()"  ng-show="sh.redraw==false" title="draw shape">Draw Shape </button> 
+<button id="editpath" ng-click="eShape()" ng-show="sh.redraw==true" title="re-draw edited shape">Re-draw</button>
+<button id="clearpoints" ng-click="clearPoints()" title="remove all points">Clear points</button>
+<button  id="clearall" ng-click="clearShapes()" instr-row title="remove all shapes">Clear shapes</button>
+    <button id="delMode" ng-click="toggleDelete()" ng-class="sh.delete ? 'activated':''" title="enter delete mode">Delete</button>
 
-<input type=color ng-model=crds.pointColour ng-change="changePointColour()" class=cpicker>
+<input type=color ng-model=crds.pointColour ng-change="changePointColour()" class=cpicker title="change colour of points">
+</div>
+    
+<div id=ctrlDisplay>    
 
-<div id=currentZoom><p>{{crds.zoom}}</p></div>
-    <button class="iconBig zoomIn" ng-click="zoomChng(0.1)"></button><button  class="iconBig zoomOut" ng-click="zoomChng(-0.1)"></button>
-  
+    <button class="iconBig zoomIn" ng-click="zoomChng(0.1)" title="zoom in"></button>
+   <button  class="iconBig zoomOut" ng-click="zoomChng(-0.1)" title="zoom out"></button>
+   <div id=currentZoom><p>{{crds.zoom}}</p></div>
 <div id="currentCoords">
     <p><b>x:</b> <span class="coord" id="xcordpx"> {{roundNum(crds.x)}} </span> px (<span class="coord" id="xcordpc">{{roundNum(crds.xp)}}</span> %)</p>
     <p><b>y:</b> <span class="coord" id="ycordpx"> {{roundNum(crds.y)}} </span> px (<span class="coord" id="ycordpc">{{roundNum(crds.yp)}}</span> %)</p>
-<p><b>x,y:</b> <span class="coord" id="xypx">{{roundNum(crds.x)}}, {{roundNum(crds.y)}}</span></p>
+<p><b>x,y:</b> <span class="coord" id="xypx">{{roundNum(crds.x)}}, {{roundNum(crds.y)}}</span><inst-row wind="coordinates"></inst-row></p>
+</div>
+    <h2 id=helpLink ng-click="sh.help=!sh.help" title="help">?</h2>
 </div>
