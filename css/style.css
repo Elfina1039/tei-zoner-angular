@@ -9,7 +9,7 @@
 
 h1{
     font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
-    font-size: 14pt;
+    font-size: 37px;
     color: #292929;
 }
 
@@ -24,7 +24,7 @@ nav{
   flex-flow_row wrap;
     font: bold 12px Arial;
     list-style-type: none;
-    padding-bottom: 24px;
+    padding-bottom: 0;
     border-bottom: 1px solid #9EA0A1;
     margin-left: 0;
     
@@ -39,12 +39,9 @@ nav{
   margin-right:0.5em;
 
 }
-nav ul li:hover a {
-    color: #fff;
 
-}
-a:hover {
-    color: #5f0000;
+#onglets a:hover {
+    background-color: #444;
     text-decoration: underline;
 }
 a:link, a:visited, a:active {
@@ -75,15 +72,20 @@ html,body{
 }
 body{
  padding-bottom: 3rem;
-   color:black
+   color:black;
+   font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
 }
 
 #mainContainer, nav, #mainBanner{width:100%}
 
-#menu{width:100%; height:25%;
+#menu{width:100%; 
 display:flex;
+  margin-left: 2em;
+margin-right: 4em;
+ padding-left:2em;
+  padding-top:0.5em;
   flex-flow:row nowrap;
-  justify-content:center;
+  justify-content:flex-start;
 }
 #main{width:100%; height:100%; position:absolute; 
 left:0; top:25%; display:flex; 
@@ -165,6 +167,9 @@ overflow-y:scroll;
 background-color:rgba(229, 186, 29, 0.9); z-index:20; 
 border:none; color:black;
 transition:height 1s ease-out, padding 1s ease-out}
+
+#help a {color:white;
+font-size:13pt}
 
 .slideUp{height:0; padding:0}
 .slideDown{height:95%;padding:1.5em;}
@@ -336,8 +341,8 @@ button.move{background-image:url(icons/low_priority.png);}
 button.assignShape{background-image:url(icons/attach_file.png);}
 button.add{background-image:url(icons/add.png);}
 
-button.zoomIn{background-image:url(icons/zoom_in.png);}
-button.zoomOut{background-image:url(icons/zoom_out.png);}
+button.zoomIn{background-image:url(icons/outline_add_box_white.png);}
+button.zoomOut{background-image:url(icons/outline_indeterminate_check_box.png);}
 
       ul.tabul{padding:0; display:flex; flex-flow: row nowrap;
         margin:0; height:2.5em;
@@ -404,7 +409,7 @@ li input[type=text]{width:90%;}
 li button{width:5%;}
 li{font-weight:bold}
     
-li.active{padding-left:1em;
+#anntList .active{padding-left:1em;
 border-left:2px solid rgb(125,125,125);
 background-color:rgba(125,125,125,0.3)}
 
@@ -436,8 +441,28 @@ span.blank,xmp{margin:0; display:inline}
     
 span.blank,xmp{margin:0; display:inline}
 
-      
-    ::-webkit-scrollbar {
+
+div.chapter{border:1px solid white;
+padding:1em;
+margin:0.5em}
+
+div.chapter h2{
+  color:white;
+  margin:0.2em 0em;
+  border-bottom:1px solid white;
+}
+
+div.subChapter h2{
+  color:rgb(125,125,125);
+  margin:0.2em 0em;
+  border-bottom:1px solid rgb(125,125,125);
+  margin-left:2em
+}  
+
+div.subChapter p{
+margin-left:3em
+}
+::-webkit-scrollbar {
   width: 11px;
   height: 11px;
 }

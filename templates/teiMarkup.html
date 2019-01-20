@@ -4,60 +4,19 @@
     <button ng-repeat="v in versions" ng-click="switchVersion(v.title)" ng-class="cVersion==v.title ? 'activated':''">{{v.label}}</button>
 </div>
 
+<div class=outputCode>
 
-<div id=teiXml ng-show="cVersion=='TEI XML'" class=outputCode>
-    <xmp>
-        <graphic url='{{img.filename}}' width='{{img.width}}' height='{{img.height}}' />
-    </xmp>
-    <span class=blank ng-repeat="(num,a) in annts" ng-if="a.shape!=null">
-        <xmp>
-            <zone xml:id='imtArea_{{num}}' points='{{getPoints(a.shape)}}' rendition="{{cats[a.cat].name}}" />
-        </xmp>
-    </span>
-</div>
+<xml-graphic ng-show="cVersion=='TEI XML' " ></xml-graphic>
 
-<div id="xmlPlus" ng-show="cVersion=='xmlPlus'" class=outputCode>
-    <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
-        <xmp>
-            <div corresp="#imtArea_{{annts.indexOf(a)}}" type="imtAnnotation">
-                <head>{{a.word}}</head>
-                <div>
-                    <p>{{getTitle(a)}}</p>
-                </div>
-            </div>
-        </xmp>
-    </span>
-
-</div>
+<xml-annotations ng-show="cVersion=='xmlPlus' " ></xml-annotations>
 
 
+<json-complete id="jsonPaths" ng-show="cVersion=='JSON'" ></json-complete>
 
 
-<div id="jsonPaths" ng-show="cVersion=='JSON'" class=outputCode>
-    <pre>
-    {
-    "annts":[{{stringifyAnnts(annts) }} ],
-    "cats": {{stringifyPure(cats)}}
-    }
-    </pre>
-</div>
-
-
-
-<div id="categories" ng-show="cVersion=='categories'" class=outputCode>
-    <xmp>
-        <tagsDecl xml:id="imtAnnotationCategories">
-    </xmp>
-    <span ng-repeat="c in cats">
-        <xmp>
-            <rendition xml:id="{{c.name}}">
-                <label>{{c.name}}</label>
-                <code lang="text/css" rend="polygon">color: {{c.clr}}</code>
-            </rendition>
-        </xmp>
-    </span>
-    <xmp>
-        </tagsDecl>
-    </xmp>
-
+<xml-categories ng-show="cVersion=='categories'" ></xml-categories>
+    
+    
+    <xml-complete ng-show="cVersion=='XMLcomplete'"></xml-complete>
+    
 </div>

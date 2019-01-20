@@ -498,12 +498,13 @@ angular.module("zoner")
     
     // place point
         function placePoint(e) {
-             if(mode=="editing"){
+             if(mode=="editing" || mode=="deletion"){
                 console.log("You cannot add points in editing mode.");
             } else {
                 
-                if(mode=="selection" || mode=="deletion"){
+                if(mode=="selection" ){
                     changeMode("drawing");
+                    
                 }
                
                if(e.currentTarget.tagName=="DIV"){
@@ -784,7 +785,7 @@ angular.module("zoner")
             path += "z";
             editedShape.attr("path", path);
             clearPoints();
-         
+          changeMode("selection");
             // ?turn off edit mode?
         }
 
@@ -922,19 +923,19 @@ function padZero(str, len) {
 					{row:[{i:"Upload an image from your computer.",s:true}],
 					state:0, 
 					show:true},
-                   addAnnts:{row:[{i:"Before you create annotations, load an image",s:false}],
+                   addAnnts:{row:[{i:"Before you create annotations, load an image.",s:false}],
 					state:0, 
 					show:false},
                    annotations:{row:[{i:"Tab listing your annotations.",s:false}],
 					state:0, 
 					show:false},
-                   categories:{row:[{i:"Create catagories",s:false}],
+                   categories:{row:[{i:"Create catagories.",s:false}],
 					state:0, 
 					show:false},
-                   fields:{row:[{i:"Create custom fields",s:false}],
+                   fields:{row:[{i:"Create custom fields.",s:false}],
 					state:0, 
 					show:false},
-                   addCategory:{row:[{i:"Create custom fields",s:false}],
+                   addCategory:{row:[{i:"Click to add a category.",s:false}],
 					state:0, 
 					show:false},
                    drawShape:{row:[{i:"Place points on the canvas before you draw a shape.",s:false}],

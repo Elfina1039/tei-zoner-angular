@@ -1,0 +1,10 @@
+   <span class=blank ng-repeat="a in annts" ng-if="a.shape!=null">
+        <xmp>
+            <div corresp="#imtArea_{{annts.indexOf(a)}}" type="imtAnnotation">
+                <head>{{a.word}}</head>
+                <div>
+                    <p>{{getTitle(a)}}</p>
+                </div>
+            </div>
+        </xmp>
+    </span>

@@ -1,0 +1,8 @@
+ <xmp>
+        <graphic url='{{img.filename}}' width='{{img.width}}' height='{{img.height}}' />
+    </xmp>
+    <span class=blank ng-repeat="(num,a) in annts" ng-if="a.shape!=null">
+        <xmp>
+            <zone xml:id='imtArea_{{num}}' points='{{getPoints(a.shape)}}' rendition="{{cats[a.cat].name}}" />
+        </xmp>
+    </span>

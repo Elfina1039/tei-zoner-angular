@@ -10,9 +10,9 @@
 </div>
     
 <div id=ctrlDisplay>    
-
+<button  class="iconBig zoomOut" ng-click="zoomChng(-0.1)" title="zoom out"></button>
     <button class="iconBig zoomIn" ng-click="zoomChng(0.1)" title="zoom in"></button>
-   <button  class="iconBig zoomOut" ng-click="zoomChng(-0.1)" title="zoom out"></button>
+   
    <div id=currentZoom><p>{{crds.zoom}}</p></div>
 <div id="currentCoords">
     <p><b>x:</b> <span class="coord" id="xcordpx"> {{roundNum(crds.x)}} </span> px (<span class="coord" id="xcordpc">{{roundNum(crds.xp)}}</span> %)</p>

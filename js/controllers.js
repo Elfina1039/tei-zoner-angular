@@ -499,6 +499,10 @@ angular
                 }, {
                     title: "categories",
                     label: "XML categories"
+                },
+                                  {
+                    title: "XMLcomplete",
+                    label: "IMT XML"
                 }];
 
                 $scope.switchVersion = function (nv) {
@@ -579,6 +583,50 @@ angular
         }
 
     });
+
+
+
+ angular.module("zoner")
+ .directive("xmlGraphic",function(){
+	return {
+		templateUrl:"templates/xmlGraphic.html"
+		}
+		
+	});
+
+ angular.module("zoner")
+ .directive("xmlAnnotations",function(){
+	return {
+		templateUrl:"templates/xmlAnnotations.html"
+		}
+		
+	});
+
+ angular.module("zoner")
+ .directive("xmlCategories",function(){
+	return {
+		templateUrl:"templates/xmlCategories.html"
+		}
+		
+	});
+
+ angular.module("zoner")
+ .directive("xmlComplete",function(){
+	return {
+		templateUrl:"templates/xmlComplete.html"
+		}
+		
+	});
+
+ angular.module("zoner")
+ .directive("jsonComplete",function(){
+	return {
+		templateUrl:"templates/jsonComplete.html"
+		}
+		
+	});
+
+
 
 
  angular.module("zoner")
