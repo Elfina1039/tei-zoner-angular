@@ -207,7 +207,7 @@ angular
                                      a.shape = xmlFct.pointsToPath(a.shape);
                                    
                                 }
-                                
+                                // console.log(a.shape);
                                 a.shape = drawingFnc(a, $scope.cats[a.cat], $scope, a.shape);
                             }
                         });
@@ -564,6 +564,10 @@ angular
 
                 $scope.getPoints = function (shape) {
                     var x, y, points = "";
+                    
+                    if(!shape){
+                        return;
+                    }
                     if (shape.attrs != null) {
 
                         for (var j = 0; j < shape.attrs.path.length; j++) {
