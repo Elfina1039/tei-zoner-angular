@@ -10,7 +10,8 @@ angular
             load: false,
             redraw: false,
             editBox: false,
-            delete: false
+            delete: false,
+            emptyAnnts: false
         };
 
         $scope.img = {

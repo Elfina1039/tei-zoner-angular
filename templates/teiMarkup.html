@@ -5,7 +5,7 @@
 </div>
 
 <div class=outputCode>
-
+ <button ng-show="cVersion=='xmlPlus' || cVersion=='XMLcomplete' " id="emptyAnnts" ng-click="sh.emptyAnnts=!sh.emptyAnnts" ng-class="sh.emptyAnnts ? 'activated':''" title="Include empty annotations">Include empty annotations</button>
 <xml-graphic ng-show="cVersion=='TEI XML' " ></xml-graphic>
 
 <xml-annotations ng-show="cVersion=='xmlPlus' " ></xml-annotations>

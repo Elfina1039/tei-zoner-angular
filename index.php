@@ -220,7 +220,7 @@ require('./menu.php');
             
                 <div class=chapter id=getOutput>
                     <h2 >Get output</h2>
-                       <p>The output gets generated as you work. To display it, click <button>Show TEI</button> in the top left conrner of the canvas. A box will appear in the centre of the screen and you can copy and paste the text. Output is available as XML or JSON: 
+                    <p>The output gets generated as you work. To display it, click <button>Show TEI</button> in the top left conrner of the canvas. A box will appear in the centre of the screen and you can copy and paste the text. Output is available as XML or JSON. In XML, you can use the button <button style="width:inherit">Include empty annotations</button> to include or exclude annotations without shapes.
                        </p>
                     
                     <p>
