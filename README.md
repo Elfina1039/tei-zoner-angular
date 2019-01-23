@@ -5,7 +5,7 @@ This tool is an extended version of Chris Spark's tei-zoner. It hooks together s
 
 ## Trying it out
 
-A live version of the original tool is available at https://static.chrissparks.org.uk/tei . A live version of the extended version can be found at http://delfiin.net/tei-zoner .
+A live version of the original tool is available at https://static.chrissparks.org.uk/tei . A live version of the extended version can be found at http://teizoner.delfiin.net .
 
 ## Installation on a Server
 

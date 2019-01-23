@@ -11,7 +11,7 @@
 
 <?php
 
-echo '<div id="maincontainer">
+echo '
        
        <div id="mainBanner">
 
@@ -27,7 +27,7 @@ echo '<div id="maincontainer">
 				if ($menu == '') {
 					echo '<li class="active"><a href="index.php">Home</a></li>';              
 				} else {
-					echo '<li><a href="index.php">Home</a></li>';  
+					echo '<li><a href="http://teicat.huma-num.fr/index.php">Home</a></li>';  
 				}
 				
 				if ($menu == 'check') {
@@ -87,8 +87,6 @@ echo '		</ul>
 			  </nav>
 		  </div>';
 		  
-		  // Let's close the containing div
-		  echo'
-		  </div>';
+	
 
 ?>

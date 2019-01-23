@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <div id=menu>
+    <div id=menuSpace>
 
         <?php
 $menu = 'zoner';
