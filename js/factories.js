@@ -22,7 +22,7 @@ angular.module("zoner")
 
 
                     var prevImgs = getCookedJson("images");
-                    
+
 
                     if ($.inArray(filename, prevImgs) == -1) {
                         prevImgs.push(filename);
@@ -69,7 +69,7 @@ angular.module("zoner")
             cookList.forEach(function (ck) {
 
                 var chck = getCookie(ck);
-                
+
 
                 if (chck == null || chck == "undefined" || chck == "" || chck == "empty") {
                     setCookie(ck, "[]", 365);
@@ -87,17 +87,16 @@ angular.module("zoner")
             cooked.push(jVar);
             cookJson(cVar, cooked, 365);
 
-            
+
         }
 
 
         function getCookedJson(cVar) {
-            console.log(cVar);
             var cooked = getCookie(cVar);
 
             if (cooked) {
                 var toObj = JSON.parse(cooked);
-                
+
 
                 return toObj;
             } else {
@@ -111,7 +110,7 @@ angular.module("zoner")
             var toStr = JSON.stringify(jVar);
             setCookie(cVar, toStr, 365);
 
-            
+
         }
 
 
@@ -140,16 +139,15 @@ angular.module("zoner")
         }
 
         function saveAnnts(annts, cats) {
-    
+
             cookJson(filename + "_annts", []);
             annts.forEach(function (a) {
-                 var sh = a.shape;
+                var sh = a.shape;
                 if (sh != null) {
                     a.shape = sh.attrs.path;
                 }
-                
+
                 addToCooked(filename + "_annts", a);
-                console.log(JSON.stringify(a));
                 a.shape = sh;
 
             });
@@ -215,7 +213,6 @@ angular.module("zoner")
                     clr: color
                 };
             });
-            console.log(rsl);
             return rsl;
         }
 
@@ -252,9 +249,9 @@ angular.module("zoner")
         function parseShapeXml(zone) {
             var shapeCat = zone.getAttribute("rendition");
             if (zone.getAttribute("points")) {
-                
+
                 var shapePoints = zone.getAttribute("points");
-             var shapeCoords=pointsToPath(shapePoints);
+                var shapeCoords = pointsToPath(shapePoints);
 
             } else {
                 lrx = zone.getAttribute("lrx");
@@ -277,27 +274,24 @@ angular.module("zoner")
                 coords: shapeCoords
             }
         };
-    
-    
-    function pointsToPath(shapePoints){
-           var shapeCoords = [];
-                shapePoints=shapePoints.trim();
-            console.log("INPUT POINTS: "+shapePoints);
-                var pList = shapePoints.split(" ");
-                pList.forEach(function (p) {
-                    var xy = p.split(",");
-                    shapeCoords.push({
-                        x: xy[0],
-                        y: xy[1],
-                        string: xy[0] + "," + xy[1]
-                    });
 
+
+        function pointsToPath(shapePoints) {
+            var shapeCoords = [];
+            shapePoints = shapePoints.trim();
+            var pList = shapePoints.split(" ");
+            pList.forEach(function (p) {
+                var xy = p.split(",");
+                shapeCoords.push({
+                    x: xy[0],
+                    y: xy[1],
+                    string: xy[0] + "," + xy[1]
                 });
-        console.log("GENERATED COORDS:");
-        console.log(JSON.stringify(shapeCoords));
-        return shapeCoords;
-    }
-    
+
+            });
+            return shapeCoords;
+        }
+
 
         return {
             getAnnts: getAnnts,
@@ -312,9 +306,9 @@ angular.module("zoner")
 
 angular.module("zoner")
     .factory("drawingFct", function () {
-    
-    // NOTE: clicking on canvas gets disabled when you enter a shape/point to avoid confusion of event coordinates
-      var mode = "drawing";
+
+        // NOTE: clicking on canvas gets disabled when you enter a shape/point to avoid confusion of event coordinates
+        var mode = "drawing";
         var canvas;
         var paper;
         var coords = new Array();
@@ -323,7 +317,7 @@ angular.module("zoner")
         var rects = new Array();
         var imgWidth, imgheight, offset;
         var zm = parseFloat(1);
-        var pointColour="#ffffff";
+        var pointColour = "#ffffff";
         var colour = 'black',
             mousedown = false,
             width = 1,
@@ -332,31 +326,35 @@ angular.module("zoner")
         var sShape = null;
         var sRef = null;
         var editedShape;
-    
-    //change point colour
-    
-    function changePointColour(newColour){
-        pointColour=newColour;
-    }
-    
-    
-    // swich dele mode on and off
+
+        //change point colour
+
+        function changePointColour(newColour) {
+            pointColour = newColour;
+        }
+
+
+        // swich dele mode on and off
         function toggleDelete() {
             if (mode != "deletion") {
                 changeMode("deletion");
                 return true;
             } else if (points.length != 0) {
                 changeMode("drawing");
-                  $(canvas).click(function(e){placePoint(e)});
+                $(canvas).click(function (e) {
+                    placePoint(e)
+                });
                 return false;
             } else {
                 changeMode("selection");
-                  $(canvas).click(function(e){placePoint(e)});
+                $(canvas).click(function (e) {
+                    placePoint(e)
+                });
                 return false;
             }
         }
 
-    // initialize the canvas and Raphael paper
+        // initialize the canvas and Raphael paper
         function createEditor(link) {
             imgwidth = $('#editor').width();
             imgheight = $('#editor').height();
@@ -375,17 +373,19 @@ angular.module("zoner")
                 opacity: .5,
             });
 
-        // ?remove?
+            // ?remove?
             canvas = document.getElementById('canvas'),
                 paper = new Raphael(canvas, imgwidth, imgheight),
                 $(canvas).css({
                     "top": 0
                 });
-        
-        // basic event handler for click - draw point
-            $(canvas).click(function(e){placePoint(e)});
-            
-        // event handler for displaying coordinates
+
+            // basic event handler for click - draw point
+            $(canvas).click(function (e) {
+                placePoint(e)
+            });
+
+            // event handler for displaying coordinates
             $(canvas).mousemove(function (e) {
                 xpx = e.pageX - $(this).offset().left;
                 ypx = e.pageY - $(this).offset().top;
@@ -397,8 +397,8 @@ angular.module("zoner")
                 link.crds.y = (ypx + "/" + cpy);
                 link.crds.yp = (Math.round((ypx / imgheight) * 100));
                 link.crds.xy = (xpx + "," + ypx);
-                
-            // ?delete - handled by drag?
+
+                // ?delete - handled by drag?
                 if (sPoint != null) {
                     points[sPoint].attr({
                         cx: xpx,
@@ -407,129 +407,128 @@ angular.module("zoner")
                 }
 
                 if (sShape != null) {
-                    
+
                     var nPath = calcPath(xpx, ypx, sRef);
                     sShape.attr("path", nPath);
                 }
-                
-            // send changes to controller
+
+                // send changes to controller
                 link.$apply();
             });
 
         }
 
 
-    // draw a point
+        // draw a point
         function nPoint(x, y, i) {
-        // ?what is the point of mousedown
-                mousedown = true;
+            // ?what is the point of mousedown
+            mousedown = true;
 
-                var size = Math.ceil(3 / zm);
-               
-                var point = paper.circle(x, y, size);
-                point.attr("fill", pointColour);
-                point.crds = i;
-                
+            var size = Math.ceil(3 / zm);
+
+            var point = paper.circle(x, y, size);
+            point.attr("fill", pointColour);
+            point.crds = i;
+
             // ?why 2 arrays?
-                coords.push(point);
-                points.push(point);
-            
+            coords.push(point);
+            points.push(point);
+
             // drag n drop functions
-                function pointDrag(x, y) {
-                    this.ox = this.attr("cx");
-                    this.oy = this.attr("cy");
-                    this.attr({
-                        opacity: 0.5
-                    });
-                    
-                }
+            function pointDrag(x, y) {
+                this.ox = this.attr("cx");
+                this.oy = this.attr("cy");
+                this.attr({
+                    opacity: 0.5
+                });
 
-                function pointMove(dx, dy) {
-                    this.attr({
-                        fill: "green"
-                    });
-                    this.attr({
-                        cx: this.ox + (dx / zm),
-                        cy: this.oy + (dy / zm)
-                    });
-                }
+            }
 
-                function pointStop() {
-                    var x = this.attr("cx");
-                    var y = this.attr("cy");
-                    this.attr({
-                        opacity: 1
-                    });
-                    this.attr({
-                        fill: "yellow"
-                    });
-                }
+            function pointMove(dx, dy) {
+                this.attr({
+                    fill: "green"
+                });
+                this.attr({
+                    cx: this.ox + (dx / zm),
+                    cy: this.oy + (dy / zm)
+                });
+            }
+
+            function pointStop() {
+                var x = this.attr("cx");
+                var y = this.attr("cy");
+                this.attr({
+                    opacity: 1
+                });
+                this.attr({
+                    fill: "yellow"
+                });
+            }
 
             // point event handlers
             // ?define for prototype?
-                point.drag(pointMove, pointDrag, pointStop);
+            point.drag(pointMove, pointDrag, pointStop);
 
-                point.mouseover(function (p) {
-                    // ?is this necessary?
-                    $(canvas).unbind("click");
-                    this.attr("r", 6);
-                });
+            point.mouseover(function (p) {
+                // ?is this necessary?
+                $(canvas).unbind("click");
+                this.attr("r", 6);
+            });
 
-                point.mouseout(function () {
-                    // ?is this necessary?
-                    $(canvas).click(function(e){placePoint(e)});
-                    this.attr("r", 3);
+            point.mouseout(function () {
+                // ?is this necessary?
+                $(canvas).click(function (e) {
+                    placePoint(e)
                 });
-                
+                this.attr("r", 3);
+            });
+
             // ?rewrite to angular?
-                if (points.length > 2) {
-                    $("#closepath").prop('disabled', false).html('Draw Polygon');
-                } else if (points.length == 2) {
-                    $("#closepath").prop('disabled', false).html('Draw Rectangle');
-                } else {
-                    $("#closepath").prop('disabled', true).html('Draw');
-                }
-                $('#clearpoints').prop('disabled', false);
-          
-            }
-
-
-        
-    
-    // place point
-        function placePoint(e) {
-             if(mode=="editing" || mode=="deletion"){
-                console.log("You cannot add points in editing mode.");
+            if (points.length > 2) {
+                $("#closepath").prop('disabled', false).html('Draw Polygon');
+            } else if (points.length == 2) {
+                $("#closepath").prop('disabled', false).html('Draw Rectangle');
             } else {
-                
-                if(mode=="selection" ){
+                $("#closepath").prop('disabled', true).html('Draw');
+            }
+            $('#clearpoints').prop('disabled', false);
+
+        }
+
+
+
+
+        // place point
+        function placePoint(e) {
+            if (mode == "editing" || mode == "deletion") {
+            } else {
+
+                if (mode == "selection") {
                     changeMode("drawing");
-                    
+
                 }
-               
-               if(e.currentTarget.tagName=="DIV"){
-                var x = e.offsetX;
-                var y = e.offsetY;
-            }else if(e.currentTarget.tagName=="path"){
-                var x = e.layerX;
-                var y = e.layerY;
+
+                if (e.currentTarget.tagName == "DIV") {
+                    var x = e.offsetX;
+                    var y = e.offsetY;
+                } else if (e.currentTarget.tagName == "path") {
+                    var x = e.layerX;
+                    var y = e.layerY;
+                }
+                var i = {
+                    x: x,
+                    y: y,
+                    string: x + "," + y
+                };
+                nPoint(x, y, i);
+
             }
-                        var i = {
-                            x: x,
-                            y: y,
-                            string: x + "," + y
-                        };
-                 console.log("placing a new point: " + x + " : " + y);
-                console.log(e.currentTarget.tagName);
-                        nPoint(x, y, i);  
-                
-            }
-              
-            
-           
-            }
-    
-    // map coordinates to points
+
+
+
+        }
+
+        // map coordinates to points
         function readPoints(crds) {
             rsl = crds.map(function (cp) {
                 var x = cp.attr("cx");
@@ -544,9 +543,8 @@ angular.module("zoner")
         }
 
 
-    // drawing shape
+        // drawing shape
         function nShape(annt, cat, scope, customCoords) {
-            console.log("nSHAPE");
             // load custom coords - if drawing from XML
             if (customCoords) {
                 coords = customCoords;
@@ -578,36 +576,35 @@ angular.module("zoner")
             }
 
             // calculate shape path from coords
-                for (var i = 0; i < coords.length; i++) {
-                    if (i == 0) {
-                        var path = "M" + coords[i].string; 
-                    } else {
-                        path += "L" + coords[i].string; 
-                    }
-
+            for (var i = 0; i < coords.length; i++) {
+                if (i == 0) {
+                    var path = "M" + coords[i].string;
+                } else {
+                    path += "L" + coords[i].string;
                 }
-                path += "z";
+
+            }
+            path += "z";
 
             // call drawing function proper and get shape object
             changeMode("selection");
-                var rsl = cShape(annt, cat, scope, path);
-               
-                $("#clearpoints").prop('disabled', true);
-            
-           clearPoints();
-            
+            var rsl = cShape(annt, cat, scope, path);
+
+            $("#clearpoints").prop('disabled', true);
+
+            clearPoints();
+
             // send new shape to controller
             return rsl;
         }
 
 
-    // shape drawing function proper
-       function cShape(annt, cat, scope, path) {
-           console.log("cSHAPE");
-        // init shape object
+        // shape drawing function proper
+        function cShape(annt, cat, scope, path) {
+            // init shape object
             var shape = paper.path(path);
 
-        // apply category format
+            // apply category format
             if (cat != null) {
                 shape.attr({
                     fill: cat.clr,
@@ -619,33 +616,32 @@ angular.module("zoner")
                     opacity: 1
                 });
             }
-           
-        // shape event handlers
-           // MODES
+
+            // shape event handlers
+            // MODES
             shape.dblclick(function () {
                 if (mode == "editing") {
                     scope.eShape();
                 }
-                
+
                 changeMode("editing");
                 scope.editMode(this);
                 editShape(this);
             });
 
             shape.click(function (e) {
-                if (mode=="deletion") {
+                if (mode == "deletion") {
                     annt.shape = null;
                     this.remove();
-                  //  toggleDelete();
-                   // scope.sh.delete=false;
-                   
+                    //  toggleDelete();
+                    // scope.sh.delete=false;
+
                     //?old: getPaths();
 
-                } else if(mode=="selection") {
+                } else if (mode == "selection") {
                     scope.activateAnnt(this);
                     highlightShape(this, "inverted", 7)
                 } else {
-                    console.log("calling place point");
                     placePoint(e);
                 }
 
@@ -654,65 +650,69 @@ angular.module("zoner")
             shape.hover(function (p) {
                 // MODES
                 $(canvas).unbind("click");
-                switch(mode){
-                    case "deletion": this.attr("stroke","red"); break;
+                switch (mode) {
+                    case "deletion":
+                        this.attr("stroke", "red");
+                        break;
                 }
                 this.attr("stroke-width", 3);
             });
 
             shape.mouseout(function (p) {
                 // MODES
-                $(canvas).click(function(e){placePoint(e)});
+                $(canvas).click(function (e) {
+                    placePoint(e)
+                });
                 this.attr("stroke", "black");
                 this.attr("stroke-width", 1);
             });
 
-        // drag n drop functions
+            // drag n drop functions
             function shapeDrag(x, y) {
-                if(mode=="selection"){
-                   this.oPath = this.attr("path");
+                if (mode == "selection") {
+                    this.oPath = this.attr("path");
                     this.attr({
-                    opacity: 0.5
-                }); 
+                        opacity: 0.5
+                    });
                 }
-                
+
             }
 
-           
+
             function shapeMove(dx, dy) {
-                 if(mode=="selection"){
-                this.attr({
-                    opacity: 0.7
-                });
-                var moved = reCalcPath(dx / zm, dy / zm, this.oPath);
-                this.attr({
-                    path: moved
-                });
-                 }
+                if (mode == "selection") {
+                    this.attr({
+                        opacity: 0.7
+                    });
+                    var moved = reCalcPath(dx / zm, dy / zm, this.oPath);
+                    this.attr({
+                        path: moved
+                    });
+                }
             }
 
             function shapeStop() {
-                 if(mode=="selection"){
-                this.attr({
-                    opacity: 1
-                });
-                 }
+                if (mode == "selection") {
+                    this.attr({
+                        opacity: 1
+                    });
+                }
             }
 
             shape.drag(shapeMove, shapeDrag, shapeStop);
-           
+
             return shape;
         }
 
 
-    // delete shape proper
+        // delete shape proper
         function delShape(which) {
             which.shape.remove();
             changeMode("selection");
             return null;
         }
 
-    // ?probably delete?
+        // ?probably delete?
         function calcPath(cx, cy, sRef) {
             var px = cx - sRef.x;
             var py = cy - sRef.y;
@@ -734,7 +734,7 @@ angular.module("zoner")
             return nPath;
         }
 
-    // recalc path after movement - used for shape dragging
+        // recalc path after movement - used for shape dragging
         function reCalcPath(px, py, current) {
             var nPath = [];
             current.forEach(function (pt) {
@@ -753,9 +753,9 @@ angular.module("zoner")
             nPath = nPath.join("");
             return nPath;
         }
-    
-// editing functions
-    // initialize editing
+
+        // editing functions
+        // initialize editing
         function editShape(shp) {
             changeMode("editing");
             editedShape = shp;
@@ -772,24 +772,24 @@ angular.module("zoner")
             });
         }
 
-    // redraw a shape from points
+        // redraw a shape from points
         function redrawShape() {
             coords = readPoints(coords);
             for (var i = 0; i < coords.length; i++) {
                 if (i == 0) {
-                    var path = "M" + coords[i].string; 
+                    var path = "M" + coords[i].string;
                 } else {
-                    path += "L" + coords[i].string; 
+                    path += "L" + coords[i].string;
                 }
             }
             path += "z";
             editedShape.attr("path", path);
             clearPoints();
-          changeMode("selection");
+            changeMode("selection");
             // ?turn off edit mode?
         }
 
-    // delete all points
+        // delete all points
         function clearPoints() {
             for (var i = 0; i < points.length; i++) {
                 points[i].remove()
@@ -797,17 +797,17 @@ angular.module("zoner")
             coords.length = 0;
             points.length = 0;
             $('#clearpoints').prop('disabled', true);
-        
-     }
 
-    // delete all shapes
+        }
+
+        // delete all shapes
         function clearShapes(target) {
             confirmation = window.confirm("Are you sure? This will delete everything, and you can't undo it.");
             if (confirmation) {
                 target.annts.forEach(function (a) {
                     a.shape = null;
                 });
-                
+
                 paper.clear();
                 points.length = 0;
                 coords.length = 0;
@@ -820,7 +820,7 @@ angular.module("zoner")
             } else return;
         }
 
-    // change zoom
+        // change zoom
         function zoomChng(zChng) {
             zm = roundToTwo(parseFloat(zm + zChng));
 
@@ -836,66 +836,75 @@ angular.module("zoner")
             function roundToTwo(num) {
                 return +(Math.round(num + "e+2") + "e-2");
             }
-            
+
         }
 
-    // change colour
+        // change colour
         function reColour(a, newColour) {
             a.shape.attr("fill", newColour);
         }
-    
-    // highlight shape
+
+        // highlight shape
         function highlightShape(shape, c, w) {
             shape.attr("stroke-width", w);
-            
-            if(c=="inverted"){
-                c=invertColor(shape.attr("fill"));
+
+            if (c == "inverted") {
+                c = invertColor(shape.attr("fill"));
             }
-            
+
             shape.attr("stroke", c);
         }
-    
-    //change mode
-    
-    function changeMode(newMode){
-        console.log("entering _" + newMode + "_ mode");
-        mode=newMode;
-        var cursorImg;
-        switch(newMode){
-            case "deletion": cursorImg="no-drop"; break; 
-            case "selection": cursorImg="grab"; break; 
-            case "editing": cursorImg="pointer"; break; 
-            case "drawing": cursorImg="crosshair"; break; 
-        }
-        
-        $("#canvas").css({cursor:cursorImg});
-    }
-    // functions for converting colour (external source)
-    function invertColor(hex) {
-    if (hex.indexOf('#') === 0) {
-        hex = hex.slice(1);
-    }
-    // convert 3-digit hex to 6-digits.
-    if (hex.length === 3) {
-        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-    }
-    if (hex.length !== 6) {
-        throw new Error('Invalid HEX color.');
-    }
-    // invert color components
-    var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
-        g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
-        b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
-    // pad each with zeros and return
-    return '#' + padZero(r) + padZero(g) + padZero(b);
-}
 
-function padZero(str, len) {
-    len = len || 2;
-    var zeros = new Array(len).join('0');
-    return (zeros + str).slice(-len);
-}
-    
+        //change mode
+
+        function changeMode(newMode) {
+            mode = newMode;
+            var cursorImg;
+            switch (newMode) {
+                case "deletion":
+                    cursorImg = "no-drop";
+                    break;
+                case "selection":
+                    cursorImg = "grab";
+                    break;
+                case "editing":
+                    cursorImg = "pointer";
+                    break;
+                case "drawing":
+                    cursorImg = "crosshair";
+                    break;
+            }
+
+            $("#canvas").css({
+                cursor: cursorImg
+            });
+        }
+        // functions for converting colour (external source)
+        function invertColor(hex) {
+            if (hex.indexOf('#') === 0) {
+                hex = hex.slice(1);
+            }
+            // convert 3-digit hex to 6-digits.
+            if (hex.length === 3) {
+                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+            }
+            if (hex.length !== 6) {
+                throw new Error('Invalid HEX color.');
+            }
+            // invert color components
+            var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+                g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+                b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+            // pad each with zeros and return
+            return '#' + padZero(r) + padZero(g) + padZero(b);
+        }
+
+        function padZero(str, len) {
+            len = len || 2;
+            var zeros = new Array(len).join('0');
+            return (zeros + str).slice(-len);
+        }
+
         return {
             createEditor: createEditor,
             nShape: nShape,
@@ -915,46 +924,96 @@ function padZero(str, len) {
     });
 
 
-	
-	angular.module("zoner")
-	.factory("uiFct",function(){
-		
-		var instr={loadfile:
-					{row:[{i:"Upload an image from your computer.",s:true}],
-					state:0, 
-					show:true},
-                   addAnnts:{row:[{i:"Before you create annotations, load an image.",s:false}],
-					state:0, 
-					show:false},
-                   annotations:{row:[{i:"Tab listing your annotations.",s:false}],
-					state:0, 
-					show:false},
-                   categories:{row:[{i:"Create catagories.",s:false}],
-					state:0, 
-					show:false},
-                   fields:{row:[{i:"Create custom fields.",s:false}],
-					state:0, 
-					show:false},
-                   addCategory:{row:[{i:"Click to add a category.",s:false}],
-					state:0, 
-					show:false},
-                   drawShape:{row:[{i:"Place points on the canvas before you draw a shape.",s:false}],
-					state:0, 
-					show:false},
-                   addField:{row:[{i:"Add custon fields to be available for every annotation.",s:false}],
-					state:0, 
-					show:false},
-                   coordinates:{row:[{i:"displays coordinates as you move over the canvas",s:false}],
-					state:0, 
-					show:false}
-                   
-			 };
-			 
-		function getInstr()
-		{
-			return instr;
-		}
-		
-		return {getInstr:getInstr};
-		
-	});
+
+angular.module("zoner")
+    .factory("uiFct", function () {
+
+        var instr = {
+            loadfile: {
+                row: [{
+                    i: "First, upload an image from your computer.",
+                    s: true
+                }],
+                state: 0,
+                show: true
+            },
+            addAnnts: {
+                row: [{
+                        i: "Before you create annotations, load an image.",
+                        s: false
+                    },
+                    {
+                        i: "Add annotations here.",
+                        s: true
+                    }],
+                state: 0,
+                show: false
+            },
+            annotations: {
+                row: [{
+                    i: "This tab allows you to add annotations.",
+                    s: false
+                }],
+                state: 0,
+                show: false
+            },
+            categories: {
+                row: [{
+                    i: "Create catagories.",
+                    s: false
+                }],
+                state: 0,
+                show: false
+            },
+            fields: {
+                row: [{
+                    i: "Create custom fields.",
+                    s: false
+                }],
+                state: 0,
+                show: false
+            },
+            addCategory: {
+                row: [{
+                    i: "Click to add a category.",
+                    s: false
+                }],
+                state: 0,
+                show: false
+            },
+            drawShape: {
+                row: [{
+                    i: "Place points on the canvas before you draw a shape.",
+                    s: false
+                }],
+                state: 0,
+                show: false
+            },
+            addField: {
+                row: [{
+                    i: "Add custon fields to be available for every annotation.",
+                    s: false
+                }],
+                state: 0,
+                show: false
+            },
+            coordinates: {
+                row: [{
+                    i: "displays coordinates as you move over the canvas",
+                    s: false
+                }],
+                state: 0,
+                show: false
+            }
+
+        };
+
+        function getInstr() {
+            return instr;
+        }
+
+        return {
+            getInstr: getInstr
+        };
+
+    });

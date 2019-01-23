@@ -1,34 +1,43 @@
+<label ng-show="sh.tInput==true">
+
+    <textarea id=textInp ng-model=tInput.text placeholder="input text/XML/JSON"></textarea>
+
+</label>
+
+<label ng-show="sh.tInput==true  && tInput.text.substring(0,1)!='{' &&  tInput.text.substring(0,5)!='<?xml'">
+    Separator: <input type=text ng-model="tInput.separator">
+    <button ng-click="loadShList(); sh.tInput=false" id=loadButton title="load plain text split into words">Load text</button> </label>
 
 
-<textarea id=textInp ng-model=tInput ng-show="sh.tInput==true" placeholder="input text/XML"></textarea>
 
-<label ng-show="sh.tInput==false"> <button id=inpButton ng-click="sh.tInput=!sh.tInput"  title="show text input">Text Input</button></label>
-<label ng-show="sh.tInput==true  && tInput.substring(0,1)!='{' &&  tInput.substring(0,5)!='<?xml'" >       <button ng-click="loadShList(); sh.tInput=false" id=loadButton title="load plain text split into words">Load text</button> </label>
-<label ng-show="sh.tInput==true  && tInput.substring(0,5)=='<?xml'">   <button ng-click="loadXml(); sh.tInput=false" id=loadXml title="load shapes and anntations from XML" >Load XML</button> </label>
-<label ng-show="sh.tInput==true  && tInput.substring(0,1)=='{'"><button ng-click="loadJson(); sh.tInput=false" id=loadJson  title="load shapes and anntations from JSON">Load JSON</button> </label>
-<label ng-show="sh.load==true">    <button id=cooker ng-click="loadCooked()"  title="load shapes and anntations from cookies">Load Saved</button></label><hr>
-         
-         <input type=text readonly id=wInput>
+
+<label ng-show="sh.tInput==false"> <button id=inpButton ng-click="sh.tInput=!sh.tInput" title="show text input">Text Input</button></label>
+
+<label ng-show="sh.tInput==true  && tInput.text.substring(0,5)=='<?xml'"> <button ng-click="loadXml(); sh.tInput=false" id=loadXml title="load shapes and anntations from XML">Load XML</button> </label>
+<label ng-show="sh.tInput==true  && tInput.text.substring(0,1)=='{'"><button ng-click="loadJson(); sh.tInput=false" id=loadJson title="load shapes and anntations from JSON">Load JSON</button> </label>
+<label ng-show="sh.load==true"> <button id=cooker ng-click="loadCooked()" title="load shapes and anntations from cookies">Load Saved</button></label>
+<hr>
+
+<input type=text readonly id=wInput>
 
 <current-annt ng-show="sh.editBox==true"></current-annt>
 
 
- <ul id=anntList>    
+<ul id=anntList>
 
-   <li ng-class="a==c.Annt ? 'active':'normal'"  ng-repeat="(n,a) in annts" id="annt{{n}}">
+    <li ng-class="a==c.Annt ? 'active':'normal'" ng-repeat="(n,a) in annts" id="annt{{n}}">
 
-       <button class="icon move" ng-click="moveAnnt(n, c.Annt)" ng-show="a!=c.Annt" title="move selected annotation here"></button> 
-       <input type=text ng-model=a.word class=annt  ng-click="c.Annt=a" ng-focus="highlightShape(a,'inverted',7)" ng-blur="highlightShape(a,'black',1)">
-     
-   <!--   <select ng-model="a.cat" style="background-color:{{cats[a.cat].clr}}" ng-change="reColour(a)">
+        <button class="icon move" ng-click="moveAnnt(n, c.Annt)" ng-show="a!=c.Annt" title="move selected annotation here"></button>
+        <input type=text ng-model=a.word class=annt ng-click="c.Annt=a" ng-focus="highlightShape(a,'inverted',7)" ng-blur="highlightShape(a,'black',1)">
+
+        <!--   <select ng-model="a.cat" style="background-color:{{cats[a.cat].clr}}" ng-change="reColour(a)">
        <option ng-repeat="c in cats" value="{{c.id}}"  style="background-color:{{c.clr}}" >{{c.name}}</option>
        </select> -->
-       <button class="icon delAnnt" ng-click="delAnnt(a)" ng-show="a==c.Annt" title="delete annotation" ></button> 
-       <button class="icon delShape" ng-click="delShape(a)" ng-show="a.shape!=null" title="delete shape"></button>
-       <button class="icon assignShape" ng-click="assignShape(a)" ng-show="a.shape==null && c.Annt.shape!=null" "link selected shape"></button>
-       
-         </ul>  
+        <button class="icon delAnnt" ng-click="delAnnt(a)" ng-show="a==c.Annt" title="delete annotation"></button>
+        <button class="icon delShape" ng-click="delShape(a)" ng-show="a.shape!=null" title="delete shape"></button>
+        <button class="icon assignShape" ng-click="assignShape(a)" ng-show="a.shape==null && c.Annt.shape!=null" "link selected shape"></button>
 
-<li class=isolated><button class="icon add" ng-click="newAnnt()" title="add annotations"></button> Add annotation<inst-row wind=addAnnts></inst-row> </li>
+</ul>
 
-
+<li class=isolated><button class="icon add" ng-click="newAnnt()" title="add annotations"></button> Add annotation<inst-row wind=addAnnts></inst-row>
+</li>

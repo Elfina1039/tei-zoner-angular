@@ -1,19 +1,23 @@
+* {
+    box-sizing: border-box
+}
 
-//menu rules
 
-#mainBanner{
+/*menu rules*/
+
+#mainBanner {
     font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
     font-size: 14pt;
     color: #292929;
 }
 
-h1{
+h1 {
     font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
     font-size: 37px;
     color: #292929;
 }
 
-nav{
+nav {
     font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
     font-size: 14pt;
     color: #292929;
@@ -21,13 +25,13 @@ nav{
 
 #onglets {
     display: flex;
-  flex-flow_row wrap;
+    flex-flow_row wrap;
     font: bold 12px Arial;
     list-style-type: none;
     padding-bottom: 0;
     border-bottom: 1px solid #9EA0A1;
     margin-left: 0;
-    
+
 
 }
 
@@ -35,8 +39,8 @@ nav{
     color: white;
     text-decoration: none;
     padding: 4px;
-  background-color:rgb(125,125,125);
-  margin-right:0.5em;
+    background-color: rgb(125, 125, 125);
+    margin-right: 0.5em;
 
 }
 
@@ -44,12 +48,16 @@ nav{
     background-color: #444;
     text-decoration: underline;
 }
-a:link, a:visited, a:active {
+
+a:link,
+a:visited,
+a:active {
 
     color: #5f0000;
     text-decoration: none;
 
 }
+
 nav ul li a {
     display: block;
     padding: 25px 40px;
@@ -57,442 +65,663 @@ nav ul li a {
     text-decoration: none;
 }
 
-html,body{
- margin: 0;
- padding: 0;
- font-family: sans-serif;
- font-size: 10pt;
- line-height: 1.2em;
-  display:flex;
-  flex-flow:column nowrap;
-  background: url('../images/page_bg.png') 0 0 repeat-x;
-  background-size:100% 100%;
-  height:125%;
-  
-}
-body{
- padding-bottom: 3rem;
-   color:black;
-   font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
+#mainContainer,
+nav,
+#mainBanner {
+    width: 100%
 }
 
-#mainContainer, nav, #mainBanner{width:100%}
-
-#menu{width:100%; 
-display:flex;
-  margin-left: 2em;
-margin-right: 4em;
- padding-left:2em;
-  padding-top:0.5em;
-  flex-flow:row nowrap;
-  justify-content:flex-start;
-}
-#main{width:100%; height:100%; position:absolute; 
-left:0; top:25%; display:flex; 
-flex-flow:row wrap;
-padding:10px;}
-
-#drawing{height:98%; width:79%;
-  position:absolute; top:0; left:20%;
+#menu {
+    width: 100%;
+    display: flex;
+    margin-left: 2em;
+    margin-right: 4em;
+    padding-left: 2em;
+    padding-top: 0.5em;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
 }
 
-
-#teistuff{
- position: fixed;
- top: 5rem;
- margin: 0 10%;
- background: white;
- border: 1px solid black;
- width: 60%;
-      height:70%;
- padding: 0;
- z-index: 10;
-     color:black;
-}
-
-#teistuff h2{
-  background-color:rgba(125,125,125,0.2);
-  padding:0.5em;
-  margin:0;
-  height:7%;
+/*HTML, body, elements*/
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 10pt;
+    line-height: 1.2em;
+    display: flex;
+    flex-flow: column nowrap;
+    background: url('../images/page_bg.png') 0 0 repeat-x;
+    background-size: 100% 100%;
+    height: 125%;
 
 }
 
-#outputVersions{height:7%; display:flex;
-flex-flow:row wrap;
-align-items:center;
-padding:1%;}
-
-.outputCode{margin:1%;
-border:1px dashed rgb(125,125,125);
-overflow:scroll;
-height:82%;
-background-color:rgba(125,125,125,0.1)
+body {
+    padding-bottom: 3rem;
+    color: black;
+    font-family: "Gentium Book Basic", Cochin, Georgia, Serif;
 }
 
-#controls{
-  position: absolute;
-  top:1%;
-  left:2%;
-  background-color: rgb(229, 186, 29);
-  width: 98%;
-  z-index: 9;
-  height: 5%;
-display:flex;
-  padding-left:.5em
-}
-controls{  display:flex;
-  flex-flow:row nowrap;
-  align-items:center;
-  width:100%;
-  justify-content: space-between;
-}
-controls button{margin: 0 0.1em 0 0.1em}
-
-#ctrlButtons, #ctrlDisplay{flex-flow:row nowrap;
-  align-items:center; }
+/* ELEMENTS */
 
 
-
-
-#helpLink{ 
-  margin:0; border-radius:50%; border:2px solid white;
-background-color:rgb(229, 186, 29); z-index:21; padding:0.2em;
-text-align:center;cursor:pointer; display:inline;
+textarea {
+    width: 98%;
+    margin: 0.3em;
+    background-color: rgb(229, 186, 29)
 }
 
-#help{position:absolute; left:2%; top:6%;
-width:98%; 
-overflow-y:scroll;
-background-color:rgba(229, 186, 29, 0.9); z-index:20; 
-border:none; color:black;
-transition:height 1s ease-out, padding 1s ease-out}
+input[type=text] {
+    background-color: rgb(229, 186, 29);
+    border-radius: 0.2em;
+    border: 2px inset white;
+}
 
-#help a {color:white;
-font-size:13pt}
+hr {
+    background-color: rgb(229, 186, 29);
+    height: 3px;
+    border: none
+}
 
-.slideUp{height:0; padding:0}
-.slideDown{height:95%;padding:1.5em;}
+select {
+    width: 20%;
+    margin-left: 0.5em;
+    background-color: rgb(229, 186, 29);
+    border: none;
+    border-radius: 0.2em;
+}
 
-inst-row, instr-row.hidden{ 
-  margin:0; z-index:10000;
-text-align:center;cursor:pointer; display:inline;
-transition:background-color 0.5s ease-out, width 0.5s, height 0.5s ease-out,padding 0.5s ease-out}
+select option {
+    opacity: 0.5
+}
 
-inst-row:hover, inst-row.visible{position:absolute;
-background-color:rgb(229, 186, 29);
-padding:0.2em;
-font-size:12pt;
-padding:0.3em;
-text-align:center;
-border-radius:0 0.4em 0.4em 0.4em;
-border: 1px solid black;}
+button,
+input[type=button] {
+    border-radius: 0.2em;
+    font-weight: 520;
+    margin: 0.1em;
+    background-color: rgb(125, 125, 125);
+    padding: 0.3em;
+    color: white;
+    border: none
+}
 
-#wrapper{position:absolute; left:2%; top:6%;
-width:98%; height:95%;
-overflow:scroll;
-border:0.2em solid rgb(229, 186, 29);}
+button:hover,
+input[type=button]:hover,
+button.activated {
+    background-color: black
+}
 
 
-#editor{
-  position:absolute;
-  left:0;
-  top:0;
+
+
+
+input.annt {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid rgb(125, 125, 125);
+    color: black;
+    border-radius: 0;
+    width: 80%;
+}
+
+input.annt:hover,
+input.annt:active {
+    background-color: rgba(229, 186, 29, 0.2)
+}
+
+
+li.cat {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+input.cat {
+    width: 90%;
+    border: 0;
+    border-bottom: 2px solid rgb(125, 125, 125);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 0
+}
+
+input.cpicker: {
+    display: inline;
+    height: 1em;
+}
+
+/*LAYOUT*/
+
+#main {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 25%;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 10px;
+}
+
+#leftPan {
+    width: 20%;
+    height: 98%;
+    color: black;
+}
+
+#annTab,
+#shList {
+    background-color: rgba(229, 186, 29, 0.2);
+    color: black;
+}
+
+#catTab,
+#catList {
+    background-color: rgba(229, 186, 29, 0.4);
+}
+
+#fieldTab,
+#fieldList {
+    background-color: rgba(229, 186, 29, 0.6);
+    color: black;
+}
+
+.tab {
+    height: 96%;
+    width: 100%;
+    padding: 0.5em;
+    overflow-y: scroll;
+    color: black
+}
+
+#drawing {
+    height: 98%;
+    width: 79%;
+    position: absolute;
+    top: 0;
+    left: 20%;
+}
+
+#wrapper {
+    position: absolute;
+    left: 2%;
+    top: 6%;
+    width: 98%;
+    height: 95%;
+    overflow: scroll;
+    border: 0.2em solid rgb(229, 186, 29);
+}
+
+
+#editor {
+    position: absolute;
+    left: 0;
+    top: 0;
     transform-origin: 0 0;
 }
 
-#canvas{
-  cursor:crosshair;
-  background-color:rgba(0,0,0,0);
-  position:absolute;
-  left:0;
-  top:0;
-     transform-origin: 0 0;
-}
-.thumb {
-  border: 1px solid #000;
-  margin: 10px 5px 0 0;
-}
-
-#imgarea{
-  width: 80%;
-  padding: 1%;
-    position:absolute;
-    left:20%;
-}
-pre#teiwrapper{
-  font-size: .8rem;
-  background: white;
-  height: 90%;
-  overflow: scroll;
-  padding: .4rem;
-  white-space: pre-wrap;       /* CSS 3 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
-#output header h1{
-  font-size: 1rem;
-}
-#output h2{
-  font-size: 1rem;
-}
-span.coord{
-  display: inline-block;
-  color: rgb(125,125,125);
-}
-#currentCoords, #currentZoom{
-  background: white;
-  padding: .4rem;
-  margin-right: .3rem;
-  display:inline-flex;
-    color:black;
-    min-width:2em;
-  flex-flow:row nowrap;
-  align-items:center;
-}
-
-#currentCoords p, #currentZoom p{
-  margin: 0;
-  padding: 0;
-  display: inline-flex;
-
+#canvas {
+    cursor: crosshair;
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
 }
 
 
-#pickfile input{
-  font-size: 2rem;
-  display: inline-block;
-}
-#pickfile{
-  margin: 2rem 0;
-  font-size: 2rem;
-  line-height: 1.2em;
-}
-
-#pickfile label{margin:0.5em}
-
-*{box-sizing:border-box}
- #leftPan {
-	width:20%;
-	height:98%;
-	color:black;
+/*TEI MARKUP*/
+#teistuff {
+    position: fixed;
+    top: 5rem;
+    margin: 0 10%;
+    background: white;
+    border: 1px solid black;
+    width: 60%;
+    height: 70%;
+    padding: 0;
+    z-index: 10;
+    color: black;
 }
 
+#teistuff h2 {
+    background-color: rgba(125, 125, 125, 0.2);
+    padding: 0.5em;
+    margin: 0;
+    height: 7%;
 
-
-textarea{width:98%; margin:0.3em; background-color:rgb(229, 186, 29)}
-input[type=text]{background-color:rgb(229, 186, 29); 
-  border-radius:0.2em; border:2px inset white;}
-hr{background-color:rgb(229, 186, 29); height:3px; border:none}
-select{width:20%;margin-left:0.5em; background-color:rgb(229, 186, 29); border:none; 
-  border-radius:0.2em;}
-select option{opacity:0.5}
-button, input[type=button]{border-radius:0.2em; 
-  font-weight:520; margin:0.1em;
-background-color:rgb(125,125,125);
-padding:0.3em;
-color:white;
-border:none}
-
-button:hover, input[type=button]:hover, button.activated{background-color:black}
-
-input.annt{background-color:transparent; 
-  border:0;
-  border-bottom:2px solid rgb(125,125,125);
-  color:black;
-  border-radius:0;
-width:80%;}
-
-input.annt:hover, input.annt:active{
-  background-color:rgba(229, 186, 29, 0.2)}
-
-
-li.cat{width:100%; display:flex; flex-flow:row nowrap;}
-input.cat{width:90%; border:0; border-bottom:2px solid rgb(125,125,125);
-background-color:rgba(255,255,255,0.2); border-radius:0}
-
-input.cpicker:{display:inline; height:1em;}
-
-#annTab, #shList{background-color:rgba(229, 186, 29, 0.2); color:black; }
-#catTab, #catList{background-color:rgba(229, 186, 29, 0.4); }
- #fieldTab, #fieldList{background-color:rgba(229, 186, 29, 0.6); color:black; }
-        
-.tab{  height:96%;
-  width:100%;
-  padding:0.5em; 
-  overflow-y:scroll;
-color:black}       
-        
-    button.icon:hover{
-            background-color:black;
-        }
-button.icon{width:1.5em; height:1.5em;
-background-position:center center;
-background-size:contain;} 
-button.iconBig{width:2em; height:2em; background-size:cover; 
-  background-position:center center;} 
-
-button.delete{background-image:url(icons/delete_outline.png);}
-button.delAnnt{background-image:url(icons/delete_forever.png);}
-button.delShape{background-image:url(icons/delete_outline.png);}
-button.move{background-image:url(icons/low_priority.png);}
-button.assignShape{background-image:url(icons/attach_file.png);}
-button.add{background-image:url(icons/add.png);}
-
-button.zoomIn{background-image:url(icons/outline_add_box_white.png);}
-button.zoomOut{background-image:url(icons/outline_indeterminate_check_box.png);}
-
-      ul.tabul{padding:0; display:flex; flex-flow: row nowrap;
-        margin:0; height:2.5em;
-margin-top:1%;
-height:4%}
-
-        ul.tabul li {list-style-type:none; 
-                border: 2px solid white;
-                border-bottom:none;
-                background-color:green;
-                border-top-right-radius:1em;
-                margin:0;
-                padding:0.5em;
-                text-indent:0;
-             
-                
 }
 
-#anntList li{list-style-type:none; 
-  text-indent:0; 
-  margin:0;
-display:flex;
-flex-flow:row nowrap;}
-
-#anntList{padding:0}
-
-#cAnnt{border:2px solid rgb(125,125,125);
-padding:0.5em;
- top:0.1em;
-position:sticky;
-  background-color:rgb(219, 197, 135)
+#outputVersions {
+    height: 7%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 1%;
 }
 
-#cAnnt h5{margin:0;
-  margin-bottom:0.2em;
-  border-bottom:2px solid rgb(229, 186, 29);
-  padding:0.2em;
-display:block;
-  font-size:13pt;
-background-color:rgba(229, 186, 29, 0.2)}
-#cAnnt select{min-width:50%}
-#cAnnt ul{padding-left:0.5em;width:100%; display:flex; flex-flow:column nowrap; 
-  align-items: flex-end; }
-#cAnnt ul li{list-style-type:none; text-indent:0;width:95%;}
-#cAnnt label{width:100%;
-display:flex;
-flex-flow:row nowrap;
-justify-content:space-between;
-font-weight:bold;
-padding:0.2em; margin:0;
+.outputCode {
+    margin: 1%;
+    border: 1px dashed rgb(125, 125, 125);
+    overflow: scroll;
+    height: 82%;
+    background-color: rgba(125, 125, 125, 0.1)
 }
 
-span.fieldName{font-size: smaller;
-  color:rgb(125,125,125)
+
+/* list of annotations */
+
+#anntList li {
+    list-style-type: none;
+    text-indent: 0;
+    margin: 0;
+    display: flex;
+    flex-flow: row nowrap;
 }
 
-ul.tabul a {color:white; font-weight:bold; 
-text-decoration:none;}
-    
-  #cats{padding:0.2em;}
-#cats li{ width:100%; margin:0.3em; cursor:pointer}
-
-li input[type=text]{width:90%;}
-li button{width:5%;}
-li{font-weight:bold}
-    
-#anntList .active{padding-left:1em;
-border-left:2px solid rgb(125,125,125);
-background-color:rgba(125,125,125,0.3)}
-
-li.normal{padding-left:0;
-border-left:0}
-
-li.isolated{display:flex; 
-  fles-flow:row nowrap; 
-  align-items:center;
-  justify-content: flex-start;}
-
-li.isolated button{margin-right:0.5em}
-
- input.editAnnt{width:50%}
-
-
-
- span.cColor{width:1em; height:1em; margin:0.2em; padding:0.1em; border:1px solid white; border-radius:0.2em;} 
-#wInput{display:none}      
-      
-    
-span.blank,xmp{margin:0; display:inline}
-
-      
-    
-    
-#wInput{display:none}      
-      
-    
-span.blank,xmp{margin:0; display:inline}
-
-
-div.chapter{border:1px solid white;
-padding:1em;
-margin:0.5em}
-
-div.chapter h2{
-  color:white;
-  margin:0.2em 0em;
-  border-bottom:1px solid white;
+#anntList {
+    padding: 0
 }
 
-div.subChapter h2{
-  color:rgb(125,125,125);
-  margin:0.2em 0em;
-  border-bottom:1px solid rgb(125,125,125);
-  margin-left:2em
-}  
-
-div.subChapter p{
-margin-left:3em
+#cAnnt {
+    border: 2px solid rgb(125, 125, 125);
+    padding: 0.5em;
+    top: 0.1em;
+    position: sticky;
+    background-color: rgb(219, 197, 135)
 }
+
+#cAnnt h5 {
+    margin: 0;
+    margin-bottom: 0.2em;
+    border-bottom: 2px solid rgb(229, 186, 29);
+    padding: 0.2em;
+    display: block;
+    font-size: 13pt;
+    background-color: rgba(229, 186, 29, 0.2)
+}
+
+#anntList .active {
+    padding-left: 1em;
+    border-left: 2px solid rgb(125, 125, 125);
+    background-color: rgba(125, 125, 125, 0.3)
+}
+
+#cAnnt select {
+    min-width: 50%
+}
+
+#cAnnt ul {
+    padding-left: 0.5em;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+}
+
+#cAnnt ul li {
+    list-style-type: none;
+    text-indent: 0;
+    width: 95%;
+}
+
+#cAnnt label {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    font-weight: bold;
+    padding: 0.2em;
+    margin: 0;
+}
+
+/* CONTROLS */
+
+#controls {
+    position: absolute;
+    top: 1%;
+    left: 2%;
+    background-color: rgb(229, 186, 29);
+    width: 98%;
+    z-index: 9;
+    height: 5%;
+    display: flex;
+    padding-left: .5em
+}
+
+controls {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+controls button {
+    margin: 0 0.1em 0 0.1em
+}
+
+#ctrlButtons,
+#ctrlDisplay {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+#currentCoords,
+#currentZoom {
+    background: white;
+    padding: .4rem;
+    margin: 0.2em;
+    display: inline-flex;
+    color: black;
+    min-width: 2em;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+#currentCoords p,
+#currentZoom p {
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+
+}
+
+
+/* HELP */
+
+#helpLink {
+    margin: 0.2em;
+    border-radius: 0.2em;
+    border: 2px solid white;
+    background-color: black;
+    color: white;
+    z-index: 21;
+    padding: 0.2em;
+    text-align: center;
+    cursor: pointer;
+    display: inline;
+}
+
+#help {
+    position: absolute;
+    left: 2%;
+    top: 6%;
+    width: 98%;
+    overflow-y: scroll;
+    background-color: rgba(229, 186, 29, 0.9);
+    z-index: 20;
+    border: none;
+    color: black;
+    transition: height 1s ease-out, padding 1s ease-out
+}
+
+#help a {
+    color: white;
+    font-size: 13pt
+}
+
+.slideUp {
+    height: 0;
+    padding: 0
+}
+
+.slideDown {
+    height: 95%;
+    padding: 1.5em;
+}
+
+div.chapter {
+    border: 1px solid white;
+    padding: 1em;
+    margin: 0.5em
+}
+
+div.chapter h2 {
+    color: white;
+    margin: 0.2em 0em;
+    border-bottom: 1px solid white;
+}
+
+div.subChapter h2 {
+    color: rgb(125, 125, 125);
+    margin: 0.2em 0em;
+    border-bottom: 1px solid rgb(125, 125, 125);
+    margin-left: 2em
+}
+
+div.subChapter p {
+    margin-left: 3em
+}
+
+
+/* PICK FILE */
+
+#pickfile input {
+    font-size: 2rem;
+    display: inline-block;
+}
+
+#pickfile {
+    margin: 2rem 0;
+    font-size: 2rem;
+    line-height: 1.2em;
+}
+
+#pickfile label {
+    margin: 0.5em
+}
+
+
+
+
+
+
+
+/* BUTTONS */ 
+
+button.icon:hover {
+    background-color: black;
+}
+
+button.icon {
+    width: 1.5em;
+    height: 1.5em;
+    background-position: center center;
+    background-size: contain;
+}
+
+button.iconBig {
+    width: 2em;
+    height: 2em;
+    background-size: cover;
+    background-position: center center;
+}
+
+button.delete {
+    background-image: url(icons/delete_outline.png);
+}
+
+button.delAnnt {
+    background-image: url(icons/delete_forever.png);
+}
+
+button.delShape {
+    background-image: url(icons/delete_outline.png);
+}
+
+button.move {
+    background-image: url(icons/low_priority.png);
+}
+
+button.assignShape {
+    background-image: url(icons/attach_file.png);
+}
+
+button.add {
+    background-image: url(icons/add.png);
+}
+
+button.zoomIn {
+    background-image: url(icons/outline_add_box_white.png);
+}
+
+button.zoomOut {
+    background-image: url(icons/outline_indeterminate_check_box.png);
+}
+
+ul.tabul {
+    padding: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0;
+    height: 2.5em;
+    margin-top: 1%;
+    height: 4%
+}
+
+ul.tabul li {
+    list-style-type: none;
+    border: 2px solid white;
+    border-bottom: none;
+    background-color: green;
+    border-top-right-radius: 1em;
+    margin: 0;
+    padding: 0.5em;
+    text-indent: 0;
+
+
+}
+
+
+
+
+span.fieldName {
+    font-size: smaller;
+    color: rgb(125, 125, 125)
+}
+
+ul.tabul a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#cats {
+    padding: 0.2em;
+}
+
+#cats li {
+    width: 100%;
+    margin: 0.3em;
+    cursor: pointer
+}
+
+li input[type=text] {
+    width: 90%;
+}
+
+li button {
+    width: 5%;
+}
+
+li {
+    font-weight: bold
+}
+
+
+
+li.normal {
+    padding-left: 0;
+    border-left: 0
+}
+
+li.isolated {
+    display: flex;
+    fles-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+li.isolated button {
+    margin-right: 0.5em
+}
+
+input.editAnnt {
+    width: 50%
+}
+
+
+
+span.cColor {
+    width: 1em;
+    height: 1em;
+    margin: 0.2em;
+    padding: 0.1em;
+    border: 1px solid white;
+    border-radius: 0.2em;
+}
+
+
+
+
+#wInput {
+    display: none
+}
+
+
+span.blank,
+xmp {
+    margin: 0;
+    display: inline
+}
+
+
+
+
+/* CUSTOM SCROLLBAR */
+
 ::-webkit-scrollbar {
-  width: 11px;
-  height: 11px;
+    width: 11px;
+    height: 11px;
 }
+
 ::-webkit-scrollbar-button {
-  width: 0px;
-  height: 0px;
+    width: 0px;
+    height: 0px;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #cab413;
-  border: 2px solid #ffffff;
-  border-radius: 50px;
+    background: #cab413;
+    border: 2px solid #ffffff;
+    border-radius: 50px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffffff;
+    background: #ffffff;
 }
+
 ::-webkit-scrollbar-thumb:active {
-  background: #000000;
+    background: #000000;
 }
+
 ::-webkit-scrollbar-track {
-  background: #e5ba1d;
-  border: 0px none #ffffff;
-  border-radius: 39px;
+    background: #e5ba1d;
+    border: 0px none #ffffff;
+    border-radius: 39px;
 }
+
 ::-webkit-scrollbar-track:hover {
-  background: #e5ba1d;
+    background: #e5ba1d;
 }
+
 ::-webkit-scrollbar-track:active {
-  background: #e5ba1d;
+    background: #e5ba1d;
 }
+
 ::-webkit-scrollbar-corner {
-  background: transparent;
+    background: transparent;
 }
-    

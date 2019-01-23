@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 
     <title>TEI Zoner</title>
-    <meta name="author" content="Chris Sparks">
+    <meta name="author" content="Chris Sparks & Marie Vaňková">
 
     <link rel="stylesheet" href="css/style.css?v=1.0">
     <link rel="stylesheet" href="css/highlighter-default.css">
@@ -94,7 +94,7 @@ require('./menu.php');
 
             <div id=help ng-class="sh.help ? 'slideDown' : 'slideUp'">
                 <h1>TEI Zoner</h1>
-                <p>This tool allows you to generate TEI &lt;zone&gt; elements by drawing points on an image and link them to annotations. It is entirely browser-based (nothing is processed on the server). You can get the output in XML or JSON. </p>
+                <p>This tool allows you to generate TEI &lt;zone&gt; elements by drawing points on an image and link them to annotations. It is entirely browser-based (nothing is processed on the server). You can get the output as XML or JSON. </p>
                 <ol>
                     <li><a href="#loadImg">Step-by-step guide</a></li>
                     <ol>
@@ -133,7 +133,7 @@ require('./menu.php');
                 
                 <div class=chapter id=customCats>
                     <h2 >Create custom categories</h2>
-                    <p>You can sort annotations into categories. Different categories get displayed in different colours. By default, all annotations are assigned the "default" category and displayed in blue. To add your own categories, go the the "categories" tab on the left. Use the colour picker at the bottom to select a colour and click the <button class="icon add"></button> add button. You can edit the names and colours of categories any time using the input fields and colour pickers in the "Categories" tab.
+                    <p>You can sort annotations into categories. Different categories get displayed in different colours. By default, all annotations are assigned the "default" category and displayed in blue. To add your own categories, go the the "Categories" tab on the left. Use the colour picker at the bottom to select a colour and click the <button class="icon add"></button> add button. You can edit the names and colours of categories any time using the input fields and colour pickers in the "Categories" tab.
                     </p>
                    
                 </div>
@@ -146,7 +146,10 @@ require('./menu.php');
                     
                      <div class=subChapter id=loadText>
                     <h2 >Plain text</h2>
-                         <p>If you input a stretch of plain text it is split into individual words (space is taken as separator) and each word becomes a single annotation. This is a good option if you have a transcription of a text from a manuscript and you want to annotate a lot of words. Click <button>Load text</button> to create annotations.
+                         <p>If you input a stretch of plain text it will be split using a separator, which is initially set to "space" and can be edited in the field below the textarea.
+                             Unless you provide a custom separator, the text will be split into individual words and each word becomes a single annotation. (This is a good option if you have a transcription of a text from a manuscript and you want to annotate a lot of words.) 
+                             
+                             Click <button>Load text</button> to create annotations.
                     </p>
                    
                 </div>
@@ -177,7 +180,7 @@ require('./menu.php');
                            <li>To delete an annotation, click the <button class="icon delAnnt"></button> button which appears on the right.
                              <li>To delete the shape linked to the annotation, click t the <button class="icon delete"></button> button which appears on the right.
                                <li>To move the annotation up or down the list, click the <button class="icon move"></button> displayed left of the annotaion fields. Your "selected" annotation will be moved <i>above</i> the annotation which you clicked. 
-                               <li> Category and custom fields can be edited in the small bux "current annotation" at the top of the list of annotations. Select a category using the <select style="border:1px solid rgb(125,125,125)"><option>select</option></select> element.
+                               <li> Category and custom fields can be edited in the small box "current annotation" at the top of the list of annotations. Select a category using the <select style="border:1px solid rgb(125,125,125)"><option>select</option></select> element.
                                
                        </ul>
                        </p>
@@ -195,7 +198,7 @@ require('./menu.php');
                   <div class=subChapter id=selectionMode>
                     <h2 >Selection mode</h2>
                         <p>
-                    If you click a shape in selection mode, you activate the relevant annotation as if you clicked the annotation in the lieft tab. Moreover, you can move the shapes using standard drag and drop.
+                    If you click a shape in selection mode, you activate the relevant annotation as if you clicked the annotation in the left tab. Moreover, you can move the shapes using standard drag and drop.
                         </p>
                 </div>
                 
@@ -226,7 +229,7 @@ require('./menu.php');
                     <p>
                   
                         <ul>
-                            <li><button style="width:inherit">JSON</button> gives you the complete data for annotations and categories. It can be stored and used to load the data back to the zoner. </li>
+                            <li><button style="width:inherit">JSON</button> gives you the complete data for annotations and categories. It can be stored and used to load the data back to the zoner. It is the only format which can handle custom fields other than "title". </li>
                             
                              <li><button style="width:inherit">XML zones</button> contains "graphic" and "zone" XML tags </li>
                             
@@ -247,7 +250,7 @@ require('./menu.php');
                     </p>
                     
                     <p>
-                        <strong>Cookies are not the preferred backup option. The functionality was included mainly in order to prevent data loss in case your browser crashes unexpectedly. </strong>
+                        <strong>Cookies are not the preferred backup option, please do not rely too much on them. The functionality was included mainly in order to prevent data loss in case your browser crashes unexpectedly. </strong>
                     </p>
             
                     
@@ -260,9 +263,12 @@ require('./menu.php');
                 <p>The tool uses <a href="http://raphaeljs.com/">raphael.js</a>, <a href="https://highlightjs.org/">highlight.js</a> and <a href="https://jquery.com/">jQuery</a>, and owes a lot to the fine people of <a href="http://stackoverflow.com/">StackOverflow</a> (in particular <a href="http://stackoverflow.com/questions/25487454/display-image-from-desktop-in-a-page">this question</a>).</p>
 
 
-                <p>It was written by <a href="http://www.history.qmul.ac.uk/staff/profile/5467-dr-chris-sparks">Chris Sparks</a> to act as a teaching resource during for a <a href="http://digitalmanuscripts.eu/">DEMM Digital Editing TEI training week</a>.</p>
+                <p>The original version (working with zones only) was written by <a href="http://www.history.qmul.ac.uk/staff/profile/5467-dr-chris-sparks">Chris Sparks</a> to act as a teaching resource during for a <a href="http://digitalmanuscripts.eu/">DEMM Digital Editing TEI training week</a> </p>
                 <p>Please send comments or suggestions to <a href="https://twitter.com/sparkyc84">@sparkyc84</a>.</p>
-                <p>The source code of this project is <a href="https://github.com/sparkyc84/tei-zoner">available to fork on GitHub</a>. It is licensed under the MIT License, which means you can use modify and embed it within other projects so long as you retain the copyright notice and license text. I’d be interested to hear about any uses of the tool, and would be happy to incorporate any fixes or enhancements you might suggest.</p>
+                <p>The source code of the original project is <a href="https://github.com/sparkyc84/tei-zoner">available to fork on GitHub</a>. It is licensed under the MIT License, which means you can use modify and embed it within other projects so long as you retain the copyright notice and license text. I’d be interested to hear about any uses of the tool, and would be happy to incorporate any fixes or enhancements you might suggest.</p>
+                    
+                    <p>Additional drawing functionalities, annotations and categories were added in 2019 by Marie Vaňková (Charles University, Prague). The current version uses the <a href="https://angularjs.org/">AngularJS</a> framework. Source code is <a href="https://github.com/Elfina1039/tei-zoner-angular">available on GitHub</a>. </p>    
+                    
                 </div>
             </div>
 

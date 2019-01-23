@@ -2,7 +2,7 @@ angular
     .module("zoner")
     .controller("main", function ($scope, $log, cookingFct, drawingFct, uiFct) {
 
-    $scope.instr=uiFct.getInstr();
+        $scope.instr = uiFct.getInstr();
         $scope.sh = {
             tInput: false,
             help: false,
@@ -25,6 +25,11 @@ angular
             shape: null,
             tab: "annTab"
         };
+        $scope.tInput = {
+            text: "",
+            separator: " "
+        }
+
         $scope.crds = {
             zoom: 1,
             pointColour: "#ffffff"
@@ -39,6 +44,8 @@ angular
             cookingFct.handleFile(evt, $scope);
             $scope.sh.editBox = true;
 
+            $scope.instr.addAnnts.state = 1;
+
         };
 
 
@@ -50,7 +57,6 @@ angular
         };
 
         $scope.eShape = function () {
-
             drawingFct.redrawShape();
             $scope.sh.redraw = false;
             $scope.c.origAnnt = null;
@@ -58,13 +64,10 @@ angular
         };
 
         $scope.reColourAll = function (cat) {
-            console.log("recolouring: " + cat);
             $scope.annts.forEach(function (annt) {
                 if (annt.cat == cat) {
-                    console.log("recolour: " + annt.cat);
                     drawingFct.reColour(annt, $scope.cats[cat].clr);
                 } else {
-                    console.log("no changes: " + annt.cat);
                 }
 
             });
@@ -75,7 +78,6 @@ angular
 
 
         $scope.reColour = function (a) {
-            console.log(a);
             drawingFct.reColour(a, $scope.cats[a.cat].clr);
             $scope.$emit("save", {});
         }
@@ -88,15 +90,14 @@ angular
                     // alert(annt.word);
                     $scope.c.Annt = annt;
                     $scope.c.shape = shape;
-                    $scope.c.origAnnt=annt;
-                    
-                    if($scope.c.origAnnt.word=="blank"){
+                    $scope.c.origAnnt = annt;
+
+                    if ($scope.c.origAnnt.word == "blank") {
                         $scope.delAnnt($scope.c.origAnnt);
                     }
 
                     var editBox = document.getElementById("cAnnt");
                     var newScroll = document.getElementById("annt" + ind).offsetTop - editBox.offsetHeight - editBox.offsetTop + 10;
-                    console.log("new scroll: " + newScroll);
                     document.getElementById("shList").scrollTop = newScroll;
                 }
             });
@@ -115,12 +116,9 @@ angular
                 }
             });
 
-
-            console.log("entering edit mode - " + $scope.sh.redraw);
         }
 
         $scope.assignShape = function (a) {
-            console.log( $scope.c.shape);
             a.shape = $scope.c.shape;
 
             if ($scope.c.origAnnt) {
@@ -136,7 +134,7 @@ angular
             $scope.annts.forEach(function (annt) {
                 var path = annt.shape.attrs.path;
                 annt.shape = drawingFct.delShape(annt);
-                annt.shape = drawingFct.cShape( annt, $scope.cats[annt.cat], $scope, path);
+                annt.shape = drawingFct.cShape(annt, $scope.cats[annt.cat], $scope, path);
 
 
             });
@@ -151,8 +149,6 @@ angular
             cookingFct.saveAnnts($scope.annts, $scope.cats);
         });
 
-
-        $log.info("controller MAIN initialized");
 
 
     });
@@ -180,34 +176,33 @@ angular
                     $scope.annts = [];
 
                     $scope.startDrag = function () {
-                        console.log("dragging");
                     }
 
                     $scope.loadCooked = function () {
-                        console.log("loading at controller");
                         var loaded = cookingFct.loadCooked($scope);
                         $scope.initialize(loaded, drawingFct.cShape);
                     }
 
                     $scope.loadJson = function () {
-                        var loaded = JSON.parse($scope.tInput);
-                        $scope.initialize(loaded,drawingFct.nShape);
+                        var loaded = JSON.parse($scope.tInput.text);
+                        $scope.initialize(loaded, drawingFct.nShape);
                     }
 
                     $scope.initialize = function (loaded, drawingFnc) {
-                        console.log(JSON.stringify(loaded));
+
+                        if (loaded.fields) {
+                            $scope.fields = loaded.fields;
+                        }
+
                         $scope.annts = loaded.annts;
                         $scope.cats = loaded.cats;
-                        $scope.catCount=Object.keys(loaded.cats).length+1;
-                        console.log("drawing shapes");
+                        $scope.catCount = Object.keys(loaded.cats).length + 1;
                         $scope.annts.forEach(function (a) {
                             if (a.shape) {
                                 if (typeof a.shape === "string") {
-                                    console.log(JSON.stringify(a.shape));
-                                     a.shape = xmlFct.pointsToPath(a.shape);
-                                   
+                                    a.shape = xmlFct.pointsToPath(a.shape);
+
                                 }
-                                // console.log(a.shape);
                                 a.shape = drawingFnc(a, $scope.cats[a.cat], $scope, a.shape);
                             }
                         });
@@ -215,10 +210,9 @@ angular
                     }
                     $scope.loadShList = function () {
 
-                        var words = $scope.tInput.split(" ");
+                        var words = $scope.tInput.text.split($scope.tInput.separator);
 
                         words.forEach(function (itm, ndx) {
-                            console.log("adding " + itm);
 
                             $scope.annts.push({
                                 word: itm,
@@ -234,7 +228,7 @@ angular
                     $scope.loadXml = function () {
 
                         parser = new DOMParser();
-                        var replaced = $scope.tInput.replace(/xml:id/g, "xmlid");
+                        var replaced = $scope.tInput.text.replace(/xml:id/g, "xmlid");
                         xmlDoc = parser.parseFromString(replaced, "text/xml");
 
                         var xmlCats = xmlFct.getCats(xmlDoc);
@@ -279,7 +273,6 @@ angular
 
 
                         ind = $scope.annts.indexOf(cAnnt);
-                        console.log("moving from " + ind + " to " + ndx);
                         if (ndx > ind) {
                             ndx--;
                         }
@@ -327,9 +320,6 @@ angular
                 };
 
                 $scope.newCat = function () {
-
-                    console.log($scope.nClr);
-                    console.log($scope.catCount);
                     $scope.cats["cat" + $scope.catCount] = {
                         name: "",
                         clr: $scope.nClr,
@@ -342,9 +332,7 @@ angular
 
 
                 $scope.delCat = function (cat) {
-                    console.log(cat);
                     delete $scope.cats[cat.id];
-                    console.log($scope.cats);
                 }
 
             },
@@ -386,13 +374,11 @@ angular
                         };
 
                     });
-                    console.log(rsl);
                     return rsl;
                 }
 
 
                 $scope.delField = function (field) {
-                    console.log(field);
 
                 }
 
@@ -424,7 +410,6 @@ angular
                             shape: null,
                             fields: $scope.getFields()
                         };
-                        console.log("adding blank");
                         $scope.annts.push($scope.c.Annt);
                     }
 
@@ -459,7 +444,6 @@ angular
                 }
 
                 $scope.roundNum = function (floatNum) {
-                    // console.log(parseInt(floatNum));
                     return parseInt(floatNum);
                 }
 
@@ -489,21 +473,21 @@ angular
                 $scope.cVersion = "TEI XML";
 
                 $scope.versions = [{
-                    title: "JSON",
-                    label: "JSON"
+                        title: "JSON",
+                        label: "JSON"
                 }, {
-                    title: "TEI XML",
-                    label: "XML zones"
+                        title: "TEI XML",
+                        label: "XML zones"
                 }, {
-                    title: "xmlPlus",
-                    label: "XML annotations/text"
+                        title: "xmlPlus",
+                        label: "XML annotations/text"
                 }, {
-                    title: "categories",
-                    label: "XML categories"
+                        title: "categories",
+                        label: "XML categories"
                 },
-                                  {
-                    title: "XMLcomplete",
-                    label: "IMT XML"
+                    {
+                        title: "XMLcomplete",
+                        label: "IMT XML"
                 }];
 
                 $scope.switchVersion = function (nv) {
@@ -513,12 +497,9 @@ angular
 
 
                 $scope.getTitle = function (a) {
-                    // console.log(a);
                     if (a.fields.title && a.fields.title.value != "") {
-                        // console.log("returning tile");
                         return a.fields.title.value;
                     } else {
-                        // console.log("returning word");
                         return a.word;
                     }
                 }
@@ -551,7 +532,6 @@ angular
 
                 $scope.stringifyAnnts = function (annts) {
                     var rsl = [];
-                    console.log(annts);
                     annts.forEach(function (annt) {
                         rsl.push($scope.stringify(annt, "json2"));
                     });
@@ -564,8 +544,8 @@ angular
 
                 $scope.getPoints = function (shape) {
                     var x, y, points = "";
-                    
-                    if(!shape){
+
+                    if (!shape) {
                         return;
                     }
                     if (shape.attrs != null) {
@@ -591,66 +571,63 @@ angular
 
 
 
- angular.module("zoner")
- .directive("xmlGraphic",function(){
-	return {
-		templateUrl:"templates/xmlGraphic.html"
-		}
-		
-	});
+angular.module("zoner")
+    .directive("xmlGraphic", function () {
+        return {
+            templateUrl: "templates/xmlGraphic.html"
+        }
 
- angular.module("zoner")
- .directive("xmlAnnotations",function(){
-	return {
-		templateUrl:"templates/xmlAnnotations.html"
-		}
-		
-	});
+    });
 
- angular.module("zoner")
- .directive("xmlCategories",function(){
-	return {
-		templateUrl:"templates/xmlCategories.html"
-		}
-		
-	});
+angular.module("zoner")
+    .directive("xmlAnnotations", function () {
+        return {
+            templateUrl: "templates/xmlAnnotations.html"
+        }
 
- angular.module("zoner")
- .directive("xmlComplete",function(){
-	return {
-		templateUrl:"templates/xmlComplete.html"
-		}
-		
-	});
+    });
 
- angular.module("zoner")
- .directive("jsonComplete",function(){
-	return {
-		templateUrl:"templates/jsonComplete.html"
-		}
-		
-	});
+angular.module("zoner")
+    .directive("xmlCategories", function () {
+        return {
+            templateUrl: "templates/xmlCategories.html"
+        }
 
+    });
 
+angular.module("zoner")
+    .directive("xmlComplete", function () {
+        return {
+            templateUrl: "templates/xmlComplete.html"
+        }
+
+    });
+
+angular.module("zoner")
+    .directive("jsonComplete", function () {
+        return {
+            templateUrl: "templates/jsonComplete.html"
+        }
+
+    });
 
 
- angular.module("zoner")
- .directive("instRow",function(){
-	return {
-		scope:true,
-		link:{
-			post:function(scope,iElement,iAttributes,controller)
-			{
-				scope.wind=iAttributes.wind;
-				console.log(scope.wind);
-				scope.toggle=function(){
-					scope.instr[scope.wind].show=!scope.instr[scope.wind].show;
-					console.log(scope.instr[scope.wind].show);
-				}
-			}
-			
-		},
-		template:"<sup class='instr' ng-mouseenter='toggle()' ng-mouseleave='toggle()'><span ng-show='instr[wind].show!=false || instr[wind].row[instr[wind].state].s!=false'>{{instr[wind].row[instr[wind].state].i}}</span><span ng-show='instr[wind].show==false && instr[wind].row[instr[wind].state].s==false'>?</span></sup>"
-		}
-		
-	});
+
+
+angular.module("zoner")
+    .directive("instRow", function () {
+        return {
+            scope: true,
+            link: {
+                post: function (scope, iElement, iAttributes, controller) {
+                    scope.wind = iAttributes.wind;
+                    scope.toggle = function () {
+                        scope.instr[scope.wind].show = !scope.instr[scope.wind].show;
+                    }
+                }
+
+            },
+            template: "<sup style='display:none' class='instr' ng-mouseenter='toggle()' ng-mouseleave='toggle()'><span ng-show='instr[wind].show!=false || instr[wind].row[instr[wind].state].s!=false'>{{instr[wind].row[instr[wind].state].i}}</span><span ng-show='instr[wind].show==false && instr[wind].row[instr[wind].state].s==false'>?</span></sup>"
+        }
+
+    });

@@ -3,14 +3,13 @@
 
 
     <label> Category: <select ng-model="c.Annt.cat" style="background-color:{{cats[a.cat].clr}}" ng-change="reColour(c.Annt)">
-       <option ng-repeat="c in cats" value="{{c.id}}"  style="background-color:{{c.clr}}" >{{c.name}}</option>
-       </select>
-        </label><br>
-       
-    <label>   Fields: </label>
-<ul>
-    <li ng-repeat="f in c.Annt.fields" class=normal>{{fv}}<input type=text class=annt  ng-model="f.value" placeholder="{{f.name}}"></li>
-    </ul>
-     
-</div>
+            <option ng-repeat="c in cats" value="{{c.id}}" style="background-color:{{c.clr}}">{{c.name}}</option>
+        </select>
+    </label><br>
 
+    <label> Fields: </label>
+    <ul>
+        <li ng-repeat="f in c.Annt.fields" class=normal>{{fv}}<input type=text class=annt ng-model="f.value" placeholder="{{f.name}}"></li>
+    </ul>
+
+</div>
